@@ -92,27 +92,28 @@ export default function HomePage() {
             </span>
           </div>
 
-          <h1 className="hero-title mb-8 text-white animate-fade-in-up delay-100 drop-shadow-2xl flex flex-col gap-2">
+          <h1 className="hero-title mb-8 text-white animate-fade-in-up delay-100 drop-shadow-2xl flex flex-col gap-2 items-center">
             <span className="text-3xl md:text-6xl font-black tracking-tighter leading-none">
               HUMAN-ROBOT<br />LABOR PLATFORM
             </span>
             <span className="text-lg md:text-2xl font-light tracking-widest text-[#a855f7] mt-2 uppercase opacity-90">
               Human Intelligence, Physical Labor
             </span>
+            <span className="text-base md:text-xl text-gray-300 font-light leading-relaxed mt-4 max-w-2xl">
+              Ghost Link is an open-source experiment to design the <strong className="text-white font-bold">UI/UX of the inevitable</strong>.
+            </span>
+            <span className="text-sm md:text-base text-gray-400 leading-relaxed max-w-2xl">
+              We know that one day, millions of humans will remotely pilot robots from their living rooms—doing hazardous, skilled, or logistical work via high-fidelity neural links.
+            </span>
+            <span className="mt-4 font-mono text-cyan-400 text-sm tracking-wide opacity-80">
+              &quot;Uber for Androids.&quot; &quot;DoorDash for Drones.&quot;
+            </span>
           </h1>
 
-          <div className="text-base md:text-xl text-gray-300 max-w-2xl mx-auto mb-16 leading-relaxed animate-fade-in-up delay-200 font-light px-2">
-            <p className="mb-4">
-              Ghost Link is an open-source experiment to design the <strong className="text-white font-bold">UI/UX of the inevitable</strong>.
-            </p>
-            <p className="text-sm md:text-base text-gray-400">
-              We know that one day, millions of humans will remotely pilot robots from their living rooms—doing hazardous, skilled, or logistical work via high-fidelity neural links.
-            </p>
-            <p className="mt-4 font-mono text-cyan-400 text-sm tracking-wide opacity-80">
-              &quot;Uber for Androids.&quot; &quot;DoorDash for Drones.&quot;
-            </p>
-          </div>
 
+          <div className="h-8 md:h-8"></div> <div className="flex flex-col ...">
+
+          </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-300 px-4">
             <Link href="/marketplace" style={{ textDecoration: 'none' }}>
               <button className="btn-primary py-4 px-8 text-base shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_30px_rgba(0,229,255,0.5)] w-full sm:w-auto">
@@ -126,9 +127,6 @@ export default function HomePage() {
             </Link>
           </div>
 
-          <p className="mt-10 text-xs text-gray-500 tracking-[0.2em] animate-fade-in-up delay-300">
-            NEURAL LICENSED · ESTABLISHED 2025
-          </p>
         </div>
       </section>
 

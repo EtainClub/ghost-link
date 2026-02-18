@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import GhostLogo from './GhostLogo';
 
 const navLinks = [
     { href: '/how-to', label: 'How-To' },
@@ -27,13 +28,7 @@ export default function Navbar() {
             <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
                 {/* Logo */}
                 <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                    <div style={{
-                        width: '28px', height: '28px', borderRadius: '6px',
-                        background: 'linear-gradient(135deg, #00e5ff, #0ea5e9)',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        fontSize: '14px', fontWeight: 900, color: '#000',
-                        flexShrink: 0,
-                    }}>G</div>
+                    <GhostLogo width={28} height={28} />
                     <span style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.02em' }}>
                         GHOST <span style={{ color: '#00e5ff' }}>LINK</span>
                     </span>

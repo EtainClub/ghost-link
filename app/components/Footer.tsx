@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import GhostLogo from './GhostLogo';
 
 export default function Footer() {
     return (
@@ -13,12 +14,7 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="col-span-2 sm:col-span-1">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
-                            <div style={{
-                                width: '24px', height: '24px', borderRadius: '5px',
-                                background: 'linear-gradient(135deg, #00e5ff, #0ea5e9)',
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                fontSize: '12px', fontWeight: 900, color: '#000',
-                            }}>G</div>
+                            <GhostLogo width={24} height={24} />
                             <span style={{ fontWeight: 800, fontSize: '0.9rem' }}>GHOST <span style={{ color: '#00e5ff' }}>LINK</span></span>
                         </div>
                         <p style={{ fontSize: '0.8rem', color: '#4a5568', lineHeight: 1.6, maxWidth: '200px' }}>
