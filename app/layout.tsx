@@ -6,6 +6,30 @@ export const metadata: Metadata = {
   title: "Ghost Link — Human Precision, Robotic Scale",
   description: "The world's first decentralized human-robot labor relay platform. Remotely control high-fidelity robotic avatars and earn real-time crypto yields from anywhere on Earth.",
   keywords: "robot, teleoperator, remote labor, humanoid, ghost link, CRED, LABR",
+  openGraph: {
+    title: "Ghost Link — Human Precision, Robotic Scale",
+    description: "The world's first decentralized human-robot labor relay platform. Remotely control high-fidelity robotic avatars and earn real-time crypto yields from anywhere on Earth.",
+    url: "https://ghostlink.work",
+    siteName: "Ghost Link",
+    images: [
+      {
+        url: "https://ghostlink.work/hero-bg.png",
+        width: 1200,
+        height: 630,
+        alt: "Ghost Link Hero Image",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ghost Link — Human Precision, Robotic Scale",
+    description: "The world's first decentralized human-robot labor relay platform.",
+    images: ["https://ghostlink.work/hero-bg.png"],
+    creator: "@etainclub",
+  },
+  metadataBase: new URL("https://ghostlink.work"),
 };
 
 export default function RootLayout({
