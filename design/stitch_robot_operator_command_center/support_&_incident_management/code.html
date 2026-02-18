@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Support &amp; Incident Management - Nexus Operator Link</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#f4af25",
+                        "primary-hover": "#d99a1f",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#1a160c", /* Deepened for better contrast */
+                        "surface-dark": "#2a2415",
+                        "surface-darker": "#231d10",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for a sleek look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #231d10; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #493c22; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #685631; 
+        }
+        
+        .glass-panel {
+            background: rgba(42, 36, 21, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(244, 175, 37, 0.1);
+        }
+
+        .hud-border {
+            position: relative;
+        }
+        .hud-border::before {
+            content: '';
+            position: absolute;
+            top: -1px; left: -1px; right: -1px; bottom: -1px;
+            border-radius: inherit;
+            padding: 1px;
+            background: linear-gradient(180deg, rgba(244, 175, 37, 0.3), rgba(244, 175, 37, 0));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white font-display antialiased min-h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="flex-none flex items-center justify-between whitespace-nowrap border-b border-solid border-b-[#493c22] bg-[#231d10]/90 backdrop-blur-md px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[32px]">hub</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-wide">NEXUS <span class="text-primary font-black">OPERATOR</span></h2>
+<div class="text-[10px] text-gray-400 font-mono tracking-widest uppercase">System Online • v4.2.0</div>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<!-- Stats -->
+<div class="hidden md:flex gap-6 mr-4 border-r border-[#493c22] pr-6">
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-gray-400 uppercase tracking-wider">Network Latency</span>
+<span class="text-xs font-bold text-green-400 flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                        12ms
+                    </span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[10px] text-gray-400 uppercase tracking-wider">Active Units</span>
+<span class="text-xs font-bold text-white">4/6 Online</span>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#342b18] hover:bg-[#493c22] text-primary transition-colors border border-[#493c22]">
+<span class="material-symbols-outlined text-[20px]">wifi</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-[#342b18] hover:bg-[#493c22] text-primary transition-colors border border-[#493c22]">
+<span class="material-symbols-outlined text-[20px]">battery_charging_full</span>
+</button>
+<button class="relative flex items-center justify-center rounded-lg h-10 w-10 bg-[#342b18] hover:bg-[#493c22] text-primary transition-colors border border-[#493c22]">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-[#342b18]"></span>
+</button>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<div class="text-sm font-bold text-white">Operator 729</div>
+<div class="text-[10px] text-primary">Level 4 Clearance</div>
+</div>
+<div class="relative">
+<img alt="Profile avatar of a male operator" class="rounded-lg h-10 w-10 object-cover border-2 border-[#493c22]" data-alt="Operator profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzBbbhvRspIY5okTx5p8yLJxr2nHsdHlTMcpnvfZ6cOmRGuC7lJTjnuhPEG-zIQCVo3ZC50OrWnC5aiSRD2VOt3_gzlwyT9acNC4IfpbP5uXeluH2XA9BZ7_6kTWckGqkN-1SvihHw67SruoX4wofHHiPPfE1LXRHa1p4BI1btNTjr9r4Tx8c6e8V19f_yg0LV_uh_Z_eDMlsfcFU_IaQjNpTQOxY_48263lmdiLPcq9hV1KfeCTJ5WAIzsJry39CLpURpFgaqafA"/>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-[#231d10]"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Grid -->
+<main class="flex-1 overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-0 lg:gap-px bg-[#493c22]">
+<!-- Left Column: Incident Reporting (3 cols) -->
+<section class="lg:col-span-3 bg-surface-darker flex flex-col h-full overflow-y-auto border-r border-[#493c22] relative">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent"></div>
+<div class="p-6">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary">emergency_home</span>
+<h2 class="text-xl font-bold tracking-tight text-white">NEW INCIDENT</h2>
+</div>
+<form class="space-y-6">
+<!-- Unit Selection -->
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Affected Unit</label>
+<div class="relative">
+<select class="w-full bg-[#342b18] border border-[#493c22] text-white text-sm rounded-lg focus:ring-1 focus:ring-primary focus:border-primary p-3 appearance-none">
+<option>Unit X-9 (Heavy Lifter)</option>
+<option>Unit A-12 (Precision Arm)</option>
+<option>Unit C-4 (Logistics Rover)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-gray-400 pointer-events-none text-lg">expand_more</span>
+</div>
+</div>
+<!-- Issue Type Grid -->
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Classification</label>
+<div class="grid grid-cols-2 gap-3">
+<label class="cursor-pointer">
+<input class="peer sr-only" name="issue_type" type="radio"/>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border border-[#493c22] bg-[#2a2415] hover:bg-[#342b18] peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition-all">
+<span class="material-symbols-outlined mb-1">memory</span>
+<span class="text-xs font-medium">Hardware</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="issue_type" type="radio"/>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border border-[#493c22] bg-[#2a2415] hover:bg-[#342b18] peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition-all">
+<span class="material-symbols-outlined mb-1">wifi_off</span>
+<span class="text-xs font-medium">Network</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="issue_type" type="radio"/>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border border-[#493c22] bg-[#2a2415] hover:bg-[#342b18] peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition-all">
+<span class="material-symbols-outlined mb-1">terminal</span>
+<span class="text-xs font-medium">Software</span>
+</div>
+</label>
+<label class="cursor-pointer">
+<input class="peer sr-only" name="issue_type" type="radio"/>
+<div class="flex flex-col items-center justify-center p-3 rounded-lg border border-[#493c22] bg-[#2a2415] hover:bg-[#342b18] peer-checked:border-primary peer-checked:bg-primary/10 peer-checked:text-primary transition-all">
+<span class="material-symbols-outlined mb-1">warning</span>
+<span class="text-xs font-medium">Safety</span>
+</div>
+</label>
+</div>
+</div>
+<!-- Urgency Slider -->
+<div class="space-y-3">
+<div class="flex justify-between">
+<label class="text-xs uppercase tracking-wider text-gray-400 font-semibold">Priority Level</label>
+<span class="text-xs font-bold text-primary">HIGH</span>
+</div>
+<input class="w-full h-2 bg-[#342b18] rounded-lg appearance-none cursor-pointer accent-primary" max="3" min="1" step="1" type="range"/>
+<div class="flex justify-between text-[10px] text-gray-500 font-mono uppercase">
+<span>Low</span>
+<span>Med</span>
+<span>Crit</span>
+</div>
+</div>
+<!-- Description -->
+<div class="space-y-2">
+<label class="text-xs uppercase tracking-wider text-gray-400 font-semibold">System Logs / Notes</label>
+<textarea class="w-full h-32 bg-[#342b18] border border-[#493c22] text-white text-sm rounded-lg focus:ring-1 focus:ring-primary focus:border-primary p-3 resize-none placeholder-gray-600 font-mono" placeholder="Describe the anomaly..."></textarea>
+</div>
+<!-- Drag Drop Zone -->
+<div class="border-2 border-dashed border-[#493c22] rounded-lg p-4 flex flex-col items-center justify-center text-center cursor-pointer hover:border-primary/50 hover:bg-[#2a2415] transition-all group">
+<span class="material-symbols-outlined text-gray-500 group-hover:text-primary mb-2">upload_file</span>
+<p class="text-xs text-gray-400">Drop diagnostics logs or screenshots</p>
+</div>
+<button class="w-full h-12 bg-primary hover:bg-primary-hover text-[#231d10] font-bold rounded-lg transition-colors flex items-center justify-center gap-2 uppercase tracking-wide" type="button">
+<span class="material-symbols-outlined">send</span>
+                        Submit Incident Report
+                    </button>
+</form>
+</div>
+<!-- Quick Stats Footer -->
+<div class="mt-auto p-6 border-t border-[#493c22] bg-[#1a160c]">
+<div class="grid grid-cols-2 gap-4">
+<div>
+<div class="text-[10px] text-gray-500 uppercase">Avg Response</div>
+<div class="text-lg font-mono text-white">4m 12s</div>
+</div>
+<div>
+<div class="text-[10px] text-gray-500 uppercase">Open Tickets</div>
+<div class="text-lg font-mono text-primary">3</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Center Column: Ticket History (6 cols) -->
+<section class="lg:col-span-6 bg-background-dark flex flex-col h-full relative overflow-hidden">
+<!-- Background Grid Effect -->
+<div class="absolute inset-0 z-0 opacity-[0.03]" style="background-image: linear-gradient(#f4af25 1px, transparent 1px), linear-gradient(90deg, #f4af25 1px, transparent 1px); background-size: 40px 40px;"></div>
+<!-- Toolbar -->
+<div class="flex items-center justify-between p-6 border-b border-[#493c22] z-10 bg-background-dark/95 backdrop-blur">
+<div>
+<h2 class="text-2xl font-black tracking-tighter text-white">INCIDENT FEED</h2>
+<p class="text-sm text-gray-400">Live operational status updates</p>
+</div>
+<div class="flex gap-2">
+<div class="relative">
+<input class="bg-[#2a2415] border border-[#493c22] rounded-lg pl-9 pr-3 py-2 text-sm text-white focus:ring-1 focus:ring-primary focus:border-primary w-40" placeholder="Search ID..." type="text"/>
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-gray-500 text-lg">search</span>
+</div>
+<button class="p-2 border border-[#493c22] rounded-lg hover:bg-[#2a2415] text-gray-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Ticket List -->
+<div class="flex-1 overflow-y-auto p-6 space-y-4 z-10">
+<!-- Ticket Item: CRITICAL -->
+<div class="glass-panel rounded-xl p-0 overflow-hidden group hover:border-primary/40 transition-all cursor-pointer">
+<div class="flex items-stretch">
+<div class="w-1.5 bg-red-500"></div>
+<div class="flex-1 p-5">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<span class="bg-red-500/20 text-red-500 text-[10px] font-bold px-2 py-1 rounded border border-red-500/30 uppercase tracking-wide">Critical</span>
+<span class="text-gray-500 font-mono text-xs">#TK-8921</span>
+</div>
+<span class="text-xs text-gray-400 font-mono">12m ago</span>
+</div>
+<h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors mb-1">Servo Overheat - Right Manipulator</h3>
+<p class="text-sm text-gray-400 mb-4 line-clamp-1">Thermal sensors indicate rapid temp spike on Unit X-9 during heavy lifting sequence.</p>
+<div class="flex items-center gap-4 text-xs text-gray-500 border-t border-[#493c22]/50 pt-3 mt-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">robot_2</span>
+<span>Unit X-9</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span>Assigned: Tech_AI_02</span>
+</div>
+<div class="ml-auto flex items-center gap-1 text-primary">
+<span>View Details</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ticket Item: INVESTIGATING -->
+<div class="glass-panel rounded-xl p-0 overflow-hidden group hover:border-primary/40 transition-all cursor-pointer">
+<div class="flex items-stretch">
+<div class="w-1.5 bg-primary"></div>
+<div class="flex-1 p-5">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<span class="bg-primary/20 text-primary text-[10px] font-bold px-2 py-1 rounded border border-primary/30 uppercase tracking-wide">Investigating</span>
+<span class="text-gray-500 font-mono text-xs">#TK-8920</span>
+</div>
+<span class="text-xs text-gray-400 font-mono">45m ago</span>
+</div>
+<h3 class="text-lg font-bold text-white group-hover:text-primary transition-colors mb-1">Video Feed Latency Spike</h3>
+<p class="text-sm text-gray-400 mb-4 line-clamp-1">Packet loss detected in Sector 4. Manual override engaged.</p>
+<div class="flex items-center gap-4 text-xs text-gray-500 border-t border-[#493c22]/50 pt-3 mt-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">robot_2</span>
+<span>Unit C-4</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">person</span>
+<span>Assigned: Support_Lead</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Ticket Item: RESOLVED -->
+<div class="bg-[#2a2415]/30 rounded-xl p-0 overflow-hidden border border-[#493c22] opacity-75 hover:opacity-100 transition-all cursor-pointer">
+<div class="flex items-stretch">
+<div class="w-1.5 bg-green-500/50"></div>
+<div class="flex-1 p-5">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<span class="bg-green-500/10 text-green-500 text-[10px] font-bold px-2 py-1 rounded border border-green-500/20 uppercase tracking-wide">Resolved</span>
+<span class="text-gray-500 font-mono text-xs">#TK-8919</span>
+</div>
+<span class="text-xs text-gray-400 font-mono">2h ago</span>
+</div>
+<h3 class="text-lg font-bold text-gray-300 mb-1">Pathfinding Error - Warehouse B</h3>
+<p class="text-sm text-gray-500 mb-0 line-clamp-1">Obstacle avoidance system reset successfully. Logs cleared.</p>
+</div>
+</div>
+</div>
+<!-- Ticket Item: RESOLVED -->
+<div class="bg-[#2a2415]/30 rounded-xl p-0 overflow-hidden border border-[#493c22] opacity-75 hover:opacity-100 transition-all cursor-pointer">
+<div class="flex items-stretch">
+<div class="w-1.5 bg-green-500/50"></div>
+<div class="flex-1 p-5">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<span class="bg-green-500/10 text-green-500 text-[10px] font-bold px-2 py-1 rounded border border-green-500/20 uppercase tracking-wide">Resolved</span>
+<span class="text-gray-500 font-mono text-xs">#TK-8918</span>
+</div>
+<span class="text-xs text-gray-400 font-mono">3h ago</span>
+</div>
+<h3 class="text-lg font-bold text-gray-300 mb-1">Battery Charging Failure</h3>
+<p class="text-sm text-gray-500 mb-0 line-clamp-1">Docking station connectors cleaned remotely via air burst.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: AI Concierge (3 cols) -->
+<section class="lg:col-span-3 bg-surface-darker border-l border-[#493c22] flex flex-col h-full relative">
+<!-- AI Header -->
+<div class="p-6 border-b border-[#493c22] flex items-center gap-4 bg-[#231d10] z-20 shadow-lg">
+<div class="relative">
+<div class="size-12 rounded-full bg-gradient-to-br from-[#493c22] to-black flex items-center justify-center border border-primary/30 relative overflow-hidden">
+<img alt="Abstract AI avatar glowing" class="w-full h-full object-cover opacity-80" data-alt="AI concierge avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBB3jbXpNBTVSMAhlZMYtqSXMD6SB7I1S5X_OFtPVQlmgo4nwR_btvfbHiVb5cp-zlDYmsxfL5KHozO9wNjcHxMCPAH-z65VMt2KwCZx49W9iiH1dcCTYHqd1nxBWv4xaNP6n1gGp5RCQ4Z-xR5gnzYF54iO64FuJ9JdmSqjv9HQeGPkr7QkgAqyZEksuUMC3_Q_Va_gtQGBTuHNyexM9laJAwIThuhgpZqlmKLdpqgua1hbEQrxawJTrQ3fAiVNLS-sJV6gThKsZ8"/>
+<div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+</div>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-primary rounded-full border-2 border-[#231d10] animate-pulse"></div>
+</div>
+<div>
+<h3 class="font-bold text-white text-base">NEXUS AI</h3>
+<div class="text-xs text-primary/80 font-mono">Concierge Online</div>
+</div>
+<button class="ml-auto text-gray-400 hover:text-white">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Chat Area -->
+<div class="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-[#1a160c] to-[#231d10]">
+<!-- Time divider -->
+<div class="flex items-center justify-center my-4">
+<span class="text-[10px] text-gray-600 bg-[#2a2415] px-2 py-1 rounded-full font-mono">Today, 09:42 AM</span>
+</div>
+<!-- AI Message -->
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-[#342b18] flex items-center justify-center border border-[#493c22] flex-none">
+<span class="material-symbols-outlined text-primary text-xs">smart_toy</span>
+</div>
+<div class="flex flex-col gap-1 max-w-[85%]">
+<div class="bg-[#2a2415] border border-[#493c22] p-3 rounded-2xl rounded-tl-none text-sm text-gray-200 shadow-sm">
+                            Operator, I've detected a 15% packet loss on Unit X-9's video downlink. This often precedes a connection drop.
+                        </div>
+</div>
+</div>
+<!-- AI Message with Actions -->
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-transparent flex-none"></div> <!-- Spacer -->
+<div class="flex flex-col gap-2 max-w-[85%]">
+<div class="bg-[#2a2415] border border-[#493c22] p-3 rounded-2xl rounded-tl-none text-sm text-gray-200 shadow-sm">
+                            Recommended actions:
+                        </div>
+<div class="flex flex-wrap gap-2">
+<button class="text-xs bg-[#493c22]/50 hover:bg-primary/20 hover:text-primary text-gray-300 border border-[#493c22] px-3 py-1.5 rounded-full transition-colors">
+                                Auto-Switch Channel
+                            </button>
+<button class="text-xs bg-[#493c22]/50 hover:bg-primary/20 hover:text-primary text-gray-300 border border-[#493c22] px-3 py-1.5 rounded-full transition-colors">
+                                Reboot Comms Module
+                            </button>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex gap-3 flex-row-reverse">
+<div class="size-8 rounded-full bg-[#493c22] flex items-center justify-center border border-gray-600 flex-none">
+<span class="text-xs font-bold text-white">OP</span>
+</div>
+<div class="flex flex-col gap-1 max-w-[85%] items-end">
+<div class="bg-primary text-[#231d10] font-medium p-3 rounded-2xl rounded-tr-none text-sm shadow-sm">
+                            I'll try rebooting the module first.
+                        </div>
+<span class="text-[10px] text-gray-500">Read 09:45 AM</span>
+</div>
+</div>
+<!-- AI Message Response -->
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-[#342b18] flex items-center justify-center border border-[#493c22] flex-none">
+<span class="material-symbols-outlined text-primary text-xs">smart_toy</span>
+</div>
+<div class="flex flex-col gap-1 max-w-[85%]">
+<div class="bg-[#2a2415] border border-[#493c22] p-3 rounded-2xl rounded-tl-none text-sm text-gray-200 shadow-sm">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-sm animate-spin">sync</span>
+<span class="font-bold text-xs uppercase tracking-wide text-primary">Executing Command</span>
+</div>
+                           Initiating reboot sequence for Comms Module on Unit X-9...
+                        </div>
+</div>
+</div>
+</div>
+<!-- Chat Input -->
+<div class="p-4 bg-[#231d10] border-t border-[#493c22]">
+<div class="relative">
+<textarea class="w-full bg-[#342b18] border border-[#493c22] text-white text-sm rounded-lg focus:ring-1 focus:ring-primary focus:border-primary pl-4 pr-12 py-3 resize-none h-14" placeholder="Ask Nexus AI..."></textarea>
+<button class="absolute right-2 top-2 p-2 text-primary hover:bg-[#493c22]/50 rounded-md transition-colors">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+<div class="flex justify-between items-center mt-2 px-1">
+<span class="text-[10px] text-gray-500">Press Enter to send</span>
+<button class="text-gray-500 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-lg">mic</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Overlay Alert (Hidden by default, shown for demo purpose visually if needed, but keeping it subtle here) -->
+<!-- Ideally triggered by JS, represented here as a dormant component -->
+<div class="hidden absolute top-20 left-1/2 -translate-x-1/2 bg-red-500/90 text-white px-6 py-2 rounded-full shadow-lg backdrop-blur z-50 flex items-center gap-2 animate-bounce" id="system-alert">
+<span class="material-symbols-outlined">warning</span>
+<span class="font-bold text-sm">CRITICAL PLATFORM LATENCY DETECTED</span>
+</div>
+</body></html>

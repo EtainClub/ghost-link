@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operator Hardware Setup Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0db9f2",
+                        "primary-dark": "#0a9acb",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#050a0d",
+                        "panel-dark": "#0f1619",
+                        "glass-dark": "rgba(16, 30, 35, 0.6)",
+                        "accent-green": "#0bda57",
+                        "accent-red": "#fa5f38",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["Space Grotesk", "monospace"], // Using Space Grotesk for numbers/mono feel too
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(16, 30, 35, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .text-glow {
+            text-shadow: 0 0 10px rgba(13, 185, 242, 0.5);
+        }
+        .border-glow {
+            box-shadow: 0 0 10px rgba(13, 185, 242, 0.15);
+        }
+        .animate-pulse-slow {
+            animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scanline-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, transparent, rgba(13, 185, 242, 0.1), transparent);
+            opacity: 0.1;
+            pointer-events: none;
+            animation: scanline 4s linear infinite;
+        }
+        /* Custom scrollbar for log */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #101e23; 
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #315a68; 
+            border-radius: 2px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #0db9f2; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen flex flex-col relative overflow-hidden">
+<!-- Background Grid -->
+<div class="absolute inset-0 z-0 bg-grid-pattern bg-[length:40px_40px] opacity-[0.07] pointer-events-none"></div>
+<!-- Top Nav -->
+<header class="relative z-20 flex items-center justify-between whitespace-nowrap border-b border-solid border-[#223f49] bg-background-dark/80 backdrop-blur-md px-6 py-4 lg:px-10">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 text-primary flex items-center justify-center bg-primary/10 rounded-lg border border-primary/20">
+<span class="material-symbols-outlined text-xl">hub</span>
+</div>
+<div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-wider">OPERATOR NEXUS <span class="text-primary">//</span> V.2.0.4</h2>
+<p class="text-xs text-gray-400 font-mono tracking-widest">SESSION ID: 0X-8842-A1</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-wider">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+                SYSTEM ONLINE
+            </div>
+<button class="flex items-center justify-center rounded-lg size-10 bg-[#18262b] hover:bg-[#223f49] border border-[#223f49] text-gray-300 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg size-10 bg-[#18262b] hover:bg-[#223f49] border border-[#223f49] text-gray-300 transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+<button class="flex items-center gap-2 px-3 rounded-lg h-10 bg-[#18262b] hover:bg-[#223f49] border border-[#223f49] text-white text-sm font-bold transition-colors">
+<div class="size-6 rounded-full bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[16px]">person</span>
+</div>
+<span class="hidden sm:block">OP_PILOT_01</span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="relative z-10 flex-1 p-4 lg:p-6 overflow-hidden flex flex-col lg:flex-row gap-6">
+<!-- Left Column: Network & System -->
+<aside class="flex flex-col gap-6 w-full lg:w-[340px] shrink-0">
+<!-- Region Selector -->
+<div class="glass-panel p-5 rounded-xl">
+<label class="block text-xs font-bold text-primary tracking-widest mb-3">EDGE NODE SELECTION</label>
+<div class="relative">
+<select class="w-full bg-[#0a1216] text-white border border-[#223f49] rounded-lg px-4 py-3 appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-mono">
+<option>US-EAST-VA (latency: 12ms)</option>
+<option>EU-CENTRAL-DE (latency: 84ms)</option>
+<option>ASIA-EAST-JP (latency: 142ms)</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-gray-400">
+<span class="material-symbols-outlined">expand_more</span>
+</div>
+</div>
+<div class="mt-4 flex items-center justify-between text-xs text-gray-400 border-t border-[#223f49] pt-3">
+<span>Status: <span class="text-accent-green">OPTIMAL</span></span>
+<span>Load: 42%</span>
+</div>
+</div>
+<!-- Network Stats -->
+<div class="glass-panel p-5 rounded-xl flex-1 flex flex-col gap-4">
+<div class="flex justify-between items-center mb-1">
+<h3 class="text-xs font-bold text-gray-400 tracking-widest">NETWORK TELEMETRY</h3>
+<span class="flex h-1.5 w-1.5 rounded-full bg-accent-green shadow-[0_0_8px_#0bda57]"></span>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-[#0a1216]/50 p-3 rounded-lg border border-[#223f49]">
+<p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Latency</p>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold text-white font-mono">12</span>
+<span class="text-xs text-gray-400 mb-1">ms</span>
+</div>
+</div>
+<div class="bg-[#0a1216]/50 p-3 rounded-lg border border-[#223f49]">
+<p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Jitter</p>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold text-white font-mono">0.4</span>
+<span class="text-xs text-gray-400 mb-1">ms</span>
+</div>
+</div>
+<div class="bg-[#0a1216]/50 p-3 rounded-lg border border-[#223f49]">
+<p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Packet Loss</p>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold text-white font-mono">0.01</span>
+<span class="text-xs text-gray-400 mb-1">%</span>
+</div>
+</div>
+<div class="bg-[#0a1216]/50 p-3 rounded-lg border border-[#223f49]">
+<p class="text-[10px] text-gray-500 uppercase tracking-wider mb-1">Signal</p>
+<div class="flex items-end gap-1">
+<span class="text-2xl font-bold text-white font-mono">-45</span>
+<span class="text-xs text-gray-400 mb-1">dBm</span>
+</div>
+</div>
+</div>
+<!-- Graph -->
+<div class="mt-2 flex-1 min-h-[160px] bg-[#0a1216]/30 rounded-lg border border-[#223f49] relative overflow-hidden p-4 flex flex-col justify-end">
+<div class="absolute top-3 right-3 text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">LIVE</div>
+<svg class="absolute bottom-0 left-0 right-0" fill="none" height="100%" preserveaspectratio="none" viewbox="0 0 400 150" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<lineargradient id="gradient-chart" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#0db9f2" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#0db9f2" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<path d="M0 120 Q 20 115, 40 125 T 80 120 T 120 110 T 160 115 T 200 100 T 240 105 T 280 90 T 320 95 T 360 85 T 400 80 V 150 H 0 Z" fill="url(#gradient-chart)"></path>
+<path d="M0 120 Q 20 115, 40 125 T 80 120 T 120 110 T 160 115 T 200 100 T 240 105 T 280 90 T 320 95 T 360 85 T 400 80" fill="none" stroke="#0db9f2" stroke-width="2"></path>
+</svg>
+<div class="relative flex justify-between text-[10px] text-gray-600 font-mono mt-auto pt-2 border-t border-white/5">
+<span>-60s</span>
+<span>-30s</span>
+<span>Now</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Column: 3D Visualization -->
+<section class="flex-1 flex flex-col min-h-[400px] lg:min-h-0 relative group">
+<div class="absolute inset-0 bg-[#0a1216] border border-[#223f49] rounded-2xl overflow-hidden flex flex-col">
+<!-- 3D Scene Background placeholder -->
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<!-- Abstract glowing grid floor -->
+<div class="absolute bottom-0 w-full h-[60%] bg-[linear-gradient(to_bottom,transparent_0%,rgba(13,185,242,0.1)_100%)]"></div>
+<div class="w-full h-full" style="background-image: radial-gradient(circle at 50% 50%, #102e38 0%, #050a0d 70%);"></div>
+</div>
+<!-- Central Robot Image/Visualization -->
+<div class="relative z-10 flex-1 flex items-center justify-center">
+<div class="relative w-[300px] h-[500px]">
+<!-- Scanning effect -->
+<div class="scanline-overlay z-20"></div>
+<!-- Robot Placeholder - Using a glowing silhouette div construction for wireframe feel -->
+<img alt="Futuristic humanoid robot wireframe visualization for hardware calibration" class="w-full h-full object-contain mix-blend-screen opacity-90 filter brightness-125 contrast-125 hue-rotate-15 drop-shadow-[0_0_15px_rgba(13,185,242,0.5)]" data-alt="Futuristic humanoid robot wireframe visualization for hardware calibration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpca8o_6Im1cCY6r6mieWpXojpatTt-aFBxoucItnabFC92Vom1Mpxja7x6zE_MR-ZUYRhgitKCSmrBanDaDlBPcFtOD-xb1f_tAn06IwjNGP5xSYVINhqExvm2ZHEz7pxpxcu9u5QQGct73ni0175n1XGn0Pk1oaZFiaQpGBEPchvA5OZgIzE0Yrl3zGA8BJti3jdnMrBE_2SsSN4-5fImS6dS0RBm_4WvQ3mTdQZ7aPgQUIZheU0_1AQaREoI1Y5dk7c9IrBpwU"/>
+<!-- Calibration Points -->
+<div class="absolute top-[20%] left-[50%] w-3 h-3 bg-primary rounded-full shadow-[0_0_10px_#0db9f2] animate-pulse"></div>
+<div class="absolute top-[35%] left-[30%] w-2 h-2 bg-accent-green rounded-full shadow-[0_0_10px_#0bda57]"></div>
+<div class="absolute top-[35%] right-[30%] w-2 h-2 bg-accent-green rounded-full shadow-[0_0_10px_#0bda57]"></div>
+<div class="absolute bottom-[40%] left-[40%] w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_#0db9f2]"></div>
+<!-- Connecting Lines (Decorative) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+<line stroke="#0db9f2" stroke-opacity="0.4" stroke-width="1" x1="50%" x2="30%" y1="20%" y2="35%"></line>
+<line stroke="#0db9f2" stroke-opacity="0.4" stroke-width="1" x1="50%" x2="70%" y1="20%" y2="35%"></line>
+<line stroke="#0db9f2" stroke-opacity="0.2" stroke-width="1" x1="30%" x2="40%" y1="35%" y2="60%"></line>
+</svg>
+</div>
+</div>
+<!-- Overlay Controls -->
+<div class="absolute top-6 left-6 z-20">
+<div class="bg-black/60 backdrop-blur border border-white/10 p-3 rounded-lg">
+<p class="text-[10px] text-primary font-bold tracking-widest mb-2">CALIBRATION MODE</p>
+<div class="flex items-center gap-2 mb-1">
+<div class="w-2 h-2 bg-accent-green rounded-full animate-pulse"></div>
+<span class="text-xs text-white">Motion Capture: Active</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-accent-green rounded-full animate-pulse"></div>
+<span class="text-xs text-white">Haptics: Standby</span>
+</div>
+</div>
+</div>
+<div class="absolute bottom-6 left-0 right-0 z-20 flex justify-center gap-4">
+<button class="bg-[#0a1216]/80 backdrop-blur border border-[#223f49] hover:border-primary text-white px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">cached</span>
+                        Recalibrate Center
+                    </button>
+<button class="bg-[#0a1216]/80 backdrop-blur border border-[#223f49] hover:border-primary text-white px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+                        Toggle Wireframe
+                    </button>
+</div>
+</div>
+</section>
+<!-- Right Column: Hardware & Input Log -->
+<aside class="flex flex-col gap-6 w-full lg:w-[380px] shrink-0">
+<!-- Hardware List -->
+<div class="glass-panel p-5 rounded-xl flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h3 class="text-xs font-bold text-gray-400 tracking-widest">CONNECTED PERIPHERALS</h3>
+<button class="text-primary text-xs hover:text-white transition-colors">Scan for devices</button>
+</div>
+<!-- Device Card 1: VR Headset -->
+<div class="bg-[#0a1216]/80 border border-primary/40 rounded-lg p-4 relative overflow-hidden group hover:border-primary transition-all shadow-[0_0_15px_rgba(13,185,242,0.05)]">
+<div class="absolute top-0 right-0 p-2">
+<span class="flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-green opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-accent-green"></span>
+</span>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-[#18262b] p-3 rounded-md text-primary">
+<span class="material-symbols-outlined">head_mounted_device</span>
+</div>
+<div class="flex-1">
+<h4 class="text-white font-bold text-sm">Oculus Quest Pro</h4>
+<p class="text-xs text-accent-green font-mono mt-0.5">STATUS: CONNECTED</p>
+<div class="mt-3 flex items-center gap-3 text-[10px] text-gray-400 font-mono">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">battery_full</span> 94%</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[12px]">wifi</span> 5GHz</span>
+</div>
+</div>
+</div>
+<!-- Active Indicator Line -->
+<div class="absolute bottom-0 left-0 h-[2px] w-full bg-gradient-to-r from-transparent via-primary to-transparent opacity-50"></div>
+</div>
+<!-- Device Card 2: Gloves -->
+<div class="bg-[#0a1216]/40 border border-[#223f49] rounded-lg p-4 relative overflow-hidden group hover:border-gray-500 transition-all">
+<div class="absolute top-0 right-0 p-2">
+<span class="inline-flex rounded-full h-2 w-2 bg-yellow-500"></span>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-[#18262b] p-3 rounded-md text-gray-400">
+<span class="material-symbols-outlined">front_hand</span>
+</div>
+<div class="flex-1">
+<h4 class="text-white font-bold text-sm">HaptX Gloves G1</h4>
+<p class="text-xs text-yellow-500 font-mono mt-0.5">STATUS: STANDBY</p>
+<div class="mt-3 flex items-center gap-3 text-[10px] text-gray-400 font-mono">
+<span>Firmware: v2.1.0</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input class="sr-only peer" type="checkbox" value=""/>
+<div class="w-9 h-5 bg-[#18262b] peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<!-- Device Card 3: Omni Treadmill -->
+<div class="bg-[#0a1216]/40 border border-[#223f49] rounded-lg p-4 relative overflow-hidden group hover:border-gray-500 transition-all opacity-60">
+<div class="absolute top-0 right-0 p-2">
+<span class="inline-flex rounded-full h-2 w-2 bg-gray-600"></span>
+</div>
+<div class="flex items-start gap-4">
+<div class="bg-[#18262b] p-3 rounded-md text-gray-500">
+<span class="material-symbols-outlined">directions_run</span>
+</div>
+<div class="flex-1">
+<h4 class="text-gray-400 font-bold text-sm">Omni One Treadmill</h4>
+<p class="text-xs text-gray-500 font-mono mt-0.5">STATUS: DISCONNECTED</p>
+</div>
+<button class="text-primary text-[10px] font-bold border border-primary/30 px-2 py-1 rounded hover:bg-primary/10">LINK</button>
+</div>
+</div>
+</div>
+<!-- Terminal / Log -->
+<div class="glass-panel rounded-xl flex-1 flex flex-col min-h-[200px]">
+<div class="p-3 border-b border-[#223f49] bg-[#0f1619] rounded-t-xl flex justify-between items-center">
+<h3 class="text-xs font-bold text-gray-400 tracking-widest font-mono">&gt; SYSTEM_LOG</h3>
+<div class="flex gap-1.5">
+<div class="w-2.5 h-2.5 rounded-full bg-[#223f49]"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-[#223f49]"></div>
+</div>
+</div>
+<div class="p-4 font-mono text-xs overflow-y-auto custom-scrollbar flex-1 bg-[#050a0d]/80 text-gray-400 space-y-2 h-40">
+<div class="flex gap-2">
+<span class="text-gray-600">[14:02:21]</span>
+<span class="text-primary">System init sequence started...</span>
+</div>
+<div class="flex gap-2">
+<span class="text-gray-600">[14:02:22]</span>
+<span>Connecting to secure socket layer...</span>
+</div>
+<div class="flex gap-2">
+<span class="text-gray-600">[14:02:23]</span>
+<span class="text-accent-green">Handshake successful (Edge Node VA-01)</span>
+</div>
+<div class="flex gap-2">
+<span class="text-gray-600">[14:02:24]</span>
+<span>Detecting VR hardware input...</span>
+</div>
+<div class="flex gap-2">
+<span class="text-gray-600">[14:02:25]</span>
+<span class="text-white">Quest Pro detected. Signal strength 98%.</span>
+</div>
+<div class="flex gap-2">
+<span class="text-gray-600">[14:02:26]</span>
+<span class="text-yellow-500">Warning: Haptic feedback calibration pending.</span>
+</div>
+<div class="flex gap-2 animate-pulse">
+<span class="text-gray-600">[14:02:30]</span>
+<span class="text-primary">&gt; Waiting for operator confirmation..._</span>
+</div>
+</div>
+</div>
+<!-- Main CTA -->
+<button class="relative w-full group overflow-hidden rounded-lg">
+<div class="absolute inset-0 bg-primary/20 blur-xl group-hover:bg-primary/30 transition-all duration-300"></div>
+<div class="relative bg-primary hover:bg-primary-dark text-background-dark font-bold text-lg py-4 px-6 flex items-center justify-center gap-3 transition-all">
+<span class="material-symbols-outlined">rocket_launch</span>
+                    INITIATE NEURAL LINK
+                </div>
+<!-- Scanning line on button -->
+<div class="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 group-hover:animate-[shimmer_1s_infinite]"></div>
+</button>
+</aside>
+</main>
+<style>
+        @keyframes shimmer {
+            100% {
+                left: 200%;
+            }
+        }
+    </style>
+</body></html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LABORLINK - VR Control Interface</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "accent-orange": "#fa6538",
+                        "accent-green": "#0bda65",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: "Space Grotesk", sans-serif;
+            background-color: #101322;
+            color: white;
+            overflow: hidden;
+        }
+        .glass-panel {
+            background: rgba(19, 55, 236, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(19, 55, 236, 0.2);
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(19, 55, 236, 0.1);
+            position: absolute;
+            top: 0;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .crt-overlay {
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+        .reticle-circle {
+            border: 2px solid rgba(19, 55, 236, 0.5);
+            border-radius: 50%;
+        }
+        .haptic-bar {
+            transition: height 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-background-dark font-display selection:bg-primary/30">
+<!-- Main FPV Viewport -->
+<div class="relative w-screen h-screen overflow-hidden flex items-center justify-center">
+<!-- Background Video Feed Emulation -->
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Wide angle view of a high-tech robotic laboratory facility" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBkBfiQJa2XtOuWaDDbvw62dXU_K__-xH910ICtrPgxJoRx37hb58xd0wzj7zOqEqHm3Bon-piFTu6El2IY-LaJ1ArzEQzoIf0dqLzdBmKb6rqLiatWWDzlbADSyw4tuwCYVkWT5e-48AMqhk6Pll4YQ7Mb7wvzSVdMVl_bPz9iOoM7r4mL-aZ3UEamW9AW3aX6IUQs3ab2MWX82-glP5SpGP_Odd2aHfP9KZNwXgrkO0dMF1mXy5nfmYuITiefP-1JqD6yIrIDH44')">
+<div class="absolute inset-0 bg-black/40"></div>
+<div class="absolute inset-0 crt-overlay"></div>
+</div>
+<!-- Top Header Ribbon -->
+<div class="absolute top-0 left-0 w-full p-4 z-20 flex justify-between items-start pointer-events-none">
+<!-- Left System Stats -->
+<div class="flex gap-4 pointer-events-auto flex-col"><div class="glass-panel p-1 flex items-center justify-center border-l-primary border-l-2 mb-2 self-start"><img alt="LABORLINK Logo" class="h-8 w-auto" src="{{DATA:IMAGE:IMAGE_30}}"/></div>
+<div class="glass-panel p-3 flex flex-col gap-1 min-w-[120px]">
+<div class="flex justify-between items-center text-[10px] text-primary font-bold uppercase tracking-wider">
+<span>Latency</span>
+<span class="material-symbols-outlined text-[14px]">speed</span>
+</div>
+<div class="text-xl font-bold">8.4<span class="text-xs ml-1 font-medium opacity-70">ms</span></div>
+<div class="w-full bg-primary/20 h-1">
+<div class="bg-primary h-full" style="width: 85%"></div>
+</div>
+</div>
+<div class="glass-panel p-3 flex flex-col gap-1 min-w-[120px]">
+<div class="flex justify-between items-center text-[10px] text-accent-green font-bold uppercase tracking-wider">
+<span>Signal</span>
+<span class="material-symbols-outlined text-[14px]">wifi</span>
+</div>
+<div class="text-xl font-bold">99<span class="text-xs ml-1 font-medium opacity-70">%</span></div>
+<div class="w-full bg-accent-green/20 h-1">
+<div class="bg-accent-green h-full" style="width: 99%"></div>
+</div>
+</div>
+</div>
+<!-- Center Objective Panel -->
+<div class="flex flex-col items-center pointer-events-auto">
+<div class="glass-panel px-8 py-2 flex flex-col items-center border-t-0 rounded-b-lg">
+<div class="text-[10px] text-primary font-bold uppercase tracking-[0.2em] mb-1">Active Mission</div>
+<div class="text-lg font-bold tracking-tight">LABORLINK: SECURE SAMPLE 492-X</div>
+<div class="flex items-center gap-4 mt-2">
+<div class="w-48 bg-white/10 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 65%"></div>
+</div>
+<span class="text-xs font-bold">65%</span>
+</div>
+</div>
+</div>
+<!-- Right Battery/System -->
+<div class="flex gap-4 pointer-events-auto flex-col"><div class="glass-panel p-1 flex items-center justify-center border-l-primary border-l-2 mb-2 self-start"><img alt="LABORLINK Logo" class="h-8 w-auto" src="{{DATA:IMAGE:IMAGE_30}}"/></div>
+<div class="glass-panel p-3 flex flex-col gap-1 min-w-[120px] border-r-accent-orange border-r-2">
+<div class="flex justify-between items-center text-[10px] text-accent-orange font-bold uppercase tracking-wider">
+<span>Battery</span>
+<span class="material-symbols-outlined text-[14px]">battery_charging_full</span>
+</div>
+<div class="text-xl font-bold">42<span class="text-xs ml-1 font-medium opacity-70">%</span></div>
+<div class="w-full bg-accent-orange/20 h-1">
+<div class="bg-accent-orange h-full" style="width: 42%"></div>
+</div>
+</div>
+<div class="glass-panel p-2 flex items-center justify-center">
+<button class="size-10 bg-primary flex items-center justify-center rounded-sm hover:bg-primary/80 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Central HUD Reticle -->
+<div class="relative z-10 flex items-center justify-center pointer-events-none">
+<!-- Dynamic Horizon Line -->
+<div class="absolute w-[600px] h-[1px] bg-primary/30 flex justify-between items-center">
+<div class="w-8 h-[1px] bg-primary"></div>
+<div class="w-8 h-[1px] bg-primary"></div>
+</div>
+<!-- Center Crosshair -->
+<div class="relative size-64 flex items-center justify-center">
+<!-- Circular Outer -->
+<div class="absolute inset-0 border border-primary/20 rounded-full border-dashed"></div>
+<!-- Interactive Gaze Ring -->
+<div class="absolute size-4 border border-primary bg-primary/20 rounded-full flex items-center justify-center">
+<div class="size-1 bg-white rounded-full"></div>
+</div>
+<!-- Vector Markers -->
+<div class="absolute -top-12 text-[10px] font-bold text-primary">N 012°</div>
+<div class="absolute -bottom-12 text-[10px] font-bold text-primary">ALT 1.2M</div>
+</div>
+<!-- Stereoscopic Split Indicators -->
+<div class="absolute -left-[30vw] opacity-20"><span class="material-symbols-outlined text-6xl">videocam</span></div>
+<div class="absolute -right-[30vw] opacity-20"><span class="material-symbols-outlined text-6xl">videocam</span></div>
+</div>
+<!-- Left Haptic Panel -->
+<div class="absolute left-8 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-4">
+<div class="glass-panel p-4 flex flex-col items-center border-l-primary border-l-4">
+<span class="text-[10px] font-bold text-primary uppercase mb-4 vertical-text">LH HAPTIC</span>
+<div class="flex gap-1 h-48 items-end">
+<div class="w-2 bg-primary/40 h-1/2"></div>
+<div class="w-2 bg-primary/40 h-3/4"></div>
+<div class="w-2 bg-primary h-full"></div>
+<div class="w-2 bg-primary/40 h-2/3"></div>
+</div>
+<div class="mt-4 text-xs font-bold">78% FEEDBACK</div>
+</div>
+</div>
+<!-- Right Haptic Panel & Diagnostics -->
+<div class="absolute right-8 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-4">
+<div class="glass-panel p-4 flex flex-col items-center border-r-primary border-r-4">
+<span class="text-[10px] font-bold text-primary uppercase mb-4 vertical-text">RH HAPTIC</span>
+<div class="flex gap-1 h-48 items-end">
+<div class="w-2 bg-primary/40 h-1/3"></div>
+<div class="w-2 bg-primary/40 h-1/2"></div>
+<div class="w-2 bg-primary h-2/3"></div>
+<div class="w-2 bg-primary/40 h-1/4"></div>
+</div>
+<div class="mt-4 text-xs font-bold">34% FEEDBACK</div>
+</div>
+</div>
+<!-- Bottom UI Bar -->
+<div class="absolute bottom-0 left-0 w-full p-6 z-20 flex justify-between items-end">
+<!-- 3D Mini-Map -->
+<div class="relative w-64 h-48 glass-panel overflow-hidden border-b-0 rounded-t-xl group">
+<div class="absolute top-2 left-3 text-[10px] font-bold text-primary flex items-center gap-2">
+<span class="size-1.5 bg-primary animate-pulse rounded-full"></span>
+                    LIDAR SCAN 360°
+                </div>
+<!-- Simulated Wireframe Map -->
+<div class="absolute inset-0 flex items-center justify-center opacity-40">
+<svg class="stroke-primary fill-none" height="150" viewbox="0 0 200 150" width="200">
+<path d="M20,130 L180,130 L150,50 L50,50 Z" stroke-width="1"></path>
+<circle cx="100" cy="90" r="30" stroke-dasharray="4"></circle>
+<path d="M100,0 L100,150 M0,75 L200,75" opacity="0.5" stroke-width="0.5"></path>
+</svg>
+</div>
+<!-- Radar Sweep -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rotate-45 transform-gpu origin-center"></div>
+<div class="absolute bottom-3 right-3 text-[10px] font-bold text-white/50">ZOOM 1.5X</div>
+</div>
+<!-- Movement Controls & Logs -->
+<div class="flex gap-4">
+<div class="glass-panel p-4 w-80 h-32 flex flex-col gap-2 overflow-hidden border-b-0 rounded-t-xl">
+<div class="text-[10px] font-bold text-primary uppercase border-b border-primary/20 pb-1">System Logs</div>
+<div class="text-[10px] font-mono space-y-1 opacity-70">
+<div class="flex justify-between"><span class="text-accent-green">[OK]</span> <span>Navigation synced</span></div>
+<div class="flex justify-between"><span class="text-accent-green">[OK]</span> <span>Haptic modules online</span></div>
+<div class="flex justify-between"><span class="text-primary">[INFO]</span> <span>Sample detected at 4m</span></div>
+<div class="flex justify-between"><span class="text-accent-orange">[WARN]</span> <span>Visual interference 2%</span></div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<button class="bg-accent-orange px-6 py-3 font-bold text-xs uppercase tracking-widest hover:brightness-110 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">dangerous</span>
+                        Emergency Stop
+                    </button>
+<button class="glass-panel px-6 py-3 font-bold text-xs uppercase tracking-widest hover:bg-white/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">videocam_off</span>
+                        Toggle FPV
+                    </button>
+</div>
+</div>
+</div>
+<!-- Gaze tracking effect dots -->
+<div class="absolute top-1/4 left-1/3 size-2 bg-primary/20 rounded-full border border-primary/40 blur-[1px]"></div>
+<div class="absolute bottom-1/3 right-1/4 size-3 bg-primary/10 rounded-full border border-primary/20 blur-[1px]"></div>
+</div>
+<!-- Screen Vignette & Border -->
+<div class="fixed inset-0 pointer-events-none border-[12px] border-black/80 z-50"></div>
+<div class="fixed inset-0 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,0.8)] z-40"></div>
+<!-- UI Overlay for interaction sounds (Conceptual) -->
+<div class="hidden">
+<audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
+</div>
+</body></html>

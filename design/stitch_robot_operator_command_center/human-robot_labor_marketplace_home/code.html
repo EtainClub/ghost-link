@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>HUMAN-ROBOT LABOR MARKETPLACE</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "primary-glow": "#4c6ef5",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0a0c", 
+                        "surface-dark": "#131316",
+                        "surface-highlight": "#1c1c21",
+                        "accent-cyan": "#00f0ff",
+                        "accent-purple": "#bc13ec",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "sm": "0.125rem",
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'grid-pattern': "linear-gradient(to right, #232948 1px, transparent 1px), linear-gradient(to bottom, #232948 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(19, 19, 22, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .neon-text {
+            text-shadow: 0 0 10px rgba(19, 55, 236, 0.5);
+        }
+        .grid-bg {
+            background-size: 40px 40px;
+            mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+        }
+        /* Custom scrollbar for data tables */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0c; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #232948; 
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #1337ec; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased selection:bg-primary selection:text-white overflow-x-hidden">
+<div class="relative min-h-screen flex flex-col w-full">
+<!-- Background Elements -->
+<div class="fixed inset-0 z-0 pointer-events-none">
+<div class="absolute inset-0 grid-bg opacity-[0.07] bg-grid-pattern"></div>
+<div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/2"></div>
+<div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-purple/10 rounded-full blur-[120px] translate-y-1/2 -translate-x-1/2"></div>
+</div>
+<!-- Navigation -->
+<header class="sticky top-0 z-50 glass-panel border-b-0 border-b-[#232948]">
+<div class="max-w-[1400px] mx-auto px-6 h-20 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/20 rounded flex items-center justify-center text-primary border border-primary/30">
+<span class="material-symbols-outlined text-2xl">precision_manufacturing</span>
+</div>
+<div>
+<h1 class="font-bold text-lg tracking-wider leading-none">NEURAL<span class="text-primary">LINK</span></h1>
+<span class="text-[10px] text-slate-400 tracking-[0.2em] uppercase">Labor Protocol V2.0</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-white hover:text-primary transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-lg">grid_view</span> Marketplace
+                    </a>
+<a class="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-lg">monitoring</span> Fleet Status
+                    </a>
+<a class="text-sm font-medium text-slate-400 hover:text-white transition-colors flex items-center gap-2" href="#">
+<span class="material-symbols-outlined text-lg">account_balance_wallet</span> Earnings
+                    </a>
+</nav>
+<div class="flex items-center gap-3">
+<div class="hidden lg:flex flex-col items-end mr-4">
+<span class="text-[10px] uppercase text-slate-500 tracking-wider">Network Status</span>
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-xs font-mono text-green-500">OPTIMAL 12ms</span>
+</div>
+</div>
+<button class="bg-surface-highlight hover:bg-surface-highlight/80 border border-white/10 text-white px-4 h-10 rounded text-sm font-bold transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">wallet</span>
+<span class="hidden sm:inline">Connect Wallet</span>
+</button>
+<button class="bg-primary hover:bg-blue-600 text-white px-5 h-10 rounded text-sm font-bold shadow-[0_0_15px_rgba(19,55,236,0.5)] transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">gamepad</span>
+<span class="hidden sm:inline">Connect Controller</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow z-10 relative px-6 py-8 max-w-[1400px] mx-auto w-full flex flex-col gap-10">
+<!-- Hero Section -->
+<section class="grid lg:grid-cols-12 gap-8 items-center min-h-[500px]">
+<div class="lg:col-span-7 flex flex-col gap-6">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 w-fit">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="text-xs font-medium text-primary tracking-wide">LIVE PROTOCOL: 14,205 UNITS ACTIVE</span>
+</div>
+<h1 class="text-5xl md:text-7xl font-bold tracking-tight leading-[0.9]">
+                        MONETIZE YOUR <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-500">MOTOR SKILLS</span>
+</h1>
+<p class="text-lg text-slate-400 max-w-xl leading-relaxed">
+                        Remotely control high-fidelity robotic avatars. Connect to the Neural Link network and earn real-time crypto yields for complex physical tasks.
+                    </p>
+<div class="flex flex-wrap gap-4 mt-2">
+<button class="h-14 px-8 bg-white text-black hover:bg-slate-200 font-bold text-base rounded flex items-center gap-3 transition-colors">
+<span class="material-symbols-outlined">bolt</span>
+                            Start Earning Now
+                        </button>
+<button class="h-14 px-8 bg-surface-dark border border-white/10 hover:border-primary/50 text-white font-bold text-base rounded flex items-center gap-3 transition-colors group">
+<span>View Demo</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+<!-- Ticker Stats -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-8 border-t border-white/5">
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 uppercase tracking-wider mb-1">Total Yield Paid</span>
+<span class="text-xl md:text-2xl font-mono font-bold text-white">$42.8M</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 uppercase tracking-wider mb-1">Avg Hourly Rate</span>
+<span class="text-xl md:text-2xl font-mono font-bold text-accent-cyan">45.2 CRED</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 uppercase tracking-wider mb-1">Global Uptime</span>
+<span class="text-xl md:text-2xl font-mono font-bold text-white">99.98%</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 uppercase tracking-wider mb-1">Network Load</span>
+<div class="flex items-center gap-2">
+<span class="text-xl md:text-2xl font-mono font-bold text-green-400">LOW</span>
+<span class="material-symbols-outlined text-green-400 text-sm">signal_cellular_alt</span>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 relative h-full min-h-[400px] flex items-center justify-center">
+<!-- Decorative Background for Image -->
+<div class="absolute inset-0 bg-gradient-radial from-primary/20 to-transparent opacity-50 blur-2xl"></div>
+<!-- Main Robot Image -->
+<div class="relative w-full aspect-[4/5] rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-surface-dark group">
+<div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+<img alt="Futuristic humanoid robot head with glowing blue eyes and metallic skin" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoblqyZFQw45rhOXOLUMyJ-hOwvQnMTX_egnX4V1Ztm3insRgFveqTgQU3eo5eRtEWnstAvPzEWPvzf81IWPC1VUgIZRqg7Hc3qOJA-k2W7WbvbSd1knAYEVeZt2hDuiJb9dy-dvNpuzGv2oTFUBZu_xTxR2ZUvdKLpUtskIo-KRLX4lKHErxx263s5N4-IvJ1_ylmLFvQN5FKzSDBQvKodse_ELmvjHT5xbP_YiCkrFuv9HKdRBDYQsy_U3zU6cyBeDIEHsEB8gM"/>
+<!-- Overlay UI on Image -->
+<div class="absolute bottom-6 left-6 right-6 z-20">
+<div class="glass-panel p-4 rounded flex items-center justify-between">
+<div>
+<p class="text-xs text-slate-400 uppercase mb-1">Featured Unit</p>
+<p class="font-bold text-white">Atlas-X Gen 4</p>
+</div>
+<button class="bg-primary/20 hover:bg-primary/40 text-primary border border-primary/50 p-2 rounded transition-colors">
+<span class="material-symbols-outlined">sensors</span>
+</button>
+</div>
+</div>
+<!-- HUD Elements -->
+<div class="absolute top-4 right-4 z-20 flex gap-2">
+<span class="bg-black/60 backdrop-blur text-xs font-mono text-green-400 px-2 py-1 rounded border border-green-900/50">ONLINE</span>
+<span class="bg-black/60 backdrop-blur text-xs font-mono text-white px-2 py-1 rounded border border-white/10">BAT: 94%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Dashboard / Marketplace Section -->
+<section class="flex flex-col gap-6">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-4">
+<div>
+<h2 class="text-2xl font-bold text-white flex items-center gap-2">
+<span class="w-2 h-8 bg-primary rounded-sm inline-block"></span>
+                            LIVE JOB MARKET
+                        </h2>
+<p class="text-slate-400 text-sm mt-1">Real-time control opportunities available for immediate connection.</p>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 bg-surface-highlight border border-white/10 rounded text-xs font-medium text-white hover:border-primary/50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">tune</span> Filters
+                        </button>
+<div class="h-8 w-[1px] bg-white/10 mx-2 hidden md:block"></div>
+<button class="px-4 py-2 bg-primary/10 border border-primary/50 rounded text-xs font-bold text-primary">
+                            All Robots
+                        </button>
+<button class="px-4 py-2 bg-transparent border border-white/10 rounded text-xs font-medium text-slate-400 hover:text-white hover:border-white/30">
+                            Precision
+                        </button>
+<button class="px-4 py-2 bg-transparent border border-white/10 rounded text-xs font-medium text-slate-400 hover:text-white hover:border-white/30">
+                            Logistics
+                        </button>
+<button class="px-4 py-2 bg-transparent border border-white/10 rounded text-xs font-medium text-slate-400 hover:text-white hover:border-white/30">
+                            Hazmat
+                        </button>
+</div>
+</div>
+<!-- Job Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+<!-- Card 1: High Value -->
+<div class="group relative bg-surface-dark border border-white/10 hover:border-primary/50 rounded-lg overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(19,55,236,0.15)]">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent-cyan to-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="w-14 h-14 rounded bg-surface-highlight overflow-hidden border border-white/5">
+<img alt="Robot Arm" class="w-full h-full object-cover opacity-80" data-alt="Close up of robotic arm performing precision assembly" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqm0SrVEyI-qdUfuSpjQ2-zMjwiakX0Ao8U_oORKWEQVI3QE5WhR95Mw5PXutnGOn5DoVaTFJrk8ScVr99gN9ERc4fdeeYz8b2hoUMyWhuaItVJyrrCAZPzCcp886TaPVFO95FxzRTyLQLuXiZorNiJb0GLiXu5aK0HkpYMO6n4o6WuLktkxgNYKyUFnBFHtK182PlPqi88f5r1fkDhiq2hYT6nFUHhkdvKXEfcaWPI_d16LVavAYtcGMmFG--4EouvHyKRytnXHQ"/>
+</div>
+<div>
+<h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Micro-Assembly</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-xs font-mono text-slate-400">DEXTERITY-X1</span>
+<span class="w-1 h-1 bg-slate-600 rounded-full"></span>
+<span class="text-xs text-primary bg-primary/10 px-1.5 py-0.5 rounded border border-primary/20">High Skill</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-2xl font-mono font-bold text-white">45.0 <span class="text-sm text-slate-500">CRED</span></p>
+<p class="text-xs text-green-400 font-mono flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> +2.4%
+                                    </p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-white/5">
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Latency</p>
+<p class="text-sm font-mono text-white">12ms</p>
+</div>
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Signal</p>
+<div class="flex items-center justify-center gap-0.5 mt-1">
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-slate-700 rounded-sm"></div>
+</div>
+</div>
+<div class="text-center last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Est. Dur</p>
+<p class="text-sm font-mono text-white">4h 30m</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary hover:bg-blue-600 text-white font-bold py-2.5 rounded text-sm transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">settings_remote</span>
+                                    Jack In
+                                </button>
+<button class="p-2.5 border border-white/10 rounded hover:bg-white/5 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 2: Hazard -->
+<div class="group relative bg-surface-dark border border-white/10 hover:border-red-500/50 rounded-lg overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(239,68,68,0.15)]">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 via-red-500 to-orange-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="w-14 h-14 rounded bg-surface-highlight overflow-hidden border border-white/5">
+<img alt="Hazmat Robot" class="w-full h-full object-cover opacity-80" data-alt="Rugged tracked robot for hazardous environments" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzfO0Gn94xgjwVCQK0_0vairQCfNUuKH1Gm3Gq5EHn0vJZGiyDJqs9T3jZFy3pxcb2GGHYxZyOynY65VII31H-fFZYtY_lim121hAWcY3zR04QocG3bWtTtWSYhhTmnKxZJsjSvi5eesvL1YMp8iiXBrBGiKR3b9a7tljgydskyICgJm_SKSctFYrAXp6r6TSRm20EJ1TQ71eQtCTHJczp8IzpOwn8SIvbaZ68U3WHIujgRhX8hHspgZrNdgn9Y6F5DwuolrzxYkw"/>
+</div>
+<div>
+<h3 class="font-bold text-lg text-white group-hover:text-red-400 transition-colors">Hazmat Cleanup</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-xs font-mono text-slate-400">TANK-TREAD V4</span>
+<span class="w-1 h-1 bg-slate-600 rounded-full"></span>
+<span class="text-xs text-orange-400 bg-orange-400/10 px-1.5 py-0.5 rounded border border-orange-400/20">Hazardous</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-2xl font-mono font-bold text-white">80.0 <span class="text-sm text-slate-500">CRED</span></p>
+<p class="text-xs text-green-400 font-mono flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> +5.1%
+                                    </p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-white/5">
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Latency</p>
+<p class="text-sm font-mono text-white">24ms</p>
+</div>
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Signal</p>
+<div class="flex items-center justify-center gap-0.5 mt-1">
+<div class="w-1 h-3 bg-yellow-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-yellow-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-slate-700 rounded-sm"></div>
+<div class="w-1 h-3 bg-slate-700 rounded-sm"></div>
+</div>
+</div>
+<div class="text-center last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Est. Dur</p>
+<p class="text-sm font-mono text-white">1h 15m</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-surface-highlight hover:bg-white/10 text-white border border-white/10 font-bold py-2.5 rounded text-sm transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">lock</span>
+                                    Requires Cert
+                                </button>
+</div>
+</div>
+</div>
+<!-- Card 3: Standard -->
+<div class="group relative bg-surface-dark border border-white/10 hover:border-primary/50 rounded-lg overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(19,55,236,0.15)]">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent-cyan to-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="w-14 h-14 rounded bg-surface-highlight overflow-hidden border border-white/5">
+<img alt="Domestic Robot" class="w-full h-full object-cover opacity-80" data-alt="Friendly looking domestic robot with smooth white shell" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDiK53SNAPVCT1lgNlU-x_ftmwTZx71tjoi8JBuQJAtbJzf-4wKdcIPYftA4zzd7HmvoxujJqc8X3NpmdpRdeyQn-tLtR7HBZZ23dFdpVYZERtWE_mkztt6Ha6G655nerPUkvgM0_5VUOFsCnVxiF-LaEwwZJ9cEUrbC-wq_BqcgNHidM9PG5mIynOKcDp3hYyxyo_n-O0d6WpJkHsv-iXtqo76wfk73n9kJzEGscB6bTQ5a6uQNfNanNj1I__x0Sl6RQkP3xHVP0"/>
+</div>
+<div>
+<h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Domestic Sorting</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-xs font-mono text-slate-400">HELPER-BOT G2</span>
+<span class="w-1 h-1 bg-slate-600 rounded-full"></span>
+<span class="text-xs text-green-400 bg-green-400/10 px-1.5 py-0.5 rounded border border-green-400/20">Relaxed</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-2xl font-mono font-bold text-white">22.5 <span class="text-sm text-slate-500">CRED</span></p>
+<p class="text-xs text-slate-500 font-mono flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[10px]">remove</span> 0.0%
+                                    </p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-white/5">
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Latency</p>
+<p class="text-sm font-mono text-white">45ms</p>
+</div>
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Signal</p>
+<div class="flex items-center justify-center gap-0.5 mt-1">
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+</div>
+</div>
+<div class="text-center last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Est. Dur</p>
+<p class="text-sm font-mono text-white">2h 00m</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary hover:bg-blue-600 text-white font-bold py-2.5 rounded text-sm transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">settings_remote</span>
+                                    Jack In
+                                </button>
+<button class="p-2.5 border border-white/10 rounded hover:bg-white/5 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Card 4: Logistics -->
+<div class="group relative bg-surface-dark border border-white/10 hover:border-primary/50 rounded-lg overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(19,55,236,0.15)]">
+<div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-accent-cyan to-primary opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<div class="p-5 flex flex-col gap-4">
+<div class="flex justify-between items-start">
+<div class="flex gap-4">
+<div class="w-14 h-14 rounded bg-surface-highlight overflow-hidden border border-white/5">
+<img alt="Warehouse Robot" class="w-full h-full object-cover opacity-80" data-alt="Warehouse environment with automated robots" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3yJlbIl5z8aH8apkimT3K9-Gulapfx4OkyzZGWqNJT9wXpmtqI5afqPCWM3EU5GvMEkGYgzPj9xyraUTxHFi1u8eT6K9b9vyTzo5aRiCZ6widbfID2LlcDaPErtNyrF6rGtNI6OSftdzhj93dARvIPkZn0JlUSDQfEfqNs5ls-4y10MqpArqFLfnI_RmulmlxV0wrIbigUoi6OmSV-YbL98JvYltYAjcFqAx2Sg3GOkLkKlE8jwP87yMniTqKiGWxOLDYjswoFzs"/>
+</div>
+<div>
+<h3 class="font-bold text-lg text-white group-hover:text-primary transition-colors">Heavy Logistics</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-xs font-mono text-slate-400">ATLAS-LIFT</span>
+<span class="w-1 h-1 bg-slate-600 rounded-full"></span>
+<span class="text-xs text-primary bg-primary/10 px-1.5 py-0.5 rounded border border-primary/20">Moderate</span>
+</div>
+</div>
+</div>
+<div class="text-right">
+<p class="text-2xl font-mono font-bold text-white">35.0 <span class="text-sm text-slate-500">CRED</span></p>
+<p class="text-xs text-green-400 font-mono flex items-center justify-end gap-1">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> +1.2%
+                                    </p>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-2 py-3 border-y border-white/5">
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Latency</p>
+<p class="text-sm font-mono text-white">18ms</p>
+</div>
+<div class="text-center border-r border-white/5 last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Signal</p>
+<div class="flex items-center justify-center gap-0.5 mt-1">
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-green-500 rounded-sm"></div>
+<div class="w-1 h-3 bg-slate-700 rounded-sm"></div>
+</div>
+</div>
+<div class="text-center last:border-0">
+<p class="text-[10px] text-slate-500 uppercase">Est. Dur</p>
+<p class="text-sm font-mono text-white">6h 00m</p>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex-1 bg-primary hover:bg-blue-600 text-white font-bold py-2.5 rounded text-sm transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-lg">settings_remote</span>
+                                    Jack In
+                                </button>
+<button class="p-2.5 border border-white/10 rounded hover:bg-white/5 text-slate-400 hover:text-white transition-colors">
+<span class="material-symbols-outlined">bookmark</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Load More -->
+<div class="flex justify-center mt-4">
+<button class="text-slate-400 text-sm font-medium hover:text-white flex items-center gap-2 px-6 py-3 border border-white/5 rounded-full hover:bg-white/5 transition-colors">
+                        View Full Marketplace <span class="material-symbols-outlined">arrow_downward</span>
+</button>
+</div>
+</section>
+<!-- Map / Network Section -->
+<section class="glass-panel rounded-xl p-6 md:p-8 border-white/5 relative overflow-hidden">
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 mb-8 relative z-10">
+<div>
+<h2 class="text-xl font-bold text-white mb-2">NETWORK COVERAGE</h2>
+<p class="text-sm text-slate-400">Live operational nodes and relay density.</p>
+</div>
+<div class="flex gap-4">
+<div class="text-right">
+<p class="text-xs text-slate-500 uppercase">Active Relays</p>
+<p class="text-lg font-mono font-bold text-white">8,942</p>
+</div>
+<div class="text-right">
+<p class="text-xs text-slate-500 uppercase">Packet Loss</p>
+<p class="text-lg font-mono font-bold text-accent-cyan">0.02%</p>
+</div>
+</div>
+</div>
+<!-- Abstract Map Visualization -->
+<div class="w-full h-[300px] relative bg-[#131316] rounded border border-white/10 overflow-hidden">
+<img alt="Global Network Map" class="w-full h-full object-cover opacity-30 mix-blend-screen" data-alt="Abstract world map with glowing connection nodes representing network traffic" data-location="World Map" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAERjs1CzO5KvUR02tZbTtZzjfEaa_VYj6JTiauzCREiuDpPLJpCV-pTWfQg2Ir7cTtbvquk8OptEduMtUSV-pNGPbMHfyPLcp61_rXRQdBuOH3y-s5IYgP5cfdxyMzFTBK3jw8QBk8DrurPBN4xa-REViZk2mPpoTqzfyp-LmS80jDH_S6whreV5mEVmFTF9YMyPXDv0hwyMLy9ESqDHu78oNb9VLHtLQNp79ZK8vM6b1_pNrQkGN89axIgT5NkI9Df7rguNXBtOw"/>
+<!-- Overlay Data Points (Abstract) -->
+<div class="absolute top-1/3 left-1/4 w-3 h-3 bg-primary rounded-full animate-ping"></div>
+<div class="absolute top-1/3 left-1/4 w-3 h-3 bg-primary rounded-full"></div>
+<div class="absolute top-1/2 left-1/2 w-2 h-2 bg-accent-cyan rounded-full animate-ping delay-75"></div>
+<div class="absolute top-1/2 left-1/2 w-2 h-2 bg-accent-cyan rounded-full"></div>
+<div class="absolute bottom-1/3 right-1/4 w-4 h-4 bg-accent-purple rounded-full animate-ping delay-150"></div>
+<div class="absolute bottom-1/3 right-1/4 w-4 h-4 bg-accent-purple rounded-full"></div>
+<div class="absolute bottom-4 left-4 bg-black/80 backdrop-blur px-3 py-1.5 rounded border border-white/10 text-xs font-mono text-slate-300">
+                        LATENCY MAP: NORTH AMERICA (ACTIVE)
+                     </div>
+</div>
+</section>
+</main>
+<footer class="border-t border-white/5 bg-background-dark mt-12 py-12">
+<div class="max-w-[1400px] mx-auto px-6 grid md:grid-cols-4 gap-8">
+<div>
+<h3 class="font-bold text-white mb-4">NEURAL LINK</h3>
+<p class="text-slate-500 text-sm leading-relaxed">
+                        Decentralized robotics labor protocol. Empowering human operators to earn through telepresence.
+                    </p>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm mb-4">PLATFORM</h4>
+<ul class="flex flex-col gap-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Marketplace</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Fleet Stats</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Governance</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm mb-4">OPERATORS</h4>
+<ul class="flex flex-col gap-2 text-sm text-slate-400">
+<li><a class="hover:text-primary transition-colors" href="#">Training Sims</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Hardware Setup</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Earnings Calc</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-bold text-white text-sm mb-4">CONNECT</h4>
+<div class="flex gap-4">
+<a class="w-8 h-8 flex items-center justify-center rounded bg-white/5 hover:bg-white/10 text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</a>
+<a class="w-8 h-8 flex items-center justify-center rounded bg-white/5 hover:bg-white/10 text-white transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">hub</span>
+</a>
+</div>
+</div>
+</div>
+<div class="max-w-[1400px] mx-auto px-6 mt-12 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-slate-600">
+<p>© 2024 Neural Link Protocol. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="hover:text-slate-400" href="#">Privacy Policy</a>
+<a class="hover:text-slate-400" href="#">Terms of Service</a>
+</div>
+</div>
+</footer>
+</div>
+</body></html>

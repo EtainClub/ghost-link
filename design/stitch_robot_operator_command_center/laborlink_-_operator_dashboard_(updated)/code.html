@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Operator Performance Dashboard - LABORLINK</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "primary-glow": "#1337ec80",
+                        "secondary": "#929bc9",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0a0b10",
+                        "surface-dark": "#12141c",
+                        "border-dark": "#1f243a",
+                        "success": "#0bda65",
+                        "warning": "#f59e0b",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "sans": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px",
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #1f243a 1px, transparent 1px), linear-gradient(to bottom, #1f243a 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .radar-chart-bg {
+            background: radial-gradient(circle at center, rgba(19, 55, 236, 0.1) 0%, transparent 70%);
+        }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(19, 55, 236, 0.5);
+        }
+        .scanline {
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+            background-size: 100% 4px;
+        }
+        /* Custom scrollbar for table */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0b10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f243a;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #323b67;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white font-sans antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-b-border-dark bg-background-dark/80 backdrop-blur-md px-6 py-4">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 rounded overflow-hidden"><img alt="LABORLINK Logo" class="w-full h-full object-contain" src="{{DATA:IMAGE:IMAGE_30}}"/></div>
+<div>
+<h2 class="text-white text-lg font-bold leading-tight tracking-wider font-display">LABORLINK</h2>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-success animate-pulse"></span>
+<span class="text-xs text-secondary font-mono tracking-widest">SYSTEM ONLINE</span>
+</div>
+</div>
+</div>
+<nav class="hidden md:flex flex-1 justify-center gap-10">
+<a class="text-white text-sm font-bold uppercase tracking-widest border-b-2 border-primary pb-1" href="#">Dashboard</a>
+<a class="text-secondary hover:text-white transition-colors text-sm font-medium uppercase tracking-widest" href="#">Missions</a>
+<a class="text-secondary hover:text-white transition-colors text-sm font-medium uppercase tracking-widest" href="#">Assets</a>
+<a class="text-secondary hover:text-white transition-colors text-sm font-medium uppercase tracking-widest" href="#">Leaderboard</a>
+</nav>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex flex-col items-end">
+<span class="text-[10px] text-secondary tracking-widest font-mono">ROBO/USD</span>
+<span class="text-sm font-bold font-mono text-success">$0.274 <span class="text-[10px]">▲ 2.4%</span></span>
+</div>
+<div class="flex gap-3">
+<button class="flex size-10 cursor-pointer items-center justify-center rounded bg-surface-dark border border-border-dark hover:border-primary/50 hover:bg-surface-dark/80 transition-all text-white relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full border border-surface-dark"></span>
+</button>
+<div class="h-10 w-10 bg-surface-dark border border-border-dark rounded overflow-hidden relative group cursor-pointer">
+<img alt="Operator avatar showing a man in a futuristic setting" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Operator Avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbLxIniH88-JeaDXS8shwycQpEagRnSpy2QHFhkeJeG_gyNr0Gxk8WYLpbcD5w4A0lsUgN7ddcaO9_EuKzLHSWbuAB-awzVkNkuSmsgcTqOtkclOF8aEKbjCumXHij-K41A_-ioORi3V1wEAuPMiR56E0YepNmZ_1kccjiE7VDw34FWd6S-RASNhLU9tn2nPEVsVMpQOJeSTzjOSXEo9ZIvfQt5zaaBNFa4cQ8McklxCD8GvjtMHdn5KuB8bDSWcVYoO7QIo2VRkA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[1440px] mx-auto p-6 md:p-8 lg:p-10 flex flex-col gap-8 relative">
+<!-- Background Grid Effect -->
+<div class="absolute inset-0 bg-[size:40px_40px] bg-grid-pattern opacity-[0.03] pointer-events-none z-0"></div>
+<!-- Dashboard Header & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 z-10">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3">
+<h1 class="text-white text-4xl md:text-5xl font-black font-display tracking-tight uppercase glow-text">LABORLINK Dashboard</h1>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 uppercase tracking-widest">Unit-734</span>
+</div>
+<p class="text-secondary text-base font-normal max-w-2xl">Welcome back, Operator. Your neural link latency is optimal at 12ms.</p>
+</div>
+<div class="flex gap-3">
+<button class="group flex items-center justify-center gap-2 h-10 px-5 bg-surface-dark border border-border-dark text-white text-sm font-bold uppercase tracking-wider hover:bg-white/5 transition-all rounded">
+<span class="material-symbols-outlined text-base group-hover:rotate-90 transition-transform">refresh</span>
+                    Sync Data
+                </button>
+<button class="flex items-center justify-center gap-2 h-10 px-5 bg-primary hover:bg-primary/90 text-white text-sm font-bold uppercase tracking-wider transition-all rounded shadow-[0_0_15px_rgba(19,55,236,0.4)]">
+<span class="material-symbols-outlined text-base">power_settings_new</span>
+                    Go Offline
+                </button>
+</div>
+</div>
+<!-- KPI Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 z-10">
+<!-- Total Earnings -->
+<div class="flex flex-col justify-between p-6 rounded bg-surface-dark border border-border-dark relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary">payments</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-secondary text-xs font-bold uppercase tracking-widest">Total Earnings</p>
+<div class="flex items-baseline gap-2">
+<p class="text-white text-3xl font-display font-bold">45,230</p>
+<span class="text-sm font-bold text-primary font-display">ROBO</span>
+</div>
+<p class="text-secondary text-sm font-mono">≈ $12,400.50 USD</p>
+</div>
+<div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between">
+<span class="text-success text-xs font-bold flex items-center gap-1 bg-success/10 px-2 py-0.5 rounded">
+<span class="material-symbols-outlined text-sm">trending_up</span> +$450 (24h)
+                    </span>
+<span class="text-[10px] text-secondary uppercase tracking-widest">Updated: 2m ago</span>
+</div>
+</div>
+<!-- Operator Rank -->
+<div class="flex flex-col justify-between p-6 rounded bg-surface-dark border border-border-dark relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">military_tech</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-secondary text-xs font-bold uppercase tracking-widest">Operator Rank</p>
+<p class="text-white text-xl font-display font-bold uppercase tracking-wide">Master Technician</p>
+<p class="text-primary text-sm font-bold font-display">Top 5% Global</p>
+</div>
+<div class="mt-4 flex flex-col gap-2">
+<div class="flex justify-between text-[10px] uppercase font-bold tracking-wider text-secondary">
+<span>Progress to Elite</span>
+<span>84%</span>
+</div>
+<div class="h-1.5 w-full bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[84%] relative">
+<div class="absolute top-0 right-0 bottom-0 w-2 bg-white/30 animate-pulse"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tasks Completed -->
+<div class="flex flex-col justify-between p-6 rounded bg-surface-dark border border-border-dark relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-white">task_alt</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-secondary text-xs font-bold uppercase tracking-widest">Tasks Completed</p>
+<p class="text-white text-3xl font-display font-bold">1,248</p>
+</div>
+<div class="mt-4 pt-4 border-t border-white/5 grid grid-cols-2 gap-2">
+<div>
+<p class="text-[10px] text-secondary uppercase tracking-widest">Success Rate</p>
+<p class="text-white font-bold font-mono">98.2%</p>
+</div>
+<div>
+<p class="text-[10px] text-secondary uppercase tracking-widest">Avg Time</p>
+<p class="text-white font-bold font-mono">14m 30s</p>
+</div>
+</div>
+</div>
+<!-- System Status -->
+<div class="flex flex-col justify-between p-6 rounded bg-surface-dark border border-border-dark relative overflow-hidden group hover:border-primary/50 transition-colors">
+<div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-success">hub</span>
+</div>
+<div class="flex flex-col gap-1">
+<p class="text-secondary text-xs font-bold uppercase tracking-widest">Network Status</p>
+<p class="text-white text-xl font-display font-bold uppercase tracking-wide flex items-center gap-2">
+<span class="size-2.5 rounded-full bg-success shadow-[0_0_8px_rgba(11,218,101,0.6)]"></span>
+                        Uplink Stable
+                    </p>
+</div>
+<div class="mt-4 pt-4 border-t border-white/5">
+<div class="flex justify-between items-center mb-1">
+<p class="text-[10px] text-secondary uppercase tracking-widest">Signal Strength</p>
+<p class="text-success font-bold font-mono text-sm">99.8%</p>
+</div>
+<!-- Signal Bars Visualization -->
+<div class="flex gap-1 h-3 items-end">
+<div class="w-1 h-[40%] bg-success/40 rounded-sm"></div>
+<div class="w-1 h-[60%] bg-success/60 rounded-sm"></div>
+<div class="w-1 h-[50%] bg-success/50 rounded-sm"></div>
+<div class="w-1 h-[80%] bg-success/80 rounded-sm"></div>
+<div class="w-1 h-[100%] bg-success rounded-sm shadow-[0_0_5px_rgba(11,218,101,0.5)]"></div>
+<div class="w-1 h-[90%] bg-success/90 rounded-sm"></div>
+<div class="w-1 h-[70%] bg-success/70 rounded-sm"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Dashboard Split -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 z-10 flex-1">
+<!-- Work History Table Section (Left 2/3) -->
+<div class="lg:col-span-2 flex flex-col gap-4 rounded bg-surface-dark border border-border-dark p-1">
+<div class="flex items-center justify-between p-4 pb-2 border-b border-white/5">
+<h3 class="text-white text-base font-bold font-display uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                        Work History Log
+                    </h3>
+<div class="flex gap-2">
+<button class="text-[10px] uppercase font-bold tracking-widest text-secondary hover:text-white transition-colors bg-white/5 px-2 py-1 rounded hover:bg-white/10">Filter</button>
+<button class="text-[10px] uppercase font-bold tracking-widest text-secondary hover:text-white transition-colors bg-white/5 px-2 py-1 rounded hover:bg-white/10">Export CSV</button>
+</div>
+</div>
+<div class="overflow-x-auto p-2">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-[10px] text-secondary uppercase tracking-widest border-b border-white/5">
+<th class="pb-3 pl-4 font-semibold">Date / Time</th>
+<th class="pb-3 font-semibold">Robot Unit</th>
+<th class="pb-3 font-semibold">Task Type</th>
+<th class="pb-3 font-semibold">Efficiency</th>
+<th class="pb-3 pr-4 text-right font-semibold">Earnings</th>
+</tr>
+</thead>
+<tbody class="text-sm">
+<!-- Row 1 -->
+<tr class="group hover:bg-white/[0.02] border-b border-white/5 transition-colors cursor-pointer relative">
+<td class="py-4 pl-4 font-mono text-secondary group-hover:text-white transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(19,55,236,0.8)]"></div>
+                                    2023-10-24 <span class="text-xs opacity-50 block">08:45 AM</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded bg-background-dark border border-border-dark flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">smart_toy</span>
+</div>
+<span class="font-bold font-display text-white">Atlas-X7</span>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                                        Hazmat Cleanup
+                                    </span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-success w-[98.5%]"></div>
+</div>
+<span class="font-mono text-success font-bold">98.5%</span>
+</div>
+</td>
+<td class="py-4 pr-4 text-right">
+<span class="font-bold font-display text-white text-lg group-hover:text-primary transition-colors">+450</span> <span class="text-xs text-secondary font-bold">ROBO</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-white/[0.02] border-b border-white/5 transition-colors cursor-pointer relative">
+<td class="py-4 pl-4 font-mono text-secondary group-hover:text-white transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(19,55,236,0.8)]"></div>
+                                    2023-10-23 <span class="text-xs opacity-50 block">14:20 PM</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded bg-background-dark border border-border-dark flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">pets</span>
+</div>
+<span class="font-bold font-display text-white">Spot-V4</span>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">
+                                        Site Survey
+                                    </span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-warning w-[92%]"></div>
+</div>
+<span class="font-mono text-warning font-bold">92.0%</span>
+</div>
+</td>
+<td class="py-4 pr-4 text-right">
+<span class="font-bold font-display text-white text-lg group-hover:text-primary transition-colors">+120</span> <span class="text-xs text-secondary font-bold">ROBO</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-white/[0.02] border-b border-white/5 transition-colors cursor-pointer relative">
+<td class="py-4 pl-4 font-mono text-secondary group-hover:text-white transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(19,55,236,0.8)]"></div>
+                                    2023-10-22 <span class="text-xs opacity-50 block">09:15 AM</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded bg-background-dark border border-border-dark flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">precision_manufacturing</span>
+</div>
+<span class="font-bold font-display text-white">Arm-C2</span>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-orange-500/10 text-orange-400 border border-orange-500/20">
+                                        Precision Weld
+                                    </span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-success w-[99.1%]"></div>
+</div>
+<span class="font-mono text-success font-bold">99.1%</span>
+</div>
+</td>
+<td class="py-4 pr-4 text-right">
+<span class="font-bold font-display text-white text-lg group-hover:text-primary transition-colors">+800</span> <span class="text-xs text-secondary font-bold">ROBO</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-white/[0.02] border-b border-white/5 transition-colors cursor-pointer relative">
+<td class="py-4 pl-4 font-mono text-secondary group-hover:text-white transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(19,55,236,0.8)]"></div>
+                                    2023-10-21 <span class="text-xs opacity-50 block">16:45 PM</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded bg-background-dark border border-border-dark flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">flight_takeoff</span>
+</div>
+<span class="font-bold font-display text-white">Drone-X1</span>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-teal-500/10 text-teal-400 border border-teal-500/20">
+                                        Aerial Map
+                                    </span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-success w-[95.4%]"></div>
+</div>
+<span class="font-mono text-success font-bold">95.4%</span>
+</div>
+</td>
+<td class="py-4 pr-4 text-right">
+<span class="font-bold font-display text-white text-lg group-hover:text-primary transition-colors">+210</span> <span class="text-xs text-secondary font-bold">ROBO</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-white/[0.02] transition-colors cursor-pointer relative">
+<td class="py-4 pl-4 font-mono text-secondary group-hover:text-white transition-colors">
+<div class="absolute left-0 top-0 bottom-0 w-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity shadow-[0_0_8px_rgba(19,55,236,0.8)]"></div>
+                                    2023-10-21 <span class="text-xs opacity-50 block">11:00 AM</span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded bg-background-dark border border-border-dark flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-lg">forklift</span>
+</div>
+<span class="font-bold font-display text-white">Lift-G2</span>
+</div>
+</td>
+<td class="py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/20">
+                                        Cargo Load
+                                    </span>
+</td>
+<td class="py-4">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-background-dark rounded-full overflow-hidden">
+<div class="h-full bg-warning w-[88.7%]"></div>
+</div>
+<span class="font-mono text-warning font-bold">88.7%</span>
+</div>
+</td>
+<td class="py-4 pr-4 text-right">
+<span class="font-bold font-display text-white text-lg group-hover:text-primary transition-colors">+320</span> <span class="text-xs text-secondary font-bold">ROBO</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-auto border-t border-white/5 p-3 flex justify-center">
+<button class="text-xs uppercase font-bold tracking-widest text-primary hover:text-white transition-colors flex items-center gap-1">
+                        View Full History <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Skills Matrix (Right 1/3) -->
+<div class="flex flex-col gap-4">
+<div class="flex-1 rounded bg-surface-dark border border-border-dark p-6 flex flex-col items-center justify-center relative overflow-hidden">
+<div class="w-full flex justify-between items-center mb-6 z-10">
+<h3 class="text-white text-base font-bold font-display uppercase tracking-wider flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">radar</span>
+                            Proficiency Matrix
+                        </h3>
+<span class="text-[10px] text-secondary uppercase tracking-widest border border-white/10 px-2 py-1 rounded">Overall: 96%</span>
+</div>
+<!-- Radar Chart Graphic -->
+<div class="relative size-64 z-10 my-4 radar-chart-bg rounded-full">
+<!-- Chart Grid (Hexagons) -->
+<svg class="w-full h-full absolute inset-0 text-white/10 overflow-visible" fill="none" stroke="currentColor" stroke-width="0.5" viewbox="0 0 100 100">
+<!-- Outer Hex -->
+<polygon points="50 5, 90 27.5, 90 72.5, 50 95, 10 72.5, 10 27.5"></polygon>
+<!-- Mid Hex -->
+<polygon points="50 20, 75 35, 75 65, 50 80, 25 65, 25 35"></polygon>
+<!-- Inner Hex -->
+<polygon points="50 35, 60 42.5, 60 57.5, 50 65, 40 57.5, 40 42.5"></polygon>
+<!-- Cross lines -->
+<line x1="50" x2="50" y1="50" y2="5"></line>
+<line x1="50" x2="90" y1="50" y2="27.5"></line>
+<line x1="50" x2="90" y1="50" y2="72.5"></line>
+<line x1="50" x2="50" y1="50" y2="95"></line>
+<line x1="50" x2="10" y1="50" y2="72.5"></line>
+<line x1="50" x2="10" y1="50" y2="27.5"></line>
+</svg>
+<!-- Data Polygon (Blue Area) -->
+<svg class="w-full h-full absolute inset-0 overflow-visible drop-shadow-[0_0_10px_rgba(19,55,236,0.6)]" viewbox="0 0 100 100">
+<!-- Points: Nav(Top), Prec(TopRight), Speed(BotRight), Endur(Bot), Prob(BotLeft), Tech(TopLeft) -->
+<!-- Values approx: 95, 90, 85, 98, 92, 88 -->
+<polygon fill="rgba(19, 55, 236, 0.4)" points="50 8, 86 30, 84 70, 50 93, 14 70, 15 30" stroke="#1337ec" stroke-width="1.5" vector-effect="non-scaling-stroke"></polygon>
+<!-- Data Points -->
+<circle cx="50" cy="8" fill="white" r="1.5"></circle>
+<circle cx="86" cy="30" fill="white" r="1.5"></circle>
+<circle cx="84" cy="70" fill="white" r="1.5"></circle>
+<circle cx="50" cy="93" fill="white" r="1.5"></circle>
+<circle cx="14" cy="70" fill="white" r="1.5"></circle>
+<circle cx="15" cy="30" fill="white" r="1.5"></circle>
+</svg>
+<!-- Labels -->
+<div class="absolute inset-0 text-[10px] font-bold text-secondary uppercase tracking-wider flex items-center justify-center pointer-events-none">
+<span class="absolute -top-6 text-white glow-text">Nav</span>
+<span class="absolute top-[18%] -right-8">Prec</span>
+<span class="absolute bottom-[18%] -right-10">Speed</span>
+<span class="absolute -bottom-6">Endur</span>
+<span class="absolute bottom-[18%] -left-10">Prob</span>
+<span class="absolute top-[18%] -left-8">Tech</span>
+</div>
+</div>
+<div class="mt-4 grid grid-cols-2 gap-x-8 gap-y-2 w-full px-4">
+<div class="flex justify-between items-center border-b border-white/5 pb-1">
+<span class="text-xs text-secondary font-mono">Precision</span>
+<span class="text-xs font-bold text-white">96%</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-1">
+<span class="text-xs text-secondary font-mono">Speed</span>
+<span class="text-xs font-bold text-white">88%</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-1">
+<span class="text-xs text-secondary font-mono">Navigation</span>
+<span class="text-xs font-bold text-white">99%</span>
+</div>
+<div class="flex justify-between items-center border-b border-white/5 pb-1">
+<span class="text-xs text-secondary font-mono">Problem Solv.</span>
+<span class="text-xs font-bold text-white">92%</span>
+</div>
+</div>
+</div>
+<!-- Last Robot Used Widget -->
+<div class="h-40 rounded bg-surface-dark border border-border-dark p-4 flex gap-4 relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-r from-background-dark via-transparent to-transparent z-0"></div>
+<!-- Background Image of Robot -->
+<div class="absolute right-0 top-0 bottom-0 w-2/3 bg-cover bg-center opacity-40 mix-blend-screen group-hover:opacity-60 transition-opacity" data-alt="Futuristic robot face close up" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBL2Mn9luJgiN-xDKKBh_3t1aWAvZX5tnZHJXWew3ajApXxc3_dZDqxNg8CthY8BtoFrx3sp4EhcIUeK0q9fisXSGW0ETKasICKS7Ze4aTxJObzwoJCFeWsCH9xTMfeZfbGuoMULt2ayifAuJpErFzOYC9g0H2R0OT37uOGeLyiWeuAIEmYx7tp_hIRCc57qweVCvxMMj1DIRCwYhqOvBazq_D-RE5Np_eM43rKJyYnU_7rIMslYnE5iWEpYbSJFvH00LKrBFTtVgc');"></div>
+<div class="z-10 flex flex-col justify-between h-full w-full">
+<div>
+<p class="text-[10px] text-secondary uppercase tracking-widest mb-1">Last Active Unit</p>
+<h4 class="text-xl font-bold font-display text-white">Atlas-X7</h4>
+<p class="text-xs text-success font-mono mt-1">● Online &amp; Ready</p>
+</div>
+<button class="self-start px-3 py-1.5 bg-primary/20 hover:bg-primary text-primary hover:text-white border border-primary/50 text-xs font-bold uppercase tracking-wider rounded transition-all">
+                             Reconnect
+                         </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

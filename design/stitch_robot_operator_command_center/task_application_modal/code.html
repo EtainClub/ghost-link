@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Task Application Modal</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#8c25f4",
+              "primary-dark": "#6a1cb8",
+              "background-light": "#f7f5f8",
+              "background-dark": "#0f0814",
+              "surface-dark": "#1a1023",
+              "accent-green": "#00ff94",
+              "accent-red": "#ff4d4d",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.125rem",
+              "sm": "0.25rem", 
+              "lg": "0.5rem", 
+              "xl": "1rem", 
+              "2xl": "1.5rem"
+            },
+            boxShadow: {
+              "neon": "0 0 10px rgba(140, 37, 244, 0.5), 0 0 20px rgba(140, 37, 244, 0.3)",
+              "glow-text": "0 0 10px rgba(255, 255, 255, 0.5)"
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            background: rgba(26, 16, 35, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(140, 37, 244, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(140, 37, 244, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .neon-border {
+            box-shadow: 0 0 15px -3px rgba(140, 37, 244, 0.4);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1023; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4d3168; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8c25f4; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-white min-h-screen flex flex-col relative overflow-hidden">
+<!-- Background Layer (Simulating Marketplace Home underneath) -->
+<div class="absolute inset-0 z-0 opacity-20 pointer-events-none grid-bg">
+<div class="absolute inset-0 bg-gradient-to-b from-transparent to-background-dark"></div>
+</div>
+<!-- Navbar (Background Content) -->
+<header class="w-full h-16 border-b border-primary/20 flex items-center px-8 justify-between opacity-30 z-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">smart_toy</span>
+<span class="text-xl font-bold tracking-widest">SYNTH<span class="text-primary">LABOR</span></span>
+</div>
+<div class="flex gap-6 text-sm font-medium text-gray-400">
+<span>MARKETPLACE</span>
+<span>MY CONTRACTS</span>
+<span>FLEET</span>
+</div>
+</header>
+<!-- Main Content (Background Content) -->
+<main class="flex-1 p-8 opacity-30 blur-[2px] z-0 grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Just placeholder cards to simulate the background -->
+<div class="h-64 bg-surface-dark border border-primary/20 rounded-lg"></div>
+<div class="h-64 bg-surface-dark border border-primary/20 rounded-lg"></div>
+<div class="h-64 bg-surface-dark border border-primary/20 rounded-lg"></div>
+<div class="h-64 bg-surface-dark border border-primary/20 rounded-lg"></div>
+<div class="h-64 bg-surface-dark border border-primary/20 rounded-lg"></div>
+<div class="h-64 bg-surface-dark border border-primary/20 rounded-lg"></div>
+</main>
+<!-- Modal Overlay -->
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+<!-- Backdrop Blur -->
+<div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+<!-- Modal Container -->
+<div class="relative w-full max-w-4xl glass-panel border border-primary/50 rounded-lg shadow-neon flex flex-col overflow-hidden animate-fade-in-up">
+<!-- Top Decoration Line -->
+<div class="h-1 w-full bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+<!-- Modal Header -->
+<div class="flex justify-between items-start p-8 pb-4">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-3 mb-2">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-accent-red/20 text-accent-red border border-accent-red/30 tracking-wider uppercase">High Priority</span>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-primary/20 text-primary border border-primary/30 tracking-wider uppercase">Open Contract</span>
+</div>
+<h1 class="text-3xl md:text-4xl font-bold tracking-tighter text-white leading-none">HAZARDOUS WASTE SORTING</h1>
+<p class="text-gray-400 text-sm font-mono mt-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">fingerprint</span>
+                        CONTRACT #8849-XJ • SECTOR 4 • INDUSTRIAL ZONE
+                    </p>
+</div>
+<button class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-white/5 group">
+<span class="material-symbols-outlined group-hover:rotate-90 transition-transform duration-300">close</span>
+</button>
+</div>
+<!-- Content Grid -->
+<div class="p-8 pt-2 grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Specs & Description (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-6">
+<!-- Reward & Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+<!-- Reward -->
+<div class="bg-surface-dark/50 border border-primary/30 p-4 rounded flex flex-col gap-1 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-2 opacity-10 group-hover:opacity-20 transition-opacity">
+<span class="material-symbols-outlined text-4xl">currency_bitcoin</span>
+</div>
+<span class="text-xs text-primary font-bold uppercase tracking-wider">Base Reward</span>
+<div class="text-2xl font-bold text-white flex items-baseline gap-1">
+                                45.00 <span class="text-sm font-normal text-gray-400">$ROBO/hr</span>
+</div>
+<span class="text-[10px] text-accent-green flex items-center gap-1 mt-1">
+<span class="material-symbols-outlined text-[10px]">trending_up</span> +12% Surge
+                            </span>
+</div>
+<!-- Duration -->
+<div class="bg-surface-dark/50 border border-white/10 p-4 rounded flex flex-col gap-1">
+<span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Est. Duration</span>
+<div class="text-2xl font-bold text-white">4 <span class="text-sm font-normal text-gray-400">Hours</span></div>
+<span class="text-[10px] text-gray-500 mt-1">Single Session</span>
+</div>
+<!-- Risk -->
+<div class="bg-surface-dark/50 border border-white/10 p-4 rounded flex flex-col gap-1">
+<span class="text-xs text-gray-400 font-bold uppercase tracking-wider">Risk Class</span>
+<div class="text-2xl font-bold text-accent-red">B <span class="text-sm font-normal text-gray-400">Severe</span></div>
+<span class="text-[10px] text-gray-500 mt-1">Remote Ops Only</span>
+</div>
+</div>
+<!-- Robot Unit Info -->
+<div class="relative bg-[#261834] rounded-lg border border-primary/20 overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex flex-col sm:flex-row p-4 gap-6 items-center">
+<div class="w-24 h-24 shrink-0 rounded bg-black/40 border border-white/10 relative overflow-hidden">
+<img alt="Robot Model" class="w-full h-full object-cover opacity-80" data-alt="Futuristic robot head close up with glowing blue eyes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVd1J5iV_Yb7cDZWojhHXi_N4Zqw4UHMh6QUI68-RuRBS8FURCkwJLbV9LLLMt4eZ-fORaM3u1ByTKUcu2LCaom7NJ-U3ONB7ugN04RWTZVDe8IrwMqCx_fSx8aHYFfH0PBcsok2l0ZaZijdePFg2bqsBpu-9EbJPgJieLvBABiOXxlYUsHCZ4zx-JezoNlf82YAHnVqEulpKPDYhIpEVZg1ux5wWxaMOqeL74LJcWJLBpr7O-pk1Qbooia5ABzgSAchU_w7X9bwc"/>
+</div>
+<div class="flex-1 space-y-2">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-lg font-bold text-white">1X Neo Gen-2</h3>
+<p class="text-sm text-primary/80">Anthropomorphic General Purpose</p>
+</div>
+<span class="text-xs bg-white/10 px-2 py-1 rounded text-gray-300 border border-white/5">v2.4.1 Firmware</span>
+</div>
+<div class="grid grid-cols-2 gap-4 text-xs text-gray-400 mt-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">battery_charging_full</span> 98% Charge
+                                    </div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">wifi</span> Signal: Strong
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Description Text -->
+<div class="space-y-2">
+<h3 class="text-sm font-bold text-white tracking-widest uppercase mb-1">Mission Brief</h3>
+<p class="text-gray-400 text-sm leading-relaxed">
+                            Teleoperation required for sorting volatile chemical containers in Sector 4. Operator must identify Class-B hazardous materials and manipulate robotic end-effectors to separate recyclable composites from toxic waste. High precision required to avoid containment breach.
+                        </p>
+</div>
+</div>
+<!-- Right Column: Requirements & Actions (5 cols) -->
+<div class="lg:col-span-5 flex flex-col h-full">
+<div class="bg-black/20 border border-white/5 rounded-lg p-5 flex-1 flex flex-col">
+<h3 class="text-sm font-bold text-white tracking-widest uppercase mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">verified_user</span>
+                            System Requirements
+                        </h3>
+<div class="space-y-4 flex-1">
+<!-- Requirement Item 1: Match -->
+<div class="flex justify-between items-center group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined text-lg">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-200">Dexterity Level 4</span>
+<span class="text-xs text-gray-500">Required for fine manipulation</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-accent-green">check_circle</span>
+</div>
+<!-- Requirement Item 2: Match -->
+<div class="flex justify-between items-center group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+<span class="material-symbols-outlined text-lg">speed</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-200">Latency &lt; 30ms</span>
+<span class="text-xs text-accent-green">Current: 12ms</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-accent-green">check_circle</span>
+</div>
+<!-- Requirement Item 3: Warning -->
+<div class="flex justify-between items-center group">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-orange-500/10 flex items-center justify-center border border-orange-500/20 text-orange-400">
+<span class="material-symbols-outlined text-lg">science</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-200">Hazmat Cert V.2</span>
+<span class="text-xs text-orange-400">Expiring in 3 days</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-orange-400">warning</span>
+</div>
+<!-- Haptic Feedback Support -->
+<div class="flex justify-between items-center group opacity-50">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-gray-700/30 flex items-center justify-center border border-gray-600/30 text-gray-400">
+<span class="material-symbols-outlined text-lg">vibration</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-gray-200">Haptic Gloves</span>
+<span class="text-xs text-gray-500">Recommended, not required</span>
+</div>
+</div>
+<span class="text-xs text-gray-500 font-mono">OPTIONAL</span>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px w-full bg-white/10 my-6"></div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3">
+<button class="w-full py-3 rounded border border-white/20 hover:border-white/40 hover:bg-white/5 text-white font-medium tracking-wide transition-all flex items-center justify-center gap-2 group">
+<span class="material-symbols-outlined group-hover:scale-110 transition-transform">play_circle</span>
+                                PREVIEW SIMULATION
+                            </button>
+<button class="relative w-full py-4 rounded bg-primary hover:bg-primary-dark text-white font-bold tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(140,37,244,0.3)] hover:shadow-[0_0_30px_rgba(140,37,244,0.6)] flex items-center justify-center gap-2 overflow-hidden group">
+<span class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
+<span>Confirm Application</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+<p class="text-[10px] text-center text-gray-500 mt-2">
+                                By confirming, you agree to the Remote Labor Terms of Service v4.2
+                            </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer decoration -->
+<div class="mt-4 flex justify-between items-center bg-black/40 px-8 py-3 border-t border-white/5">
+<div class="flex gap-4">
+<div class="flex items-center gap-2 text-xs text-gray-500">
+<div class="w-2 h-2 rounded-full bg-accent-green animate-pulse"></div>
+                        System Online
+                    </div>
+<div class="flex items-center gap-2 text-xs text-gray-500">
+<span class="material-symbols-outlined text-[14px]">encrypted</span>
+                        End-to-End Encrypted
+                    </div>
+</div>
+<div class="font-mono text-[10px] text-gray-600">
+                    ID: 8a4f-9921-bc00
+                </div>
+</div>
+</div>
+</div>
+</body></html>

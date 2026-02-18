@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Human-Robot Labor Brokerage - Governance</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"],
+                        "sans": ["Public Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1a1d2d; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #323b67; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4b5586; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased selection:bg-primary selection:text-white">
+<div class="flex h-screen w-full flex-col overflow-hidden">
+<!-- Header / Navigation -->
+<header class="flex shrink-0 items-center justify-between border-b border-slate-200 dark:border-[#232948] bg-white dark:bg-[#111422] px-6 py-3 lg:px-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg class="h-full w-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<g>
+<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
+</g>
+</svg>
+</div>
+<h2 class="hidden md:block text-lg font-bold leading-tight tracking-tight text-slate-900 dark:text-white">HRLB // DAO</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors" href="#">Marketplace</a>
+<a class="text-sm font-medium text-slate-900 dark:text-white border-b-2 border-primary pb-0.5" href="#">Governance</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary dark:text-slate-400 dark:hover:text-white transition-colors" href="#">Wallet</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="h-10 w-64 rounded-lg bg-slate-100 dark:bg-[#232948] pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary border-none" placeholder="Search proposals..." type="text"/>
+</div>
+<button class="relative rounded-full bg-slate-100 dark:bg-[#232948] p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-[#323b67] transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute right-2 top-2 h-2 w-2 rounded-full bg-primary"></span>
+</button>
+<div class="h-10 w-10 overflow-hidden rounded-full border border-slate-200 dark:border-[#323b67]">
+<img alt="User Avatar" class="h-full w-full object-cover" data-alt="Portrait of a male operator" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgg5k0j_rew83rt8nrr-R2Y0w-fuf9ocuEYcG0_VHzmwZ5AjOYt6_0mJwlfwul0mP4-paeOUWwmXeXVToUuBzWTBfKGMPhZYKZd3mNmoTU1GwBln7ePbNtdxIq7sS6bHc4RnQolQKDrdkP0n08PGqxFeSBFIKjZixmeoTsVuM9p7lmLB8WlQSn7Z0TzVYGiD5zi52LmqzYPKhYHNf1q58ozoFfLBS71ZVOs2_WtaVeBUuptxJwAREmPTNBTNnAbmtgSrRrsNatEMw"/>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 lg:p-8">
+<div class="mx-auto max-w-[1200px] space-y-8">
+<!-- Page Header & Stats -->
+<div class="space-y-6">
+<div class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+<div>
+<h1 class="text-3xl font-black uppercase tracking-tight text-slate-900 dark:text-white md:text-4xl">Governance Console</h1>
+<p class="text-slate-500 dark:text-[#929bc9]">Shape the future of Human-Robot collaboration. Your vote is your voice.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90 transition-colors shadow-[0_0_15px_rgba(19,55,236,0.3)]">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                                    New Proposal
+                                </button>
+<button class="flex items-center gap-2 rounded-lg bg-slate-200 dark:bg-[#232948] px-4 py-2 text-sm font-medium text-slate-900 dark:text-white hover:bg-slate-300 dark:hover:bg-[#323b67] transition-colors border border-transparent dark:border-[#323b67]">
+<span class="material-symbols-outlined text-[18px]">history</span>
+                                    History
+                                </button>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+<!-- Voting Power -->
+<div class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 dark:border-[#323b67] dark:bg-[#161b2e] hover:border-primary/50 transition-colors">
+<div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-primary/5 dark:bg-primary/10 transition-transform group-hover:scale-110"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-[#929bc9]">
+<span class="material-symbols-outlined text-[16px]">how_to_vote</span>
+                                        Total Voting Power
+                                    </span>
+<span class="font-mono text-2xl font-bold text-slate-900 dark:text-white">14,502 VP</span>
+<div class="mt-2 flex items-center gap-2 text-xs">
+<span class="rounded bg-emerald-100 px-1.5 py-0.5 font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">+2.4%</span>
+<span class="text-slate-400">vs last epoch</span>
+</div>
+</div>
+</div>
+<!-- Operator Rank -->
+<div class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 dark:border-[#323b67] dark:bg-[#161b2e] hover:border-primary/50 transition-colors">
+<div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-purple-500/5 dark:bg-purple-500/10 transition-transform group-hover:scale-110"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-[#929bc9]">
+<span class="material-symbols-outlined text-[16px]">military_tech</span>
+                                        Operator Rank
+                                    </span>
+<span class="font-mono text-2xl font-bold text-slate-900 dark:text-white">Lvl 5 (1.5x)</span>
+<div class="mt-2 flex items-center gap-2 text-xs">
+<span class="text-slate-400">Next tier at 20k XP</span>
+</div>
+</div>
+</div>
+<!-- Staked Tokens -->
+<div class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 dark:border-[#323b67] dark:bg-[#161b2e] hover:border-primary/50 transition-colors">
+<div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-amber-500/5 dark:bg-amber-500/10 transition-transform group-hover:scale-110"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-[#929bc9]">
+<span class="material-symbols-outlined text-[16px]">token</span>
+                                        Staked $HRLB
+                                    </span>
+<span class="font-mono text-2xl font-bold text-slate-900 dark:text-white">5,000.00</span>
+<div class="mt-2 flex items-center gap-2 text-xs">
+<span class="rounded bg-emerald-100 px-1.5 py-0.5 font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">+12.5% APY</span>
+</div>
+</div>
+</div>
+<!-- Rewards -->
+<div class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 dark:border-[#323b67] dark:bg-[#161b2e] hover:border-primary/50 transition-colors">
+<div class="absolute -right-4 -top-4 h-24 w-24 rounded-full bg-cyan-500/5 dark:bg-cyan-500/10 transition-transform group-hover:scale-110"></div>
+<div class="relative z-10 flex flex-col gap-1">
+<span class="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-[#929bc9]">
+<span class="material-symbols-outlined text-[16px]">redeem</span>
+                                        Claimable Rewards
+                                    </span>
+<span class="font-mono text-2xl font-bold text-slate-900 dark:text-white">450.20</span>
+<div class="mt-2 flex items-center gap-2 text-xs">
+<button class="text-primary hover:text-primary/80 hover:underline font-medium">Claim Now</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Proposals Section -->
+<div class="space-y-4">
+<div class="flex flex-wrap items-center justify-between gap-4">
+<h2 class="text-xl font-bold uppercase tracking-tight text-slate-900 dark:text-white">Active Proposals</h2>
+<!-- Filters -->
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="whitespace-nowrap rounded-lg bg-primary px-4 py-1.5 text-xs font-medium text-white shadow-lg shadow-primary/25">All Proposals</button>
+<button class="whitespace-nowrap rounded-lg border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#323b67] dark:bg-[#161b2e] dark:text-slate-300 dark:hover:bg-[#232948] transition-colors">Technical Upgrades</button>
+<button class="whitespace-nowrap rounded-lg border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#323b67] dark:bg-[#161b2e] dark:text-slate-300 dark:hover:bg-[#232948] transition-colors">Economic Policy</button>
+<button class="whitespace-nowrap rounded-lg border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50 dark:border-[#323b67] dark:bg-[#161b2e] dark:text-slate-300 dark:hover:bg-[#232948] transition-colors">Treasury</button>
+</div>
+</div>
+<div class="grid gap-6 lg:grid-cols-3">
+<!-- Featured/Large Proposal Card -->
+<div class="relative overflow-hidden rounded-xl border border-slate-200 bg-white dark:border-[#323b67] dark:bg-[#161b2e] lg:col-span-2 group">
+<div class="absolute top-0 h-1 w-full bg-gradient-to-r from-primary via-purple-500 to-emerald-500"></div>
+<div class="p-6 md:p-8">
+<div class="mb-6 flex flex-wrap items-start justify-between gap-4">
+<div class="flex items-center gap-3">
+<span class="rounded bg-primary/10 px-2.5 py-1 text-xs font-bold text-primary dark:text-primary">PID-88</span>
+<span class="flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-600 dark:text-emerald-400">
+<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                                Active Voting
+                                            </span>
+<span class="flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+                                                Ends in 14h 32m
+                                            </span>
+</div>
+<div class="flex -space-x-2">
+<div class="h-8 w-8 rounded-full border-2 border-white bg-slate-200 dark:border-[#161b2e] dark:bg-slate-700 overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="Voter 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0mZNz6qxehw3zGOk8ma3Pg7ad1AgpmN-j7qzh9PDZdYiKY62gg6DBCqtJYun8zBFO5S7_EjjITwLSDGnNVZCaVl7BM5A2Gjx047IqEa6kUjDWx_OR48UeXzXdMZWz0crfcGSzXNgWc9kMYE0FGNWHBn2nhrCWtucGLrsVwK0M9WOgCusV0fujqQIsdB4cC84YKoTClTmaQlNjdMy6Ej4B6zsJfMFQjYYGmr-ML6X_1dE0E7YFrogyHy1hahQPMcg4x5ikEAdsD2Q"/>
+</div>
+<div class="h-8 w-8 rounded-full border-2 border-white bg-slate-200 dark:border-[#161b2e] dark:bg-slate-700 overflow-hidden">
+<img class="h-full w-full object-cover" data-alt="Voter 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYQlKKRZyHNultgMPa02VN9AXvEOZYsY_ctLk9L-AAB_RozsYiM2vaZVv336MgQirxtrSYqezulOPkt6NVqkcr6nYbBHbjmDc7b9ucKW2XePjC6xUrqLHKHPS_DM-q0yMGhZyphWLbHpWvNerWNbcMrj3s3HZZdGgoIhnKs7ECebMJ2fKLF1maPB4ZCgziFqbXJwrHuI1RDMimHNwBNP0RG80GOavYKhS_S8X4KGhHLHHPMlF8H758-RyzNvZIeYq5j72CDoIKA3g"/>
+</div>
+<div class="flex h-8 w-8 items-center justify-center rounded-full border-2 border-white bg-slate-100 text-xs font-medium text-slate-600 dark:border-[#161b2e] dark:bg-[#232948] dark:text-slate-300">
+                                                +42
+                                            </div>
+</div>
+</div>
+<h3 class="mb-3 text-2xl font-bold leading-tight text-slate-900 dark:text-white">Base Pay Rate Adjustment for Hazmat Operations</h3>
+<p class="mb-8 max-w-2xl text-base text-slate-600 dark:text-slate-400">
+                                        Proposal to increase the base hourly rate for teleoperators controlling Class 4 HAZMAT robots by 12% to account for increased insurance premiums and skill requirements. This adjustment aligns with the Q3 Economic Outlook Report.
+                                    </p>
+<!-- Voting Progress -->
+<div class="mb-8 space-y-4">
+<div class="flex justify-between text-sm">
+<span class="font-medium text-slate-900 dark:text-white">Current Consensus</span>
+<span class="text-slate-500 dark:text-slate-400">Total Votes: 1.2M VP</span>
+</div>
+<!-- Multi-colored Progress Bar -->
+<div class="relative h-4 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-[#232948]">
+<div class="absolute left-0 top-0 h-full bg-primary transition-all duration-1000 ease-out" style="width: 68%"></div>
+<div class="absolute left-[68%] top-0 h-full bg-rose-500 transition-all duration-1000 ease-out" style="width: 24%"></div>
+<div class="absolute left-[92%] top-0 h-full bg-slate-400 transition-all duration-1000 ease-out" style="width: 8%"></div>
+</div>
+<!-- Legend -->
+<div class="flex flex-wrap gap-6 pt-1">
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-primary"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">For (68%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-rose-500"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Against (24%)</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="h-3 w-3 rounded-full bg-slate-400"></div>
+<span class="text-sm font-medium text-slate-700 dark:text-slate-200">Abstain (8%)</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-3 sm:flex-row">
+<button class="flex-1 rounded-lg bg-primary py-3 text-sm font-bold uppercase tracking-wide text-white hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all">
+                                            Vote For
+                                        </button>
+<button class="flex-1 rounded-lg border border-rose-500/30 bg-rose-500/10 py-3 text-sm font-bold uppercase tracking-wide text-rose-500 hover:bg-rose-500/20 transition-all dark:text-rose-400">
+                                            Vote Against
+                                        </button>
+<button class="flex-1 rounded-lg border border-slate-200 bg-transparent py-3 text-sm font-bold uppercase tracking-wide text-slate-500 hover:bg-slate-50 hover:text-slate-700 dark:border-[#323b67] dark:text-slate-400 dark:hover:bg-[#232948] dark:hover:text-white transition-all">
+                                            Abstain
+                                        </button>
+</div>
+</div>
+</div>
+<!-- Side Cards Column -->
+<div class="flex flex-col gap-6">
+<!-- Secondary Proposal Card -->
+<div class="flex flex-1 flex-col justify-between rounded-xl border border-slate-200 bg-white p-6 dark:border-[#323b67] dark:bg-[#161b2e] hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+<div>
+<div class="mb-4 flex items-center justify-between">
+<span class="rounded bg-slate-100 px-2 py-1 text-xs font-bold text-slate-600 dark:bg-[#232948] dark:text-slate-300">PID-89</span>
+<span class="text-xs font-medium text-slate-500 dark:text-slate-400">Ends in 2d 4h</span>
+</div>
+<h3 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">Protocol Upgrade: Low Latency Video Feed V2</h3>
+<p class="mb-6 text-sm text-slate-500 dark:text-slate-400 line-clamp-3">
+                                            Implementation of H.266 codec for 30% bandwidth reduction on remote mining units. Requires node restart.
+                                        </p>
+</div>
+<div class="space-y-3">
+<div class="relative h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-[#232948]">
+<div class="absolute left-0 top-0 h-full bg-primary" style="width: 92%"></div>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="font-medium text-primary">92% For</span>
+<span class="text-slate-500">8% Against</span>
+</div>
+<button class="mt-2 w-full rounded-lg border border-slate-200 bg-white py-2 text-sm font-medium text-slate-900 hover:bg-slate-50 hover:text-primary dark:border-[#323b67] dark:bg-[#232948] dark:text-white dark:hover:bg-[#323b67] transition-colors">
+                                            View Details
+                                        </button>
+</div>
+</div>
+<!-- Consensus/Sentiment Card -->
+<div class="rounded-xl border border-slate-200 bg-white p-6 dark:border-[#323b67] dark:bg-[#161b2e]">
+<h4 class="mb-4 text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-[#929bc9]">Community Sentiment</h4>
+<div class="flex items-center gap-6">
+<!-- Simple CSS Donut Chart representation -->
+<div class="relative h-24 w-24 shrink-0 rounded-full" style="background: conic-gradient(#1337ec 0% 75%, #323b67 75% 100%);">
+<div class="absolute inset-2 rounded-full bg-white dark:bg-[#161b2e] flex items-center justify-center">
+<span class="text-xl font-bold text-slate-900 dark:text-white">75%</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Bullish on Expansion</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Majority of operators support new mining sector integration.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Third Proposal (Full Width on mobile, 1/3 on large) - Visual Variety -->
+<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+<div class="rounded-xl border border-slate-200 bg-white p-6 dark:border-[#323b67] dark:bg-[#161b2e] hover:border-slate-300 dark:hover:border-slate-600 transition-colors">
+<div class="mb-4 flex items-center justify-between">
+<span class="rounded bg-slate-100 px-2 py-1 text-xs font-bold text-slate-600 dark:bg-[#232948] dark:text-slate-300">PID-90</span>
+<span class="text-xs font-medium text-amber-500">Quorum not met</span>
+</div>
+<h3 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">Treasury: Q4 Marketing Budget</h3>
+<p class="mb-6 text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+                                    Allocation of 500,000 HRLB for global operator recruitment campaigns in SE Asia and Eastern Europe.
+                                </p>
+<div class="space-y-3">
+<div class="relative h-2 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-[#232948]">
+<div class="absolute left-0 top-0 h-full bg-primary" style="width: 45%"></div>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="font-medium text-slate-900 dark:text-white">45% For</span>
+<span class="text-slate-500">Need 51%</span>
+</div>
+<button class="mt-2 w-full rounded-lg bg-primary/10 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition-colors">
+                                        Cast Vote
+                                    </button>
+</div>
+</div>
+<div class="rounded-xl border border-slate-200 bg-white p-6 dark:border-[#323b67] dark:bg-[#161b2e] hover:border-slate-300 dark:hover:border-slate-600 transition-colors opacity-75">
+<div class="mb-4 flex items-center justify-between">
+<span class="rounded bg-slate-100 px-2 py-1 text-xs font-bold text-slate-600 dark:bg-[#232948] dark:text-slate-300">PID-87</span>
+<span class="text-xs font-medium text-emerald-500">Passed • Oct 24</span>
+</div>
+<h3 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">New Robot Integration: Atlas-V7</h3>
+<p class="mb-6 text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+                                    Approved integration of Boston Dynamics Atlas V7 units for construction sector tasks.
+                                </p>
+<div class="space-y-3">
+<div class="relative h-2 w-full overflow-hidden rounded-full bg-emerald-500/20">
+<div class="absolute left-0 top-0 h-full bg-emerald-500" style="width: 100%"></div>
+</div>
+<div class="flex items-center justify-between text-xs">
+<span class="font-medium text-emerald-600 dark:text-emerald-400">Executed</span>
+<span class="text-slate-500">100% Complete</span>
+</div>
+<button class="mt-2 w-full rounded-lg border border-slate-200 bg-transparent py-2 text-sm font-medium text-slate-500 cursor-not-allowed dark:border-[#323b67]">
+                                        Closed
+                                    </button>
+</div>
+</div>
+<!-- Treasury Summary Mini Card -->
+<div class="flex flex-col justify-center rounded-xl border border-dashed border-slate-300 bg-slate-50 p-6 text-center dark:border-[#323b67] dark:bg-[#161b2e]/50">
+<div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-200 text-slate-500 dark:bg-[#232948] dark:text-slate-400">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<h3 class="text-sm font-bold uppercase text-slate-500 dark:text-slate-400">DAO Treasury</h3>
+<p class="mt-1 text-2xl font-bold text-slate-900 dark:text-white">$42.5M</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">in diversified assets</p>
+<a class="mt-4 text-xs font-medium text-primary hover:underline" href="#">View Treasury Report -&gt;</a>
+</div>
+</div>
+</div>
+<!-- Recent Activity Table -->
+<div class="rounded-xl border border-slate-200 bg-white dark:border-[#323b67] dark:bg-[#161b2e]">
+<div class="flex items-center justify-between border-b border-slate-200 p-6 dark:border-[#323b67]">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Governance History</h3>
+<button class="flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white">
+                                View All
+                                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-slate-600 dark:text-slate-400">
+<thead class="bg-slate-50 text-xs uppercase text-slate-500 dark:bg-[#1f263d] dark:text-[#929bc9]">
+<tr>
+<th class="px-6 py-4 font-medium">Proposal</th>
+<th class="px-6 py-4 font-medium">Type</th>
+<th class="px-6 py-4 font-medium">Date</th>
+<th class="px-6 py-4 font-medium">Status</th>
+<th class="px-6 py-4 font-medium text-right">Votes</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-[#323b67]">
+<tr class="group hover:bg-slate-50 dark:hover:bg-[#1f263d]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors">PID-86: Reduce Staking Minimum</td>
+<td class="px-6 py-4">Economic</td>
+<td class="px-6 py-4">Oct 12, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-rose-100 px-2 py-0.5 text-xs font-medium text-rose-700 dark:bg-rose-500/10 dark:text-rose-400">
+                                                Failed
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right font-mono">842k</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-[#1f263d]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors">PID-85: Bug Fix - Robotic Arm jitter</td>
+<td class="px-6 py-4">Technical</td>
+<td class="px-6 py-4">Oct 05, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+                                                Passed
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right font-mono">1.5M</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-[#1f263d]/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white group-hover:text-primary transition-colors">PID-84: Community Mod Election</td>
+<td class="px-6 py-4">Community</td>
+<td class="px-6 py-4">Sep 28, 2023</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 rounded-full bg-emerald-100 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400">
+                                                Passed
+                                            </span>
+</td>
+<td class="px-6 py-4 text-right font-mono">980k</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar (Desktop only) -->
+<aside class="hidden w-80 shrink-0 border-l border-slate-200 bg-white dark:border-[#232948] dark:bg-[#111422] xl:flex flex-col">
+<div class="p-6">
+<h3 class="mb-4 text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-[#929bc9]">Your Delegation</h3>
+<div class="mb-6 rounded-lg bg-slate-50 p-4 dark:bg-[#161b2e]">
+<div class="mb-2 flex items-center gap-3">
+<div class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white">
+<span class="material-symbols-outlined">shield_person</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Not Delegating</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">You vote for yourself</p>
+</div>
+</div>
+<button class="mt-3 w-full rounded border border-slate-200 bg-white py-1.5 text-xs font-medium text-slate-900 hover:bg-slate-50 dark:border-[#323b67] dark:bg-[#232948] dark:text-white dark:hover:bg-[#323b67] transition-colors">
+                            Delegate Votes
+                        </button>
+</div>
+<h3 class="mb-4 text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-[#929bc9]">Top Delegates</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img class="h-8 w-8 rounded-full object-cover" data-alt="Top Delegate 1" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSsm_FD8eH31to0Q6CzWE07tKhP3dWe2bXAUqX2JGcWV0Osq37okOWeJ82f__GNtiPCJlmHXBrz9y1DsPUIrtsIJ37nKPkuKy6d67sdrYj5a9d5avP0rWKOmd2z9NQtCX5tUFNrFwNXm2cYcuXUu8dCWty4s0izFXrLD1zopjUAjX5mY8oYTxcgLXRSrNtdmGGIzNbD6aePXhBsGW7ZKa_8NLD8YrfFrB558dH6aT-tjCcobK6IHo2JNlqGMt0UnQNXIsvApvs3fY"/>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Sarah Connor</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">2.4M VP</p>
+</div>
+</div>
+<button class="text-xs font-medium text-primary hover:underline">Select</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<img class="h-8 w-8 rounded-full object-cover" data-alt="Top Delegate 2" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwikPumKxf34TVVzyXhDzY4LRom1iuan5W7vNSz-1VgLq93iLj6_Ty2rqB2M4qRtoL8cCL-qDMxF-Y5uq0AqhmidohseyhfBGndAkP5GD97uTC1JsJJzNQxdTAw4DQUgK5XL_tqInRgEUul6o9XtZL4xVTwe9iHSo1GaPwqQhAs8SHqWMFx6uFP3jdvSlrHmtAbe5KxXNN0FtwRdUJwFVp8xT2oDD44xq3eTIVyixOvS9Br3O31m5o5mX-00wsD-GCmkAFxBPkoDc"/>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Dr. K. Lovan</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">1.8M VP</p>
+</div>
+</div>
+<button class="text-xs font-medium text-primary hover:underline">Select</button>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="flex h-8 w-8 items-center justify-center rounded-full bg-purple-500 text-white text-xs font-bold">
+                                    DA
+                                </div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">DAO Alliance</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">1.1M VP</p>
+</div>
+</div>
+<button class="text-xs font-medium text-primary hover:underline">Select</button>
+</div>
+</div>
+<div class="mt-8 border-t border-slate-200 pt-6 dark:border-[#232948]">
+<h3 class="mb-4 text-sm font-bold uppercase tracking-wide text-slate-500 dark:text-[#929bc9]">Key Metrics</h3>
+<div class="space-y-3">
+<div>
+<div class="flex justify-between text-xs text-slate-500 dark:text-slate-400">
+<span>Quorum</span>
+<span>4%</span>
+</div>
+<div class="mt-1 h-1.5 w-full rounded-full bg-slate-100 dark:bg-[#232948]">
+<div class="h-full w-[4%] rounded-full bg-slate-400"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-xs text-slate-500 dark:text-slate-400">
+<span>Passing Threshold</span>
+<span>50%</span>
+</div>
+<div class="mt-1 h-1.5 w-full rounded-full bg-slate-100 dark:bg-[#232948]">
+<div class="h-full w-[50%] rounded-full bg-slate-400"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto border-t border-slate-200 p-6 dark:border-[#232948]">
+<div class="flex items-start gap-3 rounded-lg bg-primary/10 p-3">
+<span class="material-symbols-outlined mt-0.5 text-primary text-[18px]">info</span>
+<p class="text-xs leading-relaxed text-slate-600 dark:text-slate-300">
+                            Voting rewards are distributed at the end of each epoch (every 14 days). Ensure you vote on at least 2 proposals to qualify.
+                        </p>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</body></html>
