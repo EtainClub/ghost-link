@@ -40,56 +40,111 @@ body {
 ::-webkit-scrollbar {
   width: 6px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-secondary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 3px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-cyan);
 }
 
 /* Animations */
 @keyframes pulse-glow {
-  0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent-cyan); }
-  50% { opacity: 0.7; box-shadow: 0 0 20px var(--accent-cyan), 0 0 40px var(--accent-cyan); }
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px var(--accent-cyan);
+  }
+
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 20px var(--accent-cyan), 0 0 40px var(--accent-cyan);
+  }
 }
 
 @keyframes scan-line {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
 
 @keyframes data-stream {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(-20px); opacity: 0; }
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
 }
 
 @keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 @keyframes radar-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes counter-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Utility classes */
@@ -193,12 +248,41 @@ body {
   text-transform: uppercase;
 }
 
-.badge-green { background: rgba(16, 185, 129, 0.2); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.3); }
-.badge-cyan { background: rgba(0, 229, 255, 0.15); color: #00e5ff; border: 1px solid rgba(0, 229, 255, 0.3); }
-.badge-orange { background: rgba(245, 158, 11, 0.2); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); }
-.badge-red { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-.badge-purple { background: rgba(168, 85, 247, 0.2); color: #a855f7; border: 1px solid rgba(168, 85, 247, 0.3); }
-.badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+.badge-green {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-cyan {
+  background: rgba(0, 229, 255, 0.15);
+  color: #00e5ff;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+}
+
+.badge-orange {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-red {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-purple {
+  background: rgba(168, 85, 247, 0.2);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.badge-blue {
+  background: rgba(59, 130, 246, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
 
 .stat-bar {
   height: 4px;
@@ -234,7 +318,7 @@ body {
 
 /* Grid patterns */
 .grid-bg {
-  background-image: 
+  background-image:
     linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
   background-size: 40px 40px;
@@ -270,12 +354,35 @@ body {
 
 /* Glitch effect */
 @keyframes glitch {
-  0% { clip-path: inset(40% 0 61% 0); transform: translate(-2px, 0); }
-  20% { clip-path: inset(92% 0 1% 0); transform: translate(1px, 0); }
-  40% { clip-path: inset(43% 0 1% 0); transform: translate(-1px, 0); }
-  60% { clip-path: inset(25% 0 58% 0); transform: translate(2px, 0); }
-  80% { clip-path: inset(54% 0 7% 0); transform: translate(-2px, 0); }
-  100% { clip-path: inset(58% 0 43% 0); transform: translate(1px, 0); }
+  0% {
+    clip-path: inset(40% 0 61% 0);
+    transform: translate(-2px, 0);
+  }
+
+  20% {
+    clip-path: inset(92% 0 1% 0);
+    transform: translate(1px, 0);
+  }
+
+  40% {
+    clip-path: inset(43% 0 1% 0);
+    transform: translate(-1px, 0);
+  }
+
+  60% {
+    clip-path: inset(25% 0 58% 0);
+    transform: translate(2px, 0);
+  }
+
+  80% {
+    clip-path: inset(54% 0 7% 0);
+    transform: translate(-2px, 0);
+  }
+
+  100% {
+    clip-path: inset(58% 0 43% 0);
+    transform: translate(1px, 0);
+  }
 }
 
 .hero-title {
@@ -302,9 +409,17 @@ body {
 }
 
 /* Leaderboard rank badges */
-.rank-gold { background: linear-gradient(135deg, #f59e0b, #d97706); }
-.rank-silver { background: linear-gradient(135deg, #94a3b8, #64748b); }
-.rank-bronze { background: linear-gradient(135deg, #b45309, #92400e); }
+.rank-gold {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.rank-silver {
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+}
+
+.rank-bronze {
+  background: linear-gradient(135deg, #b45309, #92400e);
+}
 
 /* VR Interface */
 .vr-overlay {
@@ -342,4 +457,54 @@ body {
   width: 100%;
   top: 50%;
   transform: translateY(-50%);
+}
+
+/* How-To Page Specifics */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.divide-y>tr:last-child {
+  border-bottom: none;
+}
+
+.hero-grid {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .hero-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .workflow-step {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    position: relative;
+    padding-left: 48px;
+  }
+
+  .workflow-step>div:first-child {
+    order: 2 !important;
+    text-align: left !important;
+  }
+
+  .workflow-step>div:nth-child(2) {
+    order: 1 !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 1rem !important;
+  }
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import BottomNav from "./components/BottomNav";
 
 export const metadata: Metadata = {
   title: "Ghost Link — Human Precision, Robotic Scale",
@@ -21,6 +22,7 @@ export default function RootLayout({
       </head>
       <body style={{ fontFamily: "'Inter', sans-serif" }}>
         {children}
+        <BottomNav />
       </body>
     </html>
   );

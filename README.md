@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 👻 Ghost Link
+> **The Operating System for the Post-Work Era.**
 
-## Getting Started
+![Ghost Link Hero](https://ghostlink.work/og-image.png)
 
-First, run the development server:
+## ⚠️ Concept-First Open Source
+**This is not just a codebase. It is a collective hallucination of the future.**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Ghost Link is an open-source experiment to design the **UI/UX of the inevitable**. We know that one day, millions of humans will remotely pilot robots from their living rooms—doing hazardous, skilled, or logistical work via high-fidelity neural links. "Uber for Androids." "DoorDash for Drones."
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**The tech isn't here yet. But we are building the interface *now*.**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+This repository is a **playground** to imagine, prototype, and debate how that future looks. We are building the dashboard for a job that doesn't exist yet, so that when it does, we set the standard.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Why Star This Repo?
+*   **Architect the Future**: Help define the standard interface for telepresence labor.
+*   **Vibe Coding Playground**: This is the perfect repo to practice **"Vibe Coding"**. Use AI (Cursor, Windsurf, Copilot) to generate wild UI concepts, futuristic dashboards, and interactive prototypes.
+*   **No "Real" Backend Required**: We focus on the *experience*. Mock data is our friend. Visuals are our currency.
+*   **Reserve Your Spot**: Early contributors are the founding architects of the Ghost Link protocol.
 
-## Learn More
+## 🛠 How to Contribute
+We don't need optimized SQL queries. We need **Ideas**.
 
-To learn more about Next.js, take a look at the following resources:
+1.  **Vibe Code**: Ask your AI to "Make the VR HUD look more cyberpunk" or "Add a haptic feedback visualizer." Submit the PR.
+2.  **Concept Art in Code**: Use React/Tailwind/Three.js to build stunning, futuristic interfaces.
+3.  **Roleplay Issues**: Open issues like *"Glitch in neural link latency display"* or *"need authentication flow for Class-5 Hazmat droids"*. Treat the fiction as real.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔮 The Vision
+Imagine a world where:
+*   A surgeon in Tokyo repairs a pipeline in Alaska.
+*   A gamer in Brazil controls a construction bot on the Moon.
+*   You earn crypto yields for every second of motor skill you rent out.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Ghost Link is the bridge.**
 
-## Deploy on Vercel
+## Tech Stack (For Now)
+*   **Next.js 16** (App Router)
+*   **Tailwind CSS** (v4)
+*   **Vibe Coding** (LLMs welcome)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+> *"The future is already here – it's just not evenly distributed."*
+>
+> **Star us to accelerate the distribution.** 🌟
+---

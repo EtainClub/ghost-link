@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ghost Link | Service Concept &amp; Workflow</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                        "cyan-accent": "#00f2ff",
+                        "purple-accent": "#a020f0",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .glow-cyan { box-shadow: 0 0 15px rgba(0, 242, 255, 0.3); }
+        .glow-purple { box-shadow: 0 0 15px rgba(160, 32, 240, 0.3); }
+        .glow-primary { box-shadow: 0 0 15px rgba(19, 55, 236, 0.4); }
+        .grid-bg {
+            background-image: radial-gradient(circle at 1px 1px, #232948 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .workflow-line {
+            background: linear-gradient(to bottom, #1337ec, #00f2ff, #a020f0, #1337ec);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Navigation -->
+<nav class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">account_tree</span>
+</div>
+<h1 class="text-xl font-bold tracking-tighter uppercase italic">Ghost <span class="text-primary">Link</span></h1>
+</div>
+<div class="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-widest text-slate-400">
+<a class="hover:text-primary transition-colors" href="#">Concept</a>
+<a class="hover:text-primary transition-colors" href="#">Workflow</a>
+<a class="hover:text-primary transition-colors" href="#">Data Cycle</a>
+<a class="hover:text-primary transition-colors" href="#">Economics</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1 rounded bg-green-500/10 border border-green-500/20">
+<span class="size-2 bg-green-500 rounded-full animate-pulse"></span>
+<span class="text-[10px] font-bold text-green-500 uppercase tracking-tighter">System Online</span>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-lg transition-all glow-primary">
+                    Connect Operator
+                </button>
+</div>
+</div>
+</nav>
+<main class="grid-bg">
+<!-- Hero Section: Concept Visualization -->
+<section class="relative py-24 px-6 max-w-7xl mx-auto">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="space-y-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-bold uppercase tracking-widest">
+<span class="material-symbols-outlined text-sm">psychology</span>
+                        The Synergy Matrix
+                    </div>
+<h2 class="text-5xl md:text-7xl font-bold tracking-tighter leading-none">
+                        Human Intelligence <br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-accent to-purple-accent">+ Robotic Physicality</span>
+</h2>
+<p class="text-lg text-slate-400 leading-relaxed max-w-xl">
+                        Bridging the gap between AI limitations and physical complexity. Ghost Link separates the "Ghost" (Neural Human Input) from the "Shell" (Autonomous Hardware), creating a high-fidelity teleoperation link for industry 4.0.
+                    </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<div class="p-4 rounded-xl border border-white/5 bg-white/5 backdrop-blur-sm flex-1 min-w-[200px]">
+<h4 class="text-cyan-accent font-bold uppercase text-xs tracking-widest mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">precision_manufacturing</span> The Shell
+                            </h4>
+<p class="text-sm text-slate-400">Industrial robot body with localized autonomous routine processing.</p>
+</div>
+<div class="p-4 rounded-xl border border-white/5 bg-white/5 backdrop-blur-sm flex-1 min-w-[200px]">
+<h4 class="text-purple-accent font-bold uppercase text-xs tracking-widest mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">sensors_krx</span> The Ghost
+                            </h4>
+<p class="text-sm text-slate-400">Human operator providing high-level cognitive solving for edge cases.</p>
+</div>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-cyan-accent/20 to-purple-accent/20 rounded-xl blur-2xl opacity-50"></div>
+<div class="relative aspect-square rounded-xl bg-slate-900 border border-white/10 overflow-hidden">
+<div class="absolute inset-0 opacity-40 bg-[url('https://placeholder.pics/svg/600')] bg-cover bg-center" data-alt="Futuristic cyborg silhouette with neural link highlights"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent"></div>
+<!-- Decorative HUD elements -->
+<div class="absolute top-4 left-4 text-[10px] font-mono text-cyan-accent/50 space-y-1">
+<p>LATENCY: 12ms</p>
+<p>SYNC: 99.8%</p>
+<p>NODE: GX-900</p>
+</div>
+<div class="absolute bottom-6 left-6 right-6 border-t border-white/10 pt-4 flex justify-between items-end">
+<div>
+<p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Active Linkage</p>
+<p class="text-sm font-bold">NEURAL-BRIDGE-v4.02</p>
+</div>
+<div class="flex gap-1">
+<div class="w-1 h-4 bg-cyan-accent animate-pulse"></div>
+<div class="w-1 h-3 bg-cyan-accent/60"></div>
+<div class="w-1 h-5 bg-cyan-accent"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Workflow Section -->
+<section class="py-24 border-t border-white/5 bg-slate-950/30">
+<div class="max-w-7xl mx-auto px-6">
+<div class="text-center mb-20">
+<h3 class="text-3xl font-bold tracking-tight mb-4">7-Step Detailed Workflow</h3>
+<p class="text-slate-400 max-w-2xl mx-auto">The architecture of seamless human-machine collaboration, from local autonomy to global neural connection.</p>
+</div>
+<div class="relative">
+<!-- Central Vertical Line -->
+<div class="absolute left-1/2 top-0 bottom-0 w-px workflow-line hidden md:block opacity-30"></div>
+<div class="space-y-12 relative">
+<!-- Step 1 -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="flex-1 md:text-right">
+<span class="text-primary font-mono text-sm tracking-tighter">01 // AUTONOMY</span>
+<h4 class="text-xl font-bold mt-1">Autonomous Robot Monitoring</h4>
+<p class="text-slate-400 text-sm mt-2 max-w-md md:ml-auto">Robot handles routine tasks via local AI models, maintaining continuous operation without human oversight.</p>
+</div>
+<div class="relative z-10 size-12 rounded-full bg-background-dark border-2 border-primary flex items-center justify-center glow-primary transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-primary">smart_toy</span>
+</div>
+<div class="flex-1 hidden md:block"></div>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-8 group">
+<div class="flex-1">
+<span class="text-cyan-accent font-mono text-sm tracking-tighter">02 // DETECTION</span>
+<h4 class="text-xl font-bold mt-1">Edge Case Detection</h4>
+<p class="text-slate-400 text-sm mt-2 max-w-md">The system identifies a complex physical bottleneck or environmental uncertainty that exceeds local AI parameters.</p>
+</div>
+<div class="relative z-10 size-12 rounded-full bg-background-dark border-2 border-cyan-accent flex items-center justify-center glow-cyan transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-cyan-accent">warning</span>
+</div>
+<div class="flex-1 hidden md:block"></div>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="flex-1 md:text-right">
+<span class="text-primary font-mono text-sm tracking-tighter">03 // MATCHING</span>
+<h4 class="text-xl font-bold mt-1">Global Operator Matching</h4>
+<p class="text-slate-400 text-sm mt-2 max-w-md md:ml-auto">Ghost Link AI scans the global operator network to find the highest-rated skill match with lowest latency.</p>
+</div>
+<div class="relative z-10 size-12 rounded-full bg-background-dark border-2 border-primary flex items-center justify-center glow-primary transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-primary">search</span>
+</div>
+<div class="flex-1 hidden md:block"></div>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-8 group">
+<div class="flex-1">
+<span class="text-purple-accent font-mono text-sm tracking-tighter">04 // LINKAGE</span>
+<h4 class="text-xl font-bold mt-1">Neural-Mechanical Link</h4>
+<p class="text-slate-400 text-sm mt-2 max-w-md">Operator initializes the link via VR/Haptic interface, gaining 1:1 tactile and visual feedback from the machine.</p>
+</div>
+<div class="relative z-10 size-12 rounded-full bg-background-dark border-2 border-purple-accent flex items-center justify-center glow-purple transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-purple-accent">network_node</span>
+</div>
+<div class="flex-1 hidden md:block"></div>
+</div>
+<!-- Step 5 -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="flex-1 md:text-right">
+<span class="text-primary font-mono text-sm tracking-tighter">05 // ACTION</span>
+<h4 class="text-xl font-bold mt-1">Real-time Teleoperation</h4>
+<p class="text-slate-400 text-sm mt-2 max-w-md md:ml-auto">Human operator takes control, solving the complex task using high-level cognitive intuition and manual dexterity.</p>
+</div>
+<div class="relative z-10 size-12 rounded-full bg-background-dark border-2 border-primary flex items-center justify-center glow-primary transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-primary">sports_esports</span>
+</div>
+<div class="flex-1 hidden md:block"></div>
+</div>
+<!-- Step 6 -->
+<div class="flex flex-col md:flex-row-reverse items-center gap-8 group">
+<div class="flex-1">
+<span class="text-cyan-accent font-mono text-sm tracking-tighter">06 // LEARNING</span>
+<h4 class="text-xl font-bold mt-1">Machine Learning Ingestion</h4>
+<p class="text-slate-400 text-sm mt-2 max-w-md">All human sensory input and mechanical outputs are recorded as high-quality training data for the next AI generation.</p>
+</div>
+<div class="relative z-10 size-12 rounded-full bg-background-dark border-2 border-cyan-accent flex items-center justify-center glow-cyan transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-cyan-accent">database</span>
+</div>
+<div class="flex-1 hidden md:block"></div>
+</div>
+<!-- Step 7 -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="flex-1 md:text-right">
+<span class="text-purple-accent font-mono text-sm tracking-tighter">07 // REWARD</span>
+<h4 class="text-xl font-bold mt-1">Reward &amp; Tokenization</h4>
+<p class="text-slate-400 text-sm mt-2 max-w-md md:ml-auto">Operator earns $GHOST tokens; Robot's uncertainty score drops, and the system becomes more autonomous.</p>
+</div>
+<div class="relative z-10 size-12 rounded-full bg-background-dark border-2 border-purple-accent flex items-center justify-center glow-purple transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-purple-accent">token</span>
+</div>
+<div class="flex-1 hidden md:block"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Data Cycle Infographic -->
+<section class="py-24 px-6 max-w-7xl mx-auto">
+<div class="grid lg:grid-cols-2 gap-16 items-center">
+<div class="relative flex justify-center">
+<div class="relative w-80 h-80 rounded-full border border-white/5 flex items-center justify-center">
+<!-- Orbiting Elements -->
+<div class="absolute inset-0 border border-primary/20 rounded-full animate-[spin_20s_linear_infinite]">
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 size-6 rounded-full bg-primary flex items-center justify-center text-[10px] text-white font-bold">ML</div>
+</div>
+<div class="absolute inset-8 border border-cyan-accent/20 rounded-full animate-[spin_15s_linear_infinite_reverse]">
+<div class="absolute top-1/2 -left-3 -translate-y-1/2 size-6 rounded-full bg-cyan-accent flex items-center justify-center text-[10px] text-black font-bold">AI</div>
+</div>
+<div class="absolute inset-16 border border-purple-accent/20 rounded-full animate-[spin_25s_linear_infinite]">
+<div class="absolute -bottom-3 left-1/2 -translate-x-1/2 size-6 rounded-full bg-purple-accent flex items-center justify-center text-[10px] text-white font-bold">HI</div>
+</div>
+<div class="text-center">
+<span class="material-symbols-outlined text-5xl text-primary block mb-2">sync</span>
+<p class="text-[10px] font-bold tracking-[0.3em] uppercase opacity-50">Data Cycle</p>
+</div>
+</div>
+<!-- Decorative blur -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+</div>
+<div>
+<h3 class="text-4xl font-bold tracking-tight mb-6">Reducing Uncertainty Through Human Intervention</h3>
+<p class="text-slate-400 mb-8 leading-relaxed">
+                        Every human decision is a data point. Our cycle ensures that robots learn from edge cases, slowly increasing their autonomous capability until a task becomes routine. This is the path to 100% automation.
+                    </p>
+<ul class="space-y-4">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-cyan-accent mt-1">check_circle</span>
+<span class="text-sm font-medium">Neural recording of haptic feedback profiles</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-cyan-accent mt-1">check_circle</span>
+<span class="text-sm font-medium">Auto-labeling of environmental edge cases</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-cyan-accent mt-1">check_circle</span>
+<span class="text-sm font-medium">RLHF (Reinforcement Learning from Human Feedback) training</span>
+</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- Economic Advantage Table -->
+<section class="py-24 border-t border-white/5 bg-slate-900/40">
+<div class="max-w-7xl mx-auto px-6">
+<div class="mb-12">
+<h3 class="text-3xl font-bold tracking-tight mb-4">Economic Advantage Matrix</h3>
+<p class="text-slate-400">Comparing operational efficiency across different models.</p>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-white/10">
+<th class="py-6 px-4 text-xs font-bold uppercase tracking-widest text-slate-500">Metric</th>
+<th class="py-6 px-4 text-xs font-bold uppercase tracking-widest text-slate-500">Full Automation</th>
+<th class="py-6 px-4 text-xs font-bold uppercase tracking-widest text-primary">Ghost Link Hybrid</th>
+<th class="py-6 px-4 text-xs font-bold uppercase tracking-widest text-slate-500">Manual Labor</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-white/5">
+<tr class="hover:bg-white/5 transition-colors">
+<td class="py-6 px-4 font-bold">Initial Capex</td>
+<td class="py-6 px-4 text-slate-400 text-sm">$2.5M+ (High)</td>
+<td class="py-6 px-4 text-primary font-bold text-sm">$450k (Mid)</td>
+<td class="py-6 px-4 text-slate-400 text-sm">$10k (Low)</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="py-6 px-4 font-bold">Flexibility / Agility</td>
+<td class="py-6 px-4 text-slate-400 text-sm">Low (Strictly Coded)</td>
+<td class="py-6 px-4 text-primary font-bold text-sm">Infinite (Human-Led)</td>
+<td class="py-6 px-4 text-slate-400 text-sm">High (Human)</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="py-6 px-4 font-bold">Downtime Risk</td>
+<td class="py-6 px-4 text-slate-400 text-sm">High (Bugs/Errors)</td>
+<td class="py-6 px-4 text-primary font-bold text-sm">Zero (Seamless Link)</td>
+<td class="py-6 px-4 text-slate-400 text-sm">Mid (Burnout)</td>
+</tr>
+<tr class="hover:bg-white/5 transition-colors">
+<td class="py-6 px-4 font-bold">Scalability</td>
+<td class="py-6 px-4 text-slate-400 text-sm">Fixed Hardware</td>
+<td class="py-6 px-4 text-primary font-bold text-sm">On-Demand Network</td>
+<td class="py-6 px-4 text-slate-400 text-sm">Linear Growth</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mt-16 grid md:grid-cols-3 gap-6">
+<div class="p-6 rounded-xl border border-white/5 bg-background-dark">
+<h5 class="text-3xl font-bold mb-2">40%</h5>
+<p class="text-xs font-bold uppercase tracking-widest text-slate-500">Opex Reduction</p>
+</div>
+<div class="p-6 rounded-xl border border-white/5 bg-background-dark">
+<h5 class="text-3xl font-bold mb-2">12ms</h5>
+<p class="text-xs font-bold uppercase tracking-widest text-slate-500">Average Latency</p>
+</div>
+<div class="p-6 rounded-xl border border-white/5 bg-background-dark">
+<h5 class="text-3xl font-bold mb-2">99.9%</h5>
+<p class="text-xs font-bold uppercase tracking-widest text-slate-500">Task Completion Rate</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-24 px-6 text-center">
+<div class="max-w-3xl mx-auto p-12 rounded-3xl bg-gradient-to-b from-primary/20 to-transparent border border-white/10 relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/1000')] opacity-10 mix-blend-overlay pointer-events-none" data-alt="Abstract network lines pattern"></div>
+<h2 class="text-4xl font-bold mb-6 tracking-tight">Ready to bridge the gap?</h2>
+<p class="text-slate-400 mb-10 leading-relaxed">
+                    Start deploying Ghost Link hardware at your facility and tap into our global network of elite teleoperators.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-primary hover:bg-primary/90 text-white px-8 py-4 text-sm font-bold uppercase tracking-widest rounded transition-all glow-primary">
+                        Request System Demo
+                    </button>
+<button class="bg-white/5 hover:bg-white/10 text-white px-8 py-4 text-sm font-bold uppercase tracking-widest rounded transition-all border border-white/10">
+                        Become an Operator
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="py-12 px-6 border-t border-white/5 text-slate-500">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-6 bg-primary/20 rounded flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-sm">account_tree</span>
+</div>
+<span class="text-sm font-bold tracking-tighter uppercase italic text-slate-400">Ghost Link</span>
+</div>
+<div class="flex gap-8 text-[10px] font-bold uppercase tracking-widest">
+<a class="hover:text-white" href="#">Whitepaper</a>
+<a class="hover:text-white" href="#">Privacy</a>
+<a class="hover:text-white" href="#">Terms</a>
+<a class="hover:text-white" href="#">Support</a>
+</div>
+<p class="text-[10px] font-mono tracking-widest">© 2024 GHOSTLINK CORP. // V_2.0.1</p>
+</div>
+</footer>
+</body></html>

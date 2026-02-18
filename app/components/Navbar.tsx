@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 const navLinks = [
+    { href: '/how-to', label: 'How-To' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/leaderboard', label: 'Leaderboard' },
@@ -38,7 +39,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Nav */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <div className="hidden md:flex" style={{ alignItems: 'center', gap: '4px' }}>
                     {navLinks.map(link => (
                         <Link key={link.href} href={link.href} style={{
                             padding: '6px 14px',
