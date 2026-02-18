@@ -1,56 +1,24 @@
 'use client';
 import Link from 'next/link';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 export default function HowToPage() {
     return (
         <div className="bg-primary text-slate-100 font-sans selection:bg-blue-600 selection:text-white overflow-x-hidden" style={{ background: '#080c14', color: '#e2e8f0' }}>
 
-            {/* Custom Navbar */}
-            <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#080c14]/80 backdrop-blur-md" style={{ borderBottom: '1px solid #1e2d45', background: 'rgba(8, 12, 20, 0.8)' }}>
-                <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px', height: '64px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <div className="flex items-center gap-3" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div style={{ width: '32px', height: '32px', background: '#00e5ff', borderRadius: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#000', fontWeight: 'bold' }}>
-                                GL
-                            </div>
-                            <h1 className="text-xl font-bold tracking-tighter uppercase italic" style={{ fontSize: '1.25rem', fontWeight: 800, letterSpacing: '-0.05em', fontStyle: 'italic', color: '#fff' }}>
-                                Ghost <span style={{ color: '#00e5ff' }}>Link</span>
-                            </h1>
-                        </Link>
-                    </div>
+            <Navbar />
 
-                    <div className="hidden md:flex items-center gap-8 text-sm font-medium uppercase tracking-widest text-slate-400" style={{ display: 'flex', gap: '32px', fontSize: '0.85rem', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8899aa' }}>
-                        <a href="#concept" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} className="hover:text-cyan">Concept</a>
-                        <a href="#workflow" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} className="hover:text-cyan">Workflow</a>
-                        <a href="#data-cycle" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} className="hover:text-cyan">Data Cycle</a>
-                        <a href="#economics" style={{ color: 'inherit', textDecoration: 'none', transition: 'color 0.2s' }} className="hover:text-cyan">Economics</a>
-                    </div>
-
-                    <div className="flex items-center gap-4" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '4px 12px', borderRadius: '4px', background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
-                            <span style={{ width: '8px', height: '8px', background: '#10b981', borderRadius: '50%', boxShadow: '0 0 8px #10b981' }}></span>
-                            <span style={{ fontSize: '0.7rem', fontWeight: 'bold', color: '#10b981', textTransform: 'uppercase', letterSpacing: '0.05em' }}>System Online</span>
-                        </div>
-                        <Link href="/dashboard">
-                            <button className="btn-primary" style={{ padding: '8px 20px', fontSize: '0.75rem' }}>
-                                Connect Operator
-                            </button>
-                        </Link>
-                    </div>
-                </div>
-            </nav>
-
-            <main className="grid-bg">
+            <main className="grid-bg" style={{ paddingTop: '60px' }}>
                 {/* Hero Section: Concept Visualization */}
-                <section id="concept" style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto', position: 'relative' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }} className="hero-grid">
+                <section id="concept" style={{ padding: '60px 16px', maxWidth: '1280px', margin: '0 auto', position: 'relative' }}>
+                    <div className="hero-grid" style={{ gap: '48px', alignItems: 'center' }}>
                         <div className="space-y-8">
                             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '4px 12px', borderRadius: '99px', background: 'rgba(0, 229, 255, 0.1)', border: '1px solid rgba(0, 229, 255, 0.3)', color: '#00e5ff', fontSize: '0.75rem', fontWeight: 'bold', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '24px' }}>
                                 <span style={{ fontSize: '1rem' }}>🧠</span> The Synergy Matrix
                             </div>
 
-                            <h2 style={{ fontSize: '3.5rem', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px' }}>
+                            <h2 style={{ fontSize: 'clamp(1.8rem, 6vw, 3.5rem)', fontWeight: 900, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '24px' }}>
                                 Human Intelligence <br />
                                 <span style={{ background: 'linear-gradient(to right, #00e5ff, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>+ Robotic Physicality</span>
                             </h2>
@@ -110,7 +78,7 @@ export default function HowToPage() {
                 </section>
 
                 {/* Workflow Section */}
-                <section id="workflow" style={{ padding: '80px 0', borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(13, 20, 32, 0.3)' }}>
+                <section id="workflow" style={{ padding: '60px 0', borderTop: '1px solid rgba(255,255,255,0.05)', background: 'rgba(13, 20, 32, 0.3)' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
                         <div style={{ textAlign: 'center', marginBottom: '80px' }}>
                             <h3 style={{ fontSize: '2rem', fontWeight: 'bold', letterSpacing: '-0.02em', marginBottom: '16px' }}>7-Step Detailed Workflow</h3>
@@ -162,8 +130,8 @@ export default function HowToPage() {
                 </section>
 
                 {/* Data Cycle Section */}
-                <section id="data-cycle" style={{ padding: '100px 24px', maxWidth: '1280px', margin: '0 auto' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px', alignItems: 'center' }} className="hero-grid">
+                <section id="data-cycle" style={{ padding: '60px 16px', maxWidth: '1280px', margin: '0 auto' }}>
+                    <div className="hero-grid" style={{ gap: '48px', alignItems: 'center' }}>
                         <div style={{ position: 'relative', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {/* Orbit Container */}
                             <div style={{ position: 'relative', width: '320px', height: '320px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.05)' }}>
@@ -208,7 +176,7 @@ export default function HowToPage() {
                 </section>
 
                 {/* Economic Matrix */}
-                <section id="economics" style={{ padding: '100px 0', background: 'rgba(13, 20, 32, 0.4)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                <section id="economics" style={{ padding: '60px 0', background: 'rgba(13, 20, 32, 0.4)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}>
                         <div style={{ marginBottom: '48px' }}>
                             <h3 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '16px' }}>Economic Advantage Matrix</h3>
@@ -259,7 +227,7 @@ export default function HowToPage() {
                 </section>
 
                 {/* CTA */}
-                <section style={{ padding: '100px 24px', textAlign: 'center' }}>
+                <section style={{ padding: '60px 16px', textAlign: 'center' }}>
                     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '64px', borderRadius: '24px', background: 'linear-gradient(to bottom, rgba(0,229,255,0.1), transparent)', border: '1px solid rgba(255,255,255,0.1)' }}>
                         <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '24px' }}>Ready to bridge the gap?</h2>
                         <p style={{ color: '#8899aa', marginBottom: '40px', fontSize: '1.1rem' }}>

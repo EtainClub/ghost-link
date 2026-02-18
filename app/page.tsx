@@ -68,12 +68,11 @@ export default function HomePage() {
       <Navbar />
 
       {/* Hero Section */}
-      {/* Hero Section */}
-      <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-6 overflow-hidden">
+      <section className="relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden">
 
         {/* Animated Background Image */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gray-900/40 z-10" /> {/* Reduced opacity for better visibility */}
+          <div className="absolute inset-0 bg-gray-900/40 z-10" />
           <div
             className="w-full h-full bg-cover bg-center animate-cinematic-pan opacity-100"
             style={{
@@ -85,7 +84,7 @@ export default function HomePage() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-20 max-w-4xl mx-auto mt-10">
+        <div className="relative z-20 max-w-4xl mx-auto mt-10 w-full">
 
           <div className="mb-8 animate-fade-in-up">
             <span className="tracking-[0.3em] text-[0.8rem] font-bold text-cyan-400 opacity-80 border-b border-cyan-500/30 pb-2">
@@ -94,19 +93,19 @@ export default function HomePage() {
           </div>
 
           <h1 className="hero-title mb-8 text-white animate-fade-in-up delay-100 drop-shadow-2xl flex flex-col gap-2">
-            <span className="text-4xl md:text-6xl font-black tracking-tighter leading-none">
+            <span className="text-3xl md:text-6xl font-black tracking-tighter leading-none">
               HUMAN-ROBOT<br />LABOR PLATFORM
             </span>
-            <span className="text-xl md:text-2xl font-light tracking-widest text-[#a855f7] mt-2 uppercase opacity-90">
+            <span className="text-lg md:text-2xl font-light tracking-widest text-[#a855f7] mt-2 uppercase opacity-90">
               Human Intelligence, Physical Labor
             </span>
           </h1>
 
-          <div className="text-lg md:text-xl text-gray-300 max-w-2xl mx-auto mb-24 leading-relaxed animate-fade-in-up delay-200 font-light">
+          <div className="text-base md:text-xl text-gray-300 max-w-2xl mx-auto mb-16 leading-relaxed animate-fade-in-up delay-200 font-light px-2">
             <p className="mb-4">
               Ghost Link is an open-source experiment to design the <strong className="text-white font-bold">UI/UX of the inevitable</strong>.
             </p>
-            <p className="text-base text-gray-400">
+            <p className="text-sm md:text-base text-gray-400">
               We know that one day, millions of humans will remotely pilot robots from their living rooms—doing hazardous, skilled, or logistical work via high-fidelity neural links.
             </p>
             <p className="mt-4 font-mono text-cyan-400 text-sm tracking-wide opacity-80">
@@ -114,32 +113,33 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-6 justify-center animate-fade-in-up delay-300">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-300 px-4">
             <Link href="/marketplace" style={{ textDecoration: 'none' }}>
-              <button className="btn-primary py-4 px-8 text-base shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_30px_rgba(0,229,255,0.5)]">
+              <button className="btn-primary py-4 px-8 text-base shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_30px_rgba(0,229,255,0.5)] w-full sm:w-auto">
                 ⚡ Start Earning Now
               </button>
             </Link>
             <Link href="/vr" style={{ textDecoration: 'none' }}>
-              <button className="btn-secondary py-4 px-8 text-base backdrop-blur-sm bg-white/5 border-white/20 hover:bg-white/10">
+              <button className="btn-secondary py-4 px-8 text-base backdrop-blur-sm bg-white/5 border-white/20 hover:bg-white/10 w-full sm:w-auto">
                 View Demo →
               </button>
             </Link>
           </div>
 
-          <p className="mt-12 text-xs text-gray-500 tracking-[0.2em] animate-fade-in-up delay-300">
+          <p className="mt-10 text-xs text-gray-500 tracking-[0.2em] animate-fade-in-up delay-300">
             NEURAL LICENSED · ESTABLISHED 2025
           </p>
         </div>
       </section>
 
       {/* Stats Bar */}
-      <section style={{ background: '#0d1420', borderTop: '1px solid #1e2d45', borderBottom: '1px solid #1e2d45', padding: '28px 24px' }}>
-        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+      <section style={{ background: '#0d1420', borderTop: '1px solid #1e2d45', borderBottom: '1px solid #1e2d45', padding: '28px 16px' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}
+          className="sm:grid-cols-4">
           {stats.map((stat, i) => (
             <div key={i} style={{ textAlign: 'center' }}>
               <p style={{ fontSize: '0.65rem', color: '#4a5568', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '6px' }}>{stat.label}</p>
-              <p className="mono" style={{ fontSize: '1.6rem', fontWeight: 800, color: stat.highlight ? '#00e5ff' : stat.green ? '#10b981' : '#e2e8f0', marginBottom: '4px' }}>{stat.value}</p>
+              <p className="mono" style={{ fontSize: '1.4rem', fontWeight: 800, color: stat.highlight ? '#00e5ff' : stat.green ? '#10b981' : '#e2e8f0', marginBottom: '4px' }}>{stat.value}</p>
               <p style={{ fontSize: '0.72rem', color: '#4a5568' }}>{stat.sub}</p>
             </div>
           ))}
@@ -147,13 +147,13 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section style={{ padding: '80px 24px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+      <section style={{ padding: '60px 16px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
         <h2 style={{ fontSize: '1.4rem', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>
           Engineered for Precision
         </h2>
         <div style={{ width: '40px', height: '3px', background: '#00e5ff', marginBottom: '40px', borderRadius: '2px' }} />
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           {features.map((f, i) => (
             <div key={i} className="card" style={{ padding: '28px' }}>
               <div style={{ fontSize: '2rem', marginBottom: '16px' }}>{f.icon}</div>
@@ -165,8 +165,8 @@ export default function HomePage() {
       </section>
 
       {/* Live Marketplace Preview */}
-      <section style={{ padding: '0 24px 80px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px' }}>
+      <section style={{ padding: '0 16px 60px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
           <div>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Live Marketplace</h2>
             <div style={{ width: '40px', height: '3px', background: '#00e5ff', borderRadius: '2px' }} />
@@ -177,7 +177,7 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {liveJobs.map((job, i) => (
             <div key={i} className="card" style={{ padding: '20px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
@@ -217,9 +217,7 @@ export default function HomePage() {
       </section>
 
       {/* Global Node Map */}
-      {/* Global Network Map Section */}
       <GlobalNetworkMap />
-
 
       <Footer />
     </div>

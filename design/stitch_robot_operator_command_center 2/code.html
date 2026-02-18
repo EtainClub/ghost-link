@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Ghost Link // Neural Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1337ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#050505",
+                        "surface": "#111422",
+                        "border-dim": "#232948",
+                        "accent-cyan": "#00f3ff",
+                        "accent-purple": "#bc00ff",
+                        "accent-green": "#0bda65"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .neural-grid {
+            display: grid;
+            grid-template-columns: repeat(60, 1fr);
+            gap: 2px;
+        }
+        .node {
+            aspect-ratio: 1;
+            transition: all 0.2s ease;
+        }
+        .node:hover {
+            transform: scale(1.5);
+            z-index: 10;
+            box-shadow: 0 0 12px var(--tw-shadow-color);
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #1337ec, transparent);
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0.3;
+        }
+        .terminal-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+        }
+        .glitch-avatar {
+            position: relative;
+            overflow: hidden;
+        }
+        .glitch-avatar::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(19, 55, 236, 0.1) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 2px;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-white font-display overflow-x-hidden selection:bg-primary/40">
+<div class="relative flex min-h-screen w-full flex-col dark group/design-root">
+<!-- Top HUD / Navigation -->
+<header class="sticky top-0 z-50 flex items-center justify-between border-b border-solid border-border-dim bg-background-dark/80 backdrop-blur-md px-6 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="size-6 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<div class="flex flex-col">
+<h2 class="text-sm font-bold leading-none tracking-tighter">GHOST LINK // NEURAL LEDGER</h2>
+<span class="text-[10px] text-primary/60 font-mono tracking-widest uppercase">Decentralized Protocol v4.0.2</span>
+</div>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-xs font-medium text-primary border-b border-primary pb-1" href="#">Ledger</a>
+<a class="text-xs font-medium text-white/50 hover:text-white transition-colors" href="#">Visionaries</a>
+<a class="text-xs font-medium text-white/50 hover:text-white transition-colors" href="#">Terminal</a>
+<a class="text-xs font-medium text-white/50 hover:text-white transition-colors" href="#">Archive</a>
+</nav>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-4 border-r border-border-dim pr-6">
+<div class="text-right">
+<p class="text-[10px] text-white/40 uppercase leading-none mb-1">Network Uptime</p>
+<p class="text-xs font-mono font-bold text-accent-green">99.98%</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-white/40 uppercase leading-none mb-1">Active Architects</p>
+<p class="text-xs font-mono font-bold text-primary">412</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded bg-primary px-4 py-2 text-xs font-bold uppercase tracking-widest hover:bg-primary/80 transition-all border border-primary/50 shadow-[0_0_15px_rgba(19,55,236,0.3)]">
+                    Connect Neural Link
+                </button>
+<div class="glitch-avatar size-8 rounded-full border border-border-dim bg-surface bg-center bg-cover" data-alt="Cyberpunk user profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAoyZyKZ3eQzGVUcH_tQKSQ-jfcAAK4Z2ZcASznGPWHCPwUHLaawRazpD-oiPA_kN0JFM2jKEz_5_ACcaGP2bZrnMqaJzNHxoUMWcMjKSxpY4LWyOXMcV-FXsBJyqBUQx5HOufxfuk-yx0bSuxBSPCOzMEJset4spPfP-REdm9nwNo_RwnO8dSWS9IDaxflqcFtDSHQobmQWUPT1tXcZslWh4IBdmimtUJpRbjt8SD148xWReuqRH97TyqmRQ1UnQT86rcd-4heH50");'></div>
+</div>
+</div>
+</header>
+<main class="flex flex-1 overflow-hidden h-[calc(100vh-64px)]">
+<!-- Sidebar Left: Top Visionaries -->
+<aside class="w-72 border-r border-border-dim bg-surface/30 p-4 flex flex-col gap-6 overflow-y-auto">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-xs font-black tracking-widest uppercase text-white/60">Top Visionaries</h3>
+<span class="material-symbols-outlined text-sm text-primary">leaderboard</span>
+</div>
+<div class="space-y-3">
+<!-- Visionary Card -->
+<div class="group flex items-center gap-3 p-2 rounded border border-transparent hover:border-primary/30 hover:bg-primary/5 transition-all cursor-pointer">
+<div class="relative">
+<div class="glitch-avatar size-10 rounded-sm bg-center bg-cover border border-white/10" data-alt="Visionary user avatar 1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD98OWEnJJvvTAblleT6s8sQslbLqMOe_TDJjj4hW99IrsoIwsTP-5PqVQyUDOoxl5l-xKSlTM_UR4Xr87RLXCbL4mh3xXbXmeHQ8cXrcwnynrhU5eqbayK_ZRYYRP2Wy7u24smvJCdnuxf_ZH06xw-cA5UGmtK-fXxsMb9pIZAqeNNKJDGJ2z83yE-oesGELSaj68f9drQb8ZUC1EB2wpYLhyvbOWbwMm1rNArvNpru4MifIXByeGDVQ3cHTqqpLU86zUnUJZULlc");'></div>
+<div class="absolute -top-1 -right-1 size-3 bg-accent-cyan rounded-full border-2 border-background-dark"></div>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">@Xenon_01</p>
+<p class="text-[10px] text-accent-cyan font-mono uppercase tracking-tighter">Neural Rank: 0.992</p>
+</div>
+</div>
+<!-- Visionary Card -->
+<div class="group flex items-center gap-3 p-2 rounded border border-transparent hover:border-primary/30 hover:bg-primary/5 transition-all cursor-pointer">
+<div class="relative">
+<div class="glitch-avatar size-10 rounded-sm bg-center bg-cover border border-white/10" data-alt="Visionary user avatar 2" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4SF5JbzQgjeH71IPP0LLg27AHh8p4eNl3xUUBY6r7_3iaHUEpLHRevH0TaTX0UlBlfCKJkUgBJzI4PVwtAJ8ohdETzegLTJPR4zgjUMO6v5_qtSzq35kC2t3QPGKEZuNFahL55P6gNlN4Heljokt-0dejvMdPbWeW6Q-rftVu6tVJimUlu9MLtgRKoCSmzMTYC6cHioKZj5tCBL6WOKfVGqaiY_0jVl6lrSROLbG_GaEh_WBjh1ToBcmYT9Xx1JOkEE8mdBdVo7Y");'></div>
+<div class="absolute -top-1 -right-1 size-3 bg-primary rounded-full border-2 border-background-dark"></div>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">@NullPointer_Ex</p>
+<p class="text-[10px] text-accent-purple font-mono uppercase tracking-tighter">Neural Rank: 0.985</p>
+</div>
+</div>
+<!-- Visionary Card -->
+<div class="group flex items-center gap-3 p-2 rounded border border-transparent hover:border-primary/30 hover:bg-primary/5 transition-all cursor-pointer">
+<div class="relative">
+<div class="glitch-avatar size-10 rounded-sm bg-center bg-cover border border-white/10" data-alt="Visionary user avatar 3" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuADf5HcfVQbo18xEEg5lAbplk9H25QOIuNzt9Sj1SCet3bZRQ5naildE1pcdfaDGb5H6X4E2_OxqAQYZ_NM9UpKTKaHgajso2Z5bpygHZwhZI0wfbcOrzmjtZX-1RMmCcGxx1kne9dXQIP-_Lwig87gLZlXyyfAhWnEl4hFqj0v8K7jvV19yNn75vuOVBa7aCuKFpLnjZd0gaoP4WytDyoli0T2N9xBA7XMmmF6CTuAag8jH3PYEFQY4KBWGDlCo6i_KsaZ_ENpK8Y");'></div>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">@VoidArchitect</p>
+<p class="text-[10px] text-white/40 font-mono uppercase tracking-tighter">Neural Rank: 0.941</p>
+</div>
+</div>
+<!-- Visionary Card -->
+<div class="group flex items-center gap-3 p-2 rounded border border-transparent hover:border-primary/30 hover:bg-primary/5 transition-all cursor-pointer">
+<div class="relative">
+<div class="glitch-avatar size-10 rounded-sm bg-center bg-cover border border-white/10" data-alt="Visionary user avatar 4" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCY8JaeLC5f_uhY6GtKfPG2KMBq-9_akkzzmmVXl8S8Z0jNgc32C3-S759QVbRMavf4-FrHshPEziGIpbBoKO-GvJz6PT7XvCzQNHy0O_HlLncm96Rhl55VKEO4BSnMLKuo_iC-Q5TH8VXOqavaK00TbXiBIPbrI_vUgLbULLvfqRmbsA_M3i5pVB0CXTd4C9nt14PQngCzboWYSfh3dTBVYY8YaBUCDhNelIRTL-GRjJ71v_sDsCKz-isw-bWthYgtcXCFV8sd8bk");'></div>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-sm font-bold truncate">@NeuralLink_99</p>
+<p class="text-[10px] text-accent-green font-mono uppercase tracking-tighter">Neural Rank: 0.912</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto border-t border-border-dim pt-4">
+<div class="p-3 bg-primary/10 border border-primary/20 rounded">
+<p class="text-[10px] text-primary font-bold uppercase mb-1">Contribution Phase</p>
+<p class="text-xs text-white/80 leading-relaxed italic">"The inevitable design of the ledger requires your neural pattern."</p>
+</div>
+</div>
+</aside>
+<!-- Main Content: Neural Ledger Grid -->
+<section class="flex-1 relative overflow-hidden flex flex-col">
+<div class="flex items-center justify-between p-6 border-b border-border-dim bg-background-dark">
+<div>
+<h1 class="text-2xl font-black uppercase tracking-[-0.05em] leading-none mb-1">Neural Ledger Visualization</h1>
+<p class="text-xs text-white/40 uppercase tracking-widest">Active shards: 10,242 nodes mapping global architectural shifts</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-[10px] font-bold border border-primary bg-primary/20 text-white rounded uppercase tracking-widest">Code</button>
+<button class="px-3 py-1 text-[10px] font-bold border border-border-dim hover:border-white/20 text-white/60 rounded uppercase tracking-widest">Design</button>
+<button class="px-3 py-1 text-[10px] font-bold border border-border-dim hover:border-white/20 text-white/60 rounded uppercase tracking-widest">Neural Map</button>
+</div>
+</div>
+<div class="flex-1 overflow-auto p-8 relative bg-[radial-gradient(circle_at_center,_rgba(19,55,236,0.05)_0%,_transparent_70%)]">
+<!-- Data Density Matrix -->
+<div class="neural-grid">
+<!-- Iterating many nodes manually for effect -->
+<!-- In a real app we'd use JS or a template engine, here we hardcode a pattern -->
+<div class="node bg-primary shadow-primary/40 rounded-sm"></div>
+<div class="node bg-primary/20 rounded-sm"></div>
+<div class="node bg-primary/60 rounded-sm"></div>
+<div class="node bg-primary/10 rounded-sm"></div>
+<div class="node bg-accent-cyan shadow-accent-cyan/20 rounded-sm"></div>
+<div class="node bg-primary/30 rounded-sm"></div>
+<div class="node bg-primary/10 rounded-sm"></div>
+<div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-accent-purple shadow-accent-purple/20 rounded-sm"></div>
+<div class="node bg-primary/10 rounded-sm"></div>
+<!-- Repeating pattern -->
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/10 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/30 rounded-sm"></div><div class="node bg-primary/80 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/20 rounded-sm"></div><div class="node bg-primary/5 rounded-sm"></div><div class="node bg-primary/40 rounded-sm"></div>
+<!-- Node mass ends here for visual demonstration -->
+</div>
+<!-- Floating Info Card (Contextual) -->
+<div class="absolute bottom-10 left-10 p-4 border border-primary/40 bg-background-dark/90 backdrop-blur rounded max-w-xs shadow-2xl">
+<div class="flex items-center gap-2 mb-2">
+<div class="size-2 rounded-full bg-primary shadow-[0_0_8px_#1337ec]"></div>
+<p class="text-[10px] font-mono uppercase tracking-widest text-primary">Node Interaction Detected</p>
+</div>
+<p class="text-xs font-bold mb-1 uppercase">Block #482,912-Alpha</p>
+<p class="text-[10px] text-white/60 font-mono leading-tight mb-3">Contributor: @GhostArchitect_0x<br/>Activity: High-Frequency Design Refinement<br/>Latency: 12ms</p>
+<div class="w-full bg-white/5 h-1 rounded overflow-hidden">
+<div class="bg-primary h-full w-2/3"></div>
+</div>
+</div>
+</div>
+<!-- Terminal Hud (Bottom) -->
+<div class="h-48 border-t border-border-dim bg-background-dark flex flex-col p-4 font-mono">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-accent-cyan">terminal</span>
+<h4 class="text-[10px] uppercase font-bold text-white/50 tracking-widest">Live Project Feed // Terminal</h4>
+</div>
+<div class="flex gap-4">
+<span class="text-[10px] text-accent-green">STATUS: SYNCED</span>
+<span class="text-[10px] text-white/30">LOGS: 1,429/sec</span>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto space-y-1 terminal-text text-white/70">
+<p><span class="text-accent-cyan">[INIT]</span> Neural shard committed by <span class="text-primary font-bold">@Xenon_01</span> (SHA-256: 4b29...)</p>
+<p><span class="text-accent-purple">[DEBATE]</span> UX proposal #942: High-latency mitigation active in shard 4.</p>
+<p><span class="text-accent-green">[SYNC]</span> Protocol handshake completed with 8,102 remote nodes.</p>
+<p><span class="text-white/40">[EVENT]</span> Archive snapshot created at sequence 89,201.</p>
+<p><span class="text-accent-cyan">[INIT]</span> Visual core architecture updated. Version 4.0.2-patch.1</p>
+<p><span class="text-accent-purple">[DEBATE]</span> Architect @NullPointer_Ex suggests increasing ledger density.</p>
+<p><span class="text-accent-green">[SYNC]</span> Neural ledger re-indexing... 42% complete.</p>
+<p><span class="text-primary/60">&gt; Waiting for next pattern...</span></p>
+</div>
+</div>
+</section>
+<!-- Sidebar Right: Quick Stats & Controls -->
+<aside class="w-64 border-l border-border-dim bg-surface/30 p-4 flex flex-col gap-8">
+<div>
+<h3 class="text-xs font-black tracking-widest uppercase text-white/60 mb-4">Focus Mode</h3>
+<div class="space-y-4">
+<div class="p-3 border border-border-dim bg-background-dark/50 rounded flex flex-col gap-2">
+<label class="text-[10px] uppercase text-white/40 font-bold">Data Isolation</label>
+<div class="flex items-center justify-between">
+<span class="text-xs font-mono">Ledger-Alpha</span>
+<div class="w-10 h-5 bg-primary rounded-full relative p-1 cursor-pointer">
+<div class="size-3 bg-white rounded-full ml-auto"></div>
+</div>
+</div>
+</div>
+<div class="p-3 border border-border-dim bg-background-dark/50 rounded flex flex-col gap-2">
+<label class="text-[10px] uppercase text-white/40 font-bold">Neural Intensity</label>
+<input class="w-full accent-primary bg-white/10 rounded-lg appearance-none cursor-pointer h-1" type="range"/>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="text-xs font-black tracking-widest uppercase text-white/60">Global Ledger Metrics</h3>
+<div class="grid grid-cols-1 gap-3">
+<div class="p-4 border border-border-dim rounded bg-gradient-to-br from-surface to-transparent">
+<p class="text-[10px] uppercase text-white/40 leading-none mb-2">Total Nodes</p>
+<div class="flex items-end justify-between">
+<h4 class="text-xl font-black font-mono">10,242</h4>
+<span class="text-[10px] text-accent-green font-bold">+1.2%</span>
+</div>
+</div>
+<div class="p-4 border border-border-dim rounded bg-gradient-to-br from-surface to-transparent">
+<p class="text-[10px] uppercase text-white/40 leading-none mb-2">Daily Commits</p>
+<div class="flex items-end justify-between">
+<h4 class="text-xl font-black font-mono">4,812</h4>
+<span class="text-[10px] text-accent-cyan font-bold">+5.7%</span>
+</div>
+</div>
+<div class="p-4 border border-border-dim rounded bg-gradient-to-br from-surface to-transparent">
+<p class="text-[10px] uppercase text-white/40 leading-none mb-2">Ledger Capacity</p>
+<div class="flex items-end justify-between">
+<h4 class="text-xl font-black font-mono">82.4%</h4>
+<span class="text-[10px] text-accent-purple font-bold">STABLE</span>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<button class="w-full flex items-center justify-center gap-2 rounded bg-surface border border-border-dim hover:border-white/20 px-4 py-3 text-xs font-bold uppercase tracking-widest transition-all">
+<span class="material-symbols-outlined text-sm">download</span>
+                    Export Snapshot
+                </button>
+</div>
+</aside>
+</main>
+<!-- Footer HUD -->
+<footer class="h-8 border-t border-border-dim bg-background-dark flex items-center justify-between px-6">
+<div class="flex items-center gap-6">
+<span class="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">Ghost Link Protocol // End of Line</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="size-1.5 bg-accent-green rounded-full animate-pulse"></div>
+<span class="text-[10px] font-mono text-accent-green uppercase tracking-widest">Global Sync: Active</span>
+</div>
+<div class="h-4 w-px bg-border-dim"></div>
+<span class="text-[10px] font-mono text-white/30 uppercase tracking-widest">Coord: 35.6895° N, 139.6917° E</span>
+</div>
+</footer>
+</div>
+</body></html>

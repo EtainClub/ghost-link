@@ -7,9 +7,10 @@ import * as THREE from 'three';
 
 interface VRSceneProps {
     mode: 'fpv' | 'third-person';
+    task: 'soldering' | 'domestic'; // New task type support
 }
 
-export default function VRScene({ mode }: VRSceneProps) {
+export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
     const robotRef = useRef<THREE.Group>(null);
 
     // Animate robot idle movement
@@ -113,44 +114,77 @@ export default function VRScene({ mode }: VRSceneProps) {
                     </group>
                 </group>
 
-                {/* Right Robot Arm */}
-                <group position={[0.6, 1.4, 0]}>
-                    {/* Shoulder */}
-                    <mesh position={[0, 0, 0]}>
-                        <sphereGeometry args={[0.15, 16, 16]} />
-                        <meshStandardMaterial color="#334155" metalness={0.8} />
-                    </mesh>
-                    {/* Upper Arm */}
-                    <mesh position={[0.1, -0.4, 0]} rotation={[0, 0, -0.2]}>
-                        <boxGeometry args={[0.12, 0.8, 0.12]} />
-                        <meshStandardMaterial color="#475569" metalness={0.7} />
-                    </mesh>
-                    {/* Forearm */}
-                    <mesh position={[0.2, -1, 0.2]} rotation={[0.4, 0, -0.2]}>
-                        <boxGeometry args={[0.1, 0.7, 0.1]} />
-                        <meshStandardMaterial color="#64748b" metalness={0.8} />
-                    </mesh>
-                    {/* Robot Hand (Claw) */}
-                    <group position={[0.25, -1.4, 0.3]} rotation={[0.4, 0, -0.2]}>
-                        <mesh>
-                            <boxGeometry args={[0.12, 0.15, 0.05]} />
-                            <meshStandardMaterial color="#334155" />
+                {/* Tool Logic Based on Task */}
+                {task === 'soldering' ? (
+                    /* Soldering Setup */
+                    <group position={[0.6, 1.4, 0]}>
+                        {/* Shoulder */}
+                        <mesh position={[0, 0, 0]}>
+                            <sphereGeometry args={[0.15, 16, 16]} />
+                            <meshStandardMaterial color="#334155" metalness={0.8} />
                         </mesh>
-                        {/* Fingers */}
-                        <mesh position={[0, -0.1, 0.05]} rotation={[0.2, 0, 0]}>
-                            <boxGeometry args={[0.03, 0.3, 0.03]} />
-                            <meshStandardMaterial color="#94a3b8" metalness={1} />
+                        {/* Upper Arm (Angled forward) */}
+                        <mesh position={[0.1, -0.4, 0.2]} rotation={[0.4, 0, -0.2]}>
+                            <boxGeometry args={[0.12, 0.8, 0.12]} />
+                            <meshStandardMaterial color="#475569" metalness={0.7} />
                         </mesh>
-                        <mesh position={[-0.04, -0.1, 0.05]} rotation={[0.2, 0, 0.1]}>
-                            <boxGeometry args={[0.03, 0.3, 0.03]} />
-                            <meshStandardMaterial color="#94a3b8" metalness={1} />
+                        {/* Forearm (Angled towards desk) */}
+                        <mesh position={[0.1, -1, 0.6]} rotation={[1.2, -0.2, -0.2]}>
+                            <boxGeometry args={[0.1, 0.7, 0.1]} />
+                            <meshStandardMaterial color="#64748b" metalness={0.8} />
                         </mesh>
-                        <mesh position={[0.04, -0.1, 0.05]} rotation={[0.2, 0, -0.1]}>
-                            <boxGeometry args={[0.03, 0.3, 0.03]} />
-                            <meshStandardMaterial color="#94a3b8" metalness={1} />
-                        </mesh>
+                        {/* Hand & Tool */}
+                        <group position={[0.05, -1.3, 0.8]} rotation={[1.5, -0.2, -0.5]}>
+                            {/* Wrist */}
+                            <mesh>
+                                <boxGeometry args={[0.12, 0.15, 0.05]} />
+                                <meshStandardMaterial color="#334155" />
+                            </mesh>
+                            {/* Soldering Iron Tool */}
+                            <mesh position={[0, -0.4, 0]} rotation={[0, 0, 0]}>
+                                <cylinderGeometry args={[0.02, 0.04, 0.8]} />
+                                <meshStandardMaterial color="#3b82f6" metalness={0.5} />
+                            </mesh>
+                            {/* Glowing Tip */}
+                            <mesh position={[0, -0.8, 0]}>
+                                <coneGeometry args={[0.01, 0.1, 8]} />
+                                <meshStandardMaterial color="#ef4444" emissive="#ef4444" emissiveIntensity={5} />
+                            </mesh>
+                        </group>
                     </group>
-                </group>
+                ) : (
+                    /* Domestic (Cleaning) Setup */
+                    <group position={[0.6, 1.4, 0]}>
+                        {/* Shoulder */}
+                        <mesh position={[0, 0, 0]}>
+                            <sphereGeometry args={[0.15, 16, 16]} />
+                            <meshStandardMaterial color="#334155" metalness={0.8} />
+                        </mesh>
+                        {/* Upper Arm */}
+                        <mesh position={[0.1, -0.4, 0.2]} rotation={[0.3, 0, -0.2]}>
+                            <boxGeometry args={[0.12, 0.8, 0.12]} />
+                            <meshStandardMaterial color="#475569" metalness={0.7} />
+                        </mesh>
+                        {/* Forearm */}
+                        <mesh position={[0.1, -1, 0.6]} rotation={[0.8, 0, -0.2]}>
+                            <boxGeometry args={[0.1, 0.7, 0.1]} />
+                            <meshStandardMaterial color="#64748b" metalness={0.8} />
+                        </mesh>
+                        {/* Hand & Sponge */}
+                        <group position={[0.05, -1.2, 0.7]} rotation={[1.5, 0, 0]}>
+                            {/* Wrist */}
+                            <mesh>
+                                <boxGeometry args={[0.12, 0.15, 0.05]} />
+                                <meshStandardMaterial color="#334155" />
+                            </mesh>
+                            {/* Sponge */}
+                            <mesh position={[0, -0.2, 0]}>
+                                <boxGeometry args={[0.2, 0.1, 0.3]} />
+                                <meshStandardMaterial color="#fcd34d" roughness={1} />
+                            </mesh>
+                        </group>
+                    </group>
+                )}
             </group>
 
             {/* Environment/Fog */}
@@ -190,31 +224,52 @@ export default function VRScene({ mode }: VRSceneProps) {
                 {/* Desk Surface */}
                 <mesh position={[0, 0.8, 0]} receiveShadow>
                     <boxGeometry args={[4, 0.1, 2]} />
-                    <meshStandardMaterial color="#0f172a" roughness={0.8} metalness={0.2} />
+                    <meshStandardMaterial color={task === 'soldering' ? "#0f172a" : "#e2e8f0"} roughness={task === 'soldering' ? 0.8 : 0.2} metalness={0.2} />
                 </mesh>
 
-                {/* Circuit Board */}
-                <group position={[0, 0.86, 0]} rotation={[-0.1, 0, 0]}>
-                    {/* PCB Board */}
-                    <mesh receiveShadow>
-                        <boxGeometry args={[0.6, 0.02, 0.4]} />
-                        <meshStandardMaterial color="#059669" roughness={0.3} metalness={0.5} />
-                    </mesh>
-                    {/* Chips/Components */}
-                    <mesh position={[0, 0.02, 0]} castShadow>
-                        <boxGeometry args={[0.1, 0.02, 0.1]} />
-                        <meshStandardMaterial color="#1e293b" />
-                    </mesh>
-                    <mesh position={[0.15, 0.02, -0.1]} castShadow>
-                        <boxGeometry args={[0.05, 0.03, 0.15]} />
-                        <meshStandardMaterial color="#000000" />
-                    </mesh>
-                    {/* Traces/Details (Simulated) */}
-                    <gridHelper args={[0.6, 20, 0x10b981, 0x10b981]} position={[0, 0.011, 0]} rotation={[0, 0, 0]} />
-                </group>
+                {task === 'soldering' ? (
+                    // Soldering: Circuit Board
+                    <group position={[0, 0.86, 0]} rotation={[-0.1, 0, 0]}>
+                        {/* PCB Board */}
+                        <mesh receiveShadow>
+                            <boxGeometry args={[0.6, 0.02, 0.4]} />
+                            <meshStandardMaterial color="#059669" roughness={0.3} metalness={0.5} />
+                        </mesh>
+                        {/* Chips/Components */}
+                        <mesh position={[0, 0.02, 0]} castShadow>
+                            <boxGeometry args={[0.1, 0.02, 0.1]} />
+                            <meshStandardMaterial color="#1e293b" />
+                        </mesh>
+                        <mesh position={[0.15, 0.02, -0.1]} castShadow>
+                            <boxGeometry args={[0.05, 0.03, 0.15]} />
+                            <meshStandardMaterial color="#000000" />
+                        </mesh>
+                        {/* Traces/Details (Simulated) */}
+                        <gridHelper args={[0.6, 20, 0x10b981, 0x10b981]} position={[0, 0.011, 0]} rotation={[0, 0, 0]} />
+                    </group>
+                ) : (
+                    // Domestic: Table Cleaning / Sorting
+                    <group position={[0, 0.86, 0]}>
+                        {/* Plate / Table Items */}
+                        <mesh position={[-0.2, 0.02, 0.1]} castShadow>
+                            <cylinderGeometry args={[0.15, 0.1, 0.05, 32]} />
+                            <meshStandardMaterial color="#ffedd5" />
+                        </mesh>
+                        {/* Cup */}
+                        <mesh position={[0.3, 0.1, -0.2]} castShadow>
+                            <cylinderGeometry args={[0.06, 0.05, 0.15, 16]} />
+                            <meshStandardMaterial color="#3b82f6" transparent opacity={0.6} />
+                        </mesh>
+                        {/* Spilled Juice (Stain) */}
+                        <mesh position={[0.1, 0.005, 0.1]} rotation={[-Math.PI / 2, 0, 0]}>
+                            <circleGeometry args={[0.12, 32]} />
+                            <meshBasicMaterial color="#ef4444" transparent opacity={0.4} />
+                        </mesh>
+                    </group>
+                )}
 
                 {/* Desk Lamp Glow */}
-                <pointLight position={[0, 1.5, 0]} distance={2} intensity={2} color="#fbbf24" />
+                <pointLight position={[0, 1.5, 0]} distance={2} intensity={2} color={task === 'soldering' ? "#fbbf24" : "#ffffff"} />
             </group>
         </>
     );

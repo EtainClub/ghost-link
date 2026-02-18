@@ -24,6 +24,9 @@ export default function VRPage() {
     // Dual View State: false = Main is FPV, PIP is 3rd Person. true = Swapped.
     const [swapViews, setSwapViews] = useState(false);
 
+    // Task State: 'soldering' or 'domestic'
+    const [activeTask, setActiveTask] = useState<'soldering' | 'domestic'>('soldering');
+
     // Simulated Data Updates
     useEffect(() => {
         const interval = setInterval(() => {
@@ -45,6 +48,12 @@ export default function VRPage() {
         setTimeout(() => setIsEmergencyStop(false), 4000);
     };
 
+    const switchTask = (task: 'soldering' | 'domestic') => {
+        setActiveTask(task);
+        setObjectiveProgress(0); // Reset progress
+        addLog('INFO', `TASK SWAPPED: ${task.toUpperCase()}`);
+    };
+
     const addLog = (status: string, msg: string) => {
         setLogs(prev => [{ status, msg }, ...prev.slice(0, 4)]);
     };
@@ -59,7 +68,7 @@ export default function VRPage() {
             <div className="absolute inset-0">
                 <Canvas shadows dpr={[1, 2]}>
                     <Suspense fallback={null}>
-                        <VRScene mode={mainMode} />
+                        <VRScene mode={mainMode} task={activeTask} />
                     </Suspense>
                 </Canvas>
 
@@ -102,9 +111,26 @@ export default function VRPage() {
 
                 {/* Center: Objective */}
                 <div className="flex flex-col items-center pointer-events-auto">
-                    <div className="backdrop-blur-md bg-[#1337ec]/10 border-x border-b border-[#1337ec]/30 px-8 py-3 rounded-b-lg text-center">
-                        <div className="text-[10px] text-[#00e5ff] font-bold uppercase tracking-[0.2em] mb-1">Active Mission</div>
-                        <div className="text-lg font-bold tracking-tight font-sans text-white text-shadow-glow">OBJECTIVE: SECURE SAMPLE 492-X</div>
+                    <div className="backdrop-blur-md bg-[#1337ec]/10 border-x border-b border-[#1337ec]/30 px-8 py-3 rounded-b-lg text-center relative group">
+                        {/* Dropdown / Task Selector Trigger */}
+                        <div className="text-[10px] text-[#00e5ff] font-bold uppercase tracking-[0.2em] mb-1 cursor-pointer hover:text-white transition-colors"
+                            title="Click to change task (Simulated)">
+                            Active Mission ▾
+                        </div>
+                        <div className="text-lg font-bold tracking-tight font-sans text-white text-shadow-glow">
+                            {activeTask === 'soldering' ? 'OBJECTIVE: SECURE SAMPLE 492-X' : 'OBJECTIVE: DOMESTIC SANITATION'}
+                        </div>
+
+                        {/* Task Switching Menu (Hover) */}
+                        <div className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 bg-black/90 border border-[#00e5ff]/30 rounded-lg overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto flex flex-col z-50">
+                            <button onClick={() => switchTask('soldering')} className={`px-4 py-2 text-xs text-left hover:bg-[#00e5ff]/20 ${activeTask === 'soldering' ? 'text-[#00e5ff] font-bold' : 'text-gray-400'}`}>
+                                ⚡ PRECISION SOLDERING
+                            </button>
+                            <button onClick={() => switchTask('domestic')} className={`px-4 py-2 text-xs text-left hover:bg-[#00e5ff]/20 ${activeTask === 'domestic' ? 'text-[#00e5ff] font-bold' : 'text-gray-400'}`}>
+                                🏠 DOMESTIC SORTING
+                            </button>
+                        </div>
+
                         <div className="flex items-center gap-4 mt-2 justify-center">
                             <div className="w-48 bg-white/10 h-1.5 rounded-full overflow-hidden">
                                 <div className="bg-[#00e5ff] h-full transition-all duration-700" style={{ width: `${objectiveProgress}%` }} />
@@ -201,7 +227,7 @@ export default function VRPage() {
                         <div className="absolute inset-0">
                             <Canvas shadows dpr={[1, 2]}>
                                 <Suspense fallback={null}>
-                                    <VRScene mode={pipMode} />
+                                    <VRScene mode={pipMode} task={activeTask} />
                                 </Suspense>
                             </Canvas>
                         </div>

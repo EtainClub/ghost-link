@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import GlobalNetworkMap from '../components/GlobalNetworkMap';
 import { useState } from 'react';
 
 const allJobs = [
@@ -44,101 +45,109 @@ export default function MarketplacePage() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: '80px' }}>
+            <main style={{ flex: 1, paddingTop: '60px' }}>
                 {/* Header */}
-                <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '40px 24px' }}>
+                <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '32px 16px' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
-                            <div>
+                        <div className="grid lg:grid-cols-12 gap-8 items-center">
+                            {/* Left Content */}
+                            <div className="lg:col-span-7">
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
                                     <span className="badge badge-green" style={{ fontSize: '0.62rem' }}>● LIVE PROTOCOL · 54,205 UNITS ACTIVE</span>
                                 </div>
-                                <h1 style={{ fontSize: '2.5rem', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px' }}>
-                                    MONETIZE YOUR<br /><span style={{ color: '#00e5ff' }}>MOTOR SKILLS</span>
+                                <h1 style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px', lineHeight: 1.1 }}>
+                                    MONETIZE YOUR<br /><span style={{ color: '#00e5ff' }}>INTELLIGENCE</span>
                                 </h1>
-                                <p style={{ fontSize: '0.9rem', color: '#8899aa', maxWidth: '420px', lineHeight: 1.6 }}>
+                                <p style={{ fontSize: '0.95rem', color: '#8899aa', maxWidth: '540px', lineHeight: 1.6 }}>
                                     Remotely control high-fidelity robotic avatars. Connect to the Ghost Link network and earn real-time crypto yields for complex physical tasks.
                                 </p>
-                                <div style={{ display: 'flex', gap: '12px', marginTop: '20px' }}>
-                                    <button className="btn-primary" style={{ padding: '12px 24px' }}>⚡ Start Earning Now</button>
-                                    <button className="btn-secondary" style={{ padding: '12px 24px' }}>View Demo →</button>
+                                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '24px' }}>
+                                    <Link href="/dashboard">
+                                        <button className="btn-primary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>⚡ Start Earning Now</button>
+                                    </Link>
+                                    <Link href="/vr">
+                                        <button className="btn-secondary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>View Demo →</button>
+                                    </Link>
+                                </div>
+
+                                {/* Stats Ticker */}
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4" style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                                    {[
+                                        { label: 'TOTAL YIELD PAID', value: '$42.8M' },
+                                        { label: 'AVG HOURLY RATE', value: '45.2 CRED', highlight: true },
+                                        { label: 'GLOBAL UPTIME', value: '99.98%' },
+                                        { label: 'NETWORK LOAD', value: 'LOW', green: true },
+                                    ].map((s, i) => (
+                                        <div key={i}>
+                                            <p style={{ fontSize: '0.62rem', color: '#4a5568', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '4px' }}>{s.label}</p>
+                                            <p className="mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: s.highlight ? '#00e5ff' : s.green ? '#10b981' : '#e2e8f0' }}>{s.value}</p>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
 
-                            {/* Featured Robot */}
-                            <div className="card glow-cyan" style={{ padding: '20px', minWidth: '240px', textAlign: 'center' }}>
-                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
-                                    <span className="badge badge-green" style={{ fontSize: '0.62rem' }}>ONLINE</span>
-                                    <span style={{ fontSize: '0.72rem', color: '#8899aa' }}>BAT: <span style={{ color: '#10b981' }}>94%</span></span>
-                                </div>
-                                <div style={{
-                                    width: '120px', height: '120px', margin: '0 auto 12px',
-                                    borderRadius: '50%',
-                                    background: 'linear-gradient(135deg, #0d1420, #1a2535)',
-                                    border: '2px solid #00e5ff',
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    fontSize: '3rem',
-                                    boxShadow: '0 0 30px rgba(0,229,255,0.2)',
-                                }}>🤖</div>
-                                <p style={{ fontSize: '0.65rem', color: '#4a5568', marginBottom: '4px' }}>FEATURED UNIT</p>
-                                <p style={{ fontWeight: 700, fontSize: '0.9rem' }}>Atlas-X Gen 4</p>
-                                <button className="btn-primary" style={{ marginTop: '12px', padding: '8px 20px', fontSize: '0.75rem' }}>
-                                    📡 Connect
-                                </button>
-                            </div>
-                        </div>
+                            {/* Right Content - Featured Robot */}
+                            <div className="lg:col-span-5 relative h-full min-h-[280px] lg:min-h-[400px] flex items-center justify-center">
+                                {/* Glow Effect */}
+                                <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-3xl opacity-20 transform translate-y-10"></div>
 
-                        {/* Stats */}
-                        <div style={{ display: 'flex', gap: '40px', marginTop: '32px', paddingTop: '24px', borderTop: '1px solid #1e2d45' }}>
-                            {[
-                                { label: 'TOTAL YIELD PAID', value: '$42.8M' },
-                                { label: 'AVG HOURLY RATE', value: '45.2 CRED', highlight: true },
-                                { label: 'GLOBAL UPTIME', value: '99.98%' },
-                                { label: 'NETWORK LOAD', value: 'LOW', green: true },
-                            ].map((s, i) => (
-                                <div key={i}>
-                                    <p style={{ fontSize: '0.62rem', color: '#4a5568', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '4px' }}>{s.label}</p>
-                                    <p className="mono" style={{ fontSize: '1.2rem', fontWeight: 800, color: s.highlight ? '#00e5ff' : s.green ? '#10b981' : '#e2e8f0' }}>{s.value}</p>
+                                {/* Robot Card */}
+                                <div className="relative w-full aspect-[4/5] rounded-xl overflow-hidden border border-white/10 shadow-2xl bg-[#131316] group" style={{ maxHeight: '360px' }}>
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+
+                                    {/* Image */}
+                                    <img
+                                        alt="Atlas-X Gen 4"
+                                        className="w-full h-full object-cover opacity-90 transition-transform duration-700 group-hover:scale-105"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoblqyZFQw45rhOXOLUMyJ-hOwvQnMTX_egnX4V1Ztm3insRgFveqTgQU3eo5eRtEWnstAvPzEWPvzf81IWPC1VUgIZRqg7Hc3qOJA-k2W7WbvbSd1knAYEVeZt2hDuiJb9dy-dvNpuzGv2oTFUBZu_xTxR2ZUvdKLpUtskIo-KRLX4lKHErxx263s5N4-IvJ1_ylmLFvQN5FKzSDBQvKodse_ELmvjHT5xbP_YiCkrFuv9HKdRBDYQsy_U3zU6cyBeDIEHsEB8gM"
+                                    />
+
+                                    {/* HUD Elements */}
+                                    <div className="absolute top-4 right-4 z-20 flex gap-2">
+                                        <span className="mono" style={{ background: 'rgba(0,0,0,0.6)', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', color: '#4ade80', border: '1px solid rgba(74, 222, 128, 0.2)' }}>● ONLINE</span>
+                                        <span className="mono" style={{ background: 'rgba(0,0,0,0.6)', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', color: 'white', border: '1px solid rgba(255, 255, 255, 0.1)' }}>BAT: 94%</span>
+                                    </div>
                                 </div>
-                            ))}
+                            </div>
                         </div>
                     </div>
                 </section>
 
                 {/* Job Market */}
-                <section style={{ padding: '40px 24px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
-                        <div>
-                            <h2 style={{ fontSize: '1.1rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                <span style={{ width: '4px', height: '20px', background: '#00e5ff', borderRadius: '2px', display: 'inline-block' }} />
-                                Live Job Market
-                            </h2>
-                            <p style={{ fontSize: '0.78rem', color: '#4a5568', marginTop: '4px' }}>Real-time control opportunities available for immediate connection.</p>
-                        </div>
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                            <button className="btn-secondary" style={{ padding: '6px 14px', fontSize: '0.75rem' }}>⚙ Filters</button>
-                            <div style={{ display: 'flex', gap: '4px' }}>
-                                {categories.map(cat => (
-                                    <button key={cat} onClick={() => setActiveCategory(cat)} style={{
-                                        padding: '6px 14px',
-                                        fontSize: '0.75rem',
-                                        fontWeight: 600,
-                                        borderRadius: '4px',
-                                        border: '1px solid',
-                                        cursor: 'pointer',
-                                        transition: 'all 0.2s',
-                                        background: activeCategory === cat ? '#00e5ff' : 'transparent',
-                                        color: activeCategory === cat ? '#000' : '#8899aa',
-                                        borderColor: activeCategory === cat ? '#00e5ff' : '#1e2d45',
-                                    }}>
-                                        {cat}
-                                    </button>
-                                ))}
-                            </div>
+                <section style={{ padding: '32px 16px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+                    <div style={{ marginBottom: '20px' }}>
+                        <h2 style={{ fontSize: '1.1rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                            <span style={{ width: '4px', height: '20px', background: '#00e5ff', borderRadius: '2px', display: 'inline-block' }} />
+                            Live Job Market
+                        </h2>
+                        <p style={{ fontSize: '0.78rem', color: '#4a5568', marginTop: '4px' }}>Real-time control opportunities available for immediate connection.</p>
+                    </div>
+
+                    {/* Filters - scrollable on mobile */}
+                    <div style={{ overflowX: 'auto', paddingBottom: '8px', marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', minWidth: 'max-content' }}>
+                            <button className="btn-secondary" style={{ padding: '6px 14px', fontSize: '0.75rem', flexShrink: 0 }}>⚙ Filters</button>
+                            {categories.map(cat => (
+                                <button key={cat} onClick={() => setActiveCategory(cat)} style={{
+                                    padding: '6px 14px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 600,
+                                    borderRadius: '4px',
+                                    border: '1px solid',
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s',
+                                    background: activeCategory === cat ? '#00e5ff' : 'transparent',
+                                    color: activeCategory === cat ? '#000' : '#8899aa',
+                                    borderColor: activeCategory === cat ? '#00e5ff' : '#1e2d45',
+                                    flexShrink: 0,
+                                }}>
+                                    {cat}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '20px' }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         {filtered.map((job, i) => (
                             <div key={i} className="card" style={{ padding: '20px' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
@@ -194,6 +203,9 @@ export default function MarketplacePage() {
                     </div>
                 </section>
             </main>
+
+            {/* Global Node Map */}
+            <GlobalNetworkMap />
 
             <Footer />
         </div>

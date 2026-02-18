@@ -32,44 +32,44 @@ export default function LeaderboardPage() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: '80px' }}>
+            <main style={{ flex: 1, paddingTop: '60px' }}>
                 {/* Header */}
-                <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '40px 24px' }}>
+                <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '32px 16px' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
                             <div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                                     <span className="badge badge-green" style={{ fontSize: '0.62rem' }}>● LIVE METRICS</span>
                                     <span style={{ fontSize: '0.75rem', color: '#4a5568' }}>System Operational</span>
                                 </div>
-                                <h1 style={{ fontSize: '2.5rem', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px' }}>
+                                <h1 style={{ fontSize: 'clamp(1.6rem, 6vw, 2.5rem)', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px' }}>
                                     GLOBAL OPERATOR <span style={{ color: '#00e5ff' }}>LEADERBOARD</span>
                                 </h1>
                                 <p style={{ fontSize: '0.85rem', color: '#8899aa', maxWidth: '480px', lineHeight: 1.6 }}>
                                     Real-time ranking of top tele-operators contributing to the Global Neural Network. Higher rank = Higher earnings multiplier.
                                 </p>
                             </div>
-                            <div style={{ display: 'flex', gap: '12px' }}>
-                                <button className="btn-secondary" style={{ padding: '10px 20px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
+                                <button className="btn-secondary" style={{ padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem' }}>
                                     ↓ Export CSV
                                 </button>
-                                <button className="btn-primary" style={{ padding: '10px 20px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <button className="btn-primary" style={{ padding: '10px 16px', display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.82rem' }}>
                                     + Connect Robot
                                 </button>
                             </div>
                         </div>
 
                         {/* Global Stats */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px', marginTop: '32px' }}>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4" style={{ marginTop: '28px' }}>
                             {[
                                 { label: 'TOTAL HUMAN-HOURS', value: '2,405,892', change: '+12.4%', progress: 75 },
                                 { label: 'AI TRAINING PROGRESS', value: '87.4%', change: '+5.2%', sub: 'Epoch 4.2 · Phase 3/4', progress: 87 },
                                 { label: 'ACTIVE ROBOTS', value: '4,102', sub: '/ 5,000 Capacity', note: 'Network load at 82%', progress: 82 },
                             ].map((stat, i) => (
-                                <div key={i} className="card" style={{ padding: '24px' }}>
+                                <div key={i} className="card" style={{ padding: '20px' }}>
                                     <p style={{ fontSize: '0.62rem', color: '#4a5568', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>{stat.label}</p>
                                     <div style={{ display: 'flex', alignItems: 'baseline', gap: '10px', marginBottom: '4px' }}>
-                                        <p className="mono" style={{ fontSize: '1.8rem', fontWeight: 800 }}>{stat.value}</p>
+                                        <p className="mono" style={{ fontSize: '1.6rem', fontWeight: 800 }}>{stat.value}</p>
                                         {stat.change && <span style={{ fontSize: '0.78rem', color: '#10b981', fontWeight: 600 }}>↑ {stat.change}</span>}
                                     </div>
                                     {stat.sub && <p style={{ fontSize: '0.72rem', color: '#4a5568', marginBottom: '8px' }}>{stat.sub}</p>}
@@ -83,39 +83,43 @@ export default function LeaderboardPage() {
                     </div>
                 </section>
 
-                {/* Leaderboard Table */}
-                <section style={{ padding: '32px 24px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
-                        <div style={{ display: 'flex', gap: '4px' }}>
-                            {categories.map(cat => (
-                                <button key={cat} onClick={() => setActiveCategory(cat)} style={{
-                                    padding: '8px 16px', fontSize: '0.78rem', fontWeight: 600,
-                                    borderRadius: '4px', border: '1px solid', cursor: 'pointer', transition: 'all 0.2s',
-                                    background: activeCategory === cat ? '#00e5ff' : 'transparent',
-                                    color: activeCategory === cat ? '#000' : '#8899aa',
-                                    borderColor: activeCategory === cat ? '#00e5ff' : '#1e2d45',
-                                }}>
-                                    {cat}
-                                </button>
-                            ))}
-                        </div>
-                        <div style={{ display: 'flex', gap: '4px' }}>
-                            {timeframes.map(t => (
-                                <button key={t} onClick={() => setActiveTime(t)} style={{
-                                    padding: '6px 14px', fontSize: '0.75rem', fontWeight: 600,
-                                    borderRadius: '4px', border: '1px solid', cursor: 'pointer', transition: 'all 0.2s',
-                                    background: activeTime === t ? '#1e2d45' : 'transparent',
-                                    color: activeTime === t ? '#e2e8f0' : '#4a5568',
-                                    borderColor: '#1e2d45',
-                                }}>
-                                    {t}
-                                </button>
-                            ))}
-                            <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>⚙</button>
+                {/* Leaderboard */}
+                <section style={{ padding: '28px 16px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+                    {/* Filter bar - scrollable on mobile */}
+                    <div style={{ overflowX: 'auto', paddingBottom: '8px', marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', minWidth: 'max-content' }}>
+                            <div style={{ display: 'flex', gap: '4px' }}>
+                                {categories.map(cat => (
+                                    <button key={cat} onClick={() => setActiveCategory(cat)} style={{
+                                        padding: '8px 14px', fontSize: '0.75rem', fontWeight: 600,
+                                        borderRadius: '4px', border: '1px solid', cursor: 'pointer', transition: 'all 0.2s',
+                                        background: activeCategory === cat ? '#00e5ff' : 'transparent',
+                                        color: activeCategory === cat ? '#000' : '#8899aa',
+                                        borderColor: activeCategory === cat ? '#00e5ff' : '#1e2d45',
+                                    }}>
+                                        {cat}
+                                    </button>
+                                ))}
+                            </div>
+                            <div style={{ display: 'flex', gap: '4px' }}>
+                                {timeframes.map(t => (
+                                    <button key={t} onClick={() => setActiveTime(t)} style={{
+                                        padding: '6px 12px', fontSize: '0.75rem', fontWeight: 600,
+                                        borderRadius: '4px', border: '1px solid', cursor: 'pointer', transition: 'all 0.2s',
+                                        background: activeTime === t ? '#1e2d45' : 'transparent',
+                                        color: activeTime === t ? '#e2e8f0' : '#4a5568',
+                                        borderColor: '#1e2d45',
+                                    }}>
+                                        {t}
+                                    </button>
+                                ))}
+                                <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>⚙</button>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="card" style={{ overflow: 'hidden' }}>
+                    {/* Desktop Table */}
+                    <div className="hidden md:block card" style={{ overflow: 'hidden' }}>
                         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                             <thead>
                                 <tr style={{ borderBottom: '1px solid #1e2d45', background: '#0d1420' }}>
@@ -188,6 +192,62 @@ export default function LeaderboardPage() {
                         </table>
 
                         <div style={{ padding: '20px', textAlign: 'center', borderTop: '1px solid #1e2d45' }}>
+                            <button style={{ background: 'none', border: 'none', color: '#00e5ff', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 600 }}>
+                                Show More Operators ↓
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Mobile Cards */}
+                    <div className="flex md:hidden flex-col gap-3">
+                        {operators.map((op, i) => (
+                            <div key={i} className="card" style={{ padding: '16px' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+                                    <div style={{
+                                        width: '32px', height: '32px', borderRadius: '50%',
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        fontSize: '0.82rem', fontWeight: 800, flexShrink: 0,
+                                        ...getRankStyle(op.rank),
+                                    }}>
+                                        {op.rank}
+                                    </div>
+                                    <div style={{
+                                        width: '40px', height: '40px', borderRadius: '50%',
+                                        background: '#1e2d45', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        fontSize: '1.2rem', border: op.rank <= 3 ? '2px solid #00e5ff' : '2px solid #1e2d45',
+                                        flexShrink: 0,
+                                    }}>
+                                        {op.avatar}
+                                    </div>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <p style={{ fontWeight: 700, fontSize: '0.95rem' }}>{op.name}</p>
+                                        {op.badge && <p style={{ fontSize: '0.68rem', color: '#00e5ff' }}>⊙ {op.badge}</p>}
+                                        {op.location && <p style={{ fontSize: '0.68rem', color: '#4a5568' }}>{op.location}</p>}
+                                    </div>
+                                    <span style={{
+                                        padding: '4px 8px', borderRadius: '3px', fontSize: '0.68rem', fontWeight: 600,
+                                        background: `${op.specColor}20`, color: op.specColor, border: `1px solid ${op.specColor}40`,
+                                        flexShrink: 0,
+                                    }}>{op.spec}</span>
+                                </div>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                                    <div>
+                                        <p style={{ fontSize: '0.6rem', color: '#4a5568', marginBottom: '2px' }}>TASKS</p>
+                                        <p className="mono" style={{ fontSize: '0.85rem', fontWeight: 700 }}>{op.tasks.toLocaleString()}</p>
+                                    </div>
+                                    <div>
+                                        <p style={{ fontSize: '0.6rem', color: '#4a5568', marginBottom: '2px' }}>QUALITY</p>
+                                        <p className="mono" style={{ fontSize: '0.85rem', fontWeight: 700, color: op.quality > 95 ? '#10b981' : op.quality > 85 ? '#f59e0b' : '#ef4444' }}>{op.quality}%</p>
+                                    </div>
+                                    <div>
+                                        <p style={{ fontSize: '0.6rem', color: '#4a5568', marginBottom: '2px' }}>EARNINGS</p>
+                                        <p className="mono" style={{ fontSize: '0.85rem', fontWeight: 700 }}>{op.earnings.toLocaleString()} <span style={{ fontSize: '0.65rem', color: '#4a5568' }}>CR</span></p>
+                                        {op.change && <p style={{ fontSize: '0.65rem', color: '#10b981' }}>{op.change}</p>}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        <div style={{ textAlign: 'center', marginTop: '8px' }}>
                             <button style={{ background: 'none', border: 'none', color: '#00e5ff', fontSize: '0.85rem', cursor: 'pointer', fontWeight: 600 }}>
                                 Show More Operators ↓
                             </button>

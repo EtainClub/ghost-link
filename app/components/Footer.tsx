@@ -5,13 +5,13 @@ export default function Footer() {
         <footer style={{
             background: '#080c14',
             borderTop: '1px solid #1e2d45',
-            padding: '48px 24px 32px',
+            padding: '40px 16px 28px',
             marginTop: 'auto',
         }}>
             <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '40px', marginBottom: '40px' }}>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-8" style={{ marginBottom: '32px' }}>
                     {/* Brand */}
-                    <div>
+                    <div className="col-span-2 sm:col-span-1">
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
                             <div style={{
                                 width: '24px', height: '24px', borderRadius: '5px',
@@ -29,8 +29,8 @@ export default function Footer() {
                     {/* Platform */}
                     <div>
                         <p style={{ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#4a5568', marginBottom: '12px' }}>Platform</p>
-                        {['Marketplace', 'Fleet Stats', 'Governance', 'Whitepaper'].map(item => (
-                            <Link key={item} href="#" style={{ display: 'block', fontSize: '0.82rem', color: '#8899aa', textDecoration: 'none', marginBottom: '8px', transition: 'color 0.2s' }}
+                        {['Marketplace', 'Contributors', 'Fleet Stats', 'Governance', 'Whitepaper'].map(item => (
+                            <Link key={item} href={item === 'Contributors' ? '/contributors' : '#'} style={{ display: 'block', fontSize: '0.82rem', color: '#8899aa', textDecoration: 'none', marginBottom: '8px', transition: 'color 0.2s' }}
                                 onMouseEnter={e => (e.currentTarget.style.color = '#00e5ff')}
                                 onMouseLeave={e => (e.currentTarget.style.color = '#8899aa')}>
                                 {item}
@@ -59,9 +59,9 @@ export default function Footer() {
                     </div>
                 </div>
 
-                <div style={{ borderTop: '1px solid #1e2d45', paddingTop: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ borderTop: '1px solid #1e2d45', paddingTop: '20px', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
                     <p style={{ fontSize: '0.75rem', color: '#4a5568' }}>© 2026 Ghost Link — Labor Protocol. All rights reserved.</p>
-                    <div style={{ display: 'flex', gap: '20px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
                         {['Privacy Policy', 'Terms of Service', 'Legal Notice'].map(item => (
                             <Link key={item} href="#" style={{ fontSize: '0.75rem', color: '#4a5568', textDecoration: 'none' }}>{item}</Link>
                         ))}

@@ -87,14 +87,14 @@ export default function DashboardPage() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: '80px' }}>
+            <main style={{ flex: 1, paddingTop: '60px' }}>
                 {/* Header */}
-                <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '32px 24px' }}>
+                <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '24px 16px' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '16px' }}>
                             <div>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
-                                    <h1 style={{ fontSize: '1.8rem', fontWeight: 900, letterSpacing: '-0.01em' }}>
+                                    <h1 style={{ fontSize: 'clamp(1.1rem, 4vw, 1.8rem)', fontWeight: 900, letterSpacing: '-0.01em' }}>
                                         GHOST LINK OPERATOR DASHBOARD
                                     </h1>
                                     <span className="badge badge-cyan">UNIT-734</span>
@@ -116,8 +116,8 @@ export default function DashboardPage() {
                 </section>
 
                 {/* Stats Cards */}
-                <section style={{ padding: '32px 24px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '32px' }}>
+                <section style={{ padding: '24px 16px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4" style={{ marginBottom: '24px' }}>
                         {/* Earnings */}
                         <div className="card" style={{ padding: '24px' }}>
                             <p style={{ fontSize: '0.65rem', color: '#4a5568', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '8px' }}>Total Earnings</p>
@@ -174,7 +174,7 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Main Content */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 340px', gap: '24px' }}>
+                    <div className="grid grid-cols-1 lg:grid-cols-[1fr_340px] gap-6">
                         {/* Work History */}
                         <div className="card" style={{ padding: '24px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
