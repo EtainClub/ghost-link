@@ -1,7 +1,7 @@
 # 👻 Ghost Link
 > **The Operating System for the Post-Work Era.**
 
-![Ghost Link Hero](https://ghostlink.work/og-image.png)
+![Ghost Link Hero](https://ghostlink.work/hero-bg.png)
 
 ## ⚠️ Concept-First Open Source
 **This is not just a codebase. It is a collective hallucination of the future.**
