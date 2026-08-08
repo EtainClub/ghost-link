@@ -2,14 +2,17 @@
 import Link from 'next/link';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import { useState, useEffect } from 'react';
 import GlobalNetworkMap from './components/GlobalNetworkMap';
+import LatencyDemo from './components/LatencyDemo';
+import OperatorFeed from './components/OperatorFeed';
+import PerspectiveToggle from './components/PerspectiveToggle';
 
+// Every figure below is invented — but stated in units a person can feel.
 const stats = [
-  { label: 'Total Yield Paid', value: '$42.8M', sub: '+2.4% (30d)' },
-  { label: 'Avg Hourly Rate', value: '45.2 CRED', sub: '≈ $12.40 USD', highlight: true },
-  { label: 'Global Uptime', value: '99.98%', sub: 'Tier-1 Protocol' },
-  { label: 'Network Load', value: 'LOW', sub: 'Optimal / Stable', green: true },
+  { label: 'Hands Rented Today', value: '31,204', sub: 'across 94 countries' },
+  { label: 'Avg Hourly Rate', value: '45.2 CRED', sub: '≈ 6.2× Manila median wage', highlight: true },
+  { label: 'Longest Active Link', value: '11,840 km', sub: 'Lagos → Reykjavík' },
+  { label: 'Jobs No Human Attended', value: '0', sub: 'a person was always there', green: true },
 ];
 
 const features = [
@@ -54,15 +57,6 @@ function SignalBars({ count, max = 5 }: { count: number; max?: number }) {
 }
 
 export default function HomePage() {
-  const [counter, setCounter] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter(c => (c + 1) % 1000);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar />
@@ -84,45 +78,44 @@ export default function HomePage() {
         </div>
 
         {/* Content Container */}
-        <div className="relative z-20 max-w-4xl mx-auto mt-10 w-full">
+        {/* NOTE: `*{padding:0}` in globals.css is unlayered and overrides Tailwind's
+            layered px-* utilities, so side gutters must be inline. */}
+        <div className="relative z-20 max-w-3xl mx-auto w-full" style={{ paddingTop: 'var(--nav-h)', paddingLeft: '16px', paddingRight: '16px' }}>
 
-          <div className="mb-8 animate-fade-in-up">
-            <span className="tracking-[0.3em] text-[0.8rem] font-bold text-cyan-400 opacity-80 border-b border-cyan-500/30 pb-2">
-              GHOST LINK
+          <div className="mb-6 animate-fade-in-up">
+            <span className="tracking-[0.3em] text-[0.72rem] font-bold text-cyan-400 opacity-80 border-b border-cyan-500/30 pb-2">
+              GHOST LINK · EST. 2041
             </span>
           </div>
 
-          <h1 className="hero-title mb-8 text-white animate-fade-in-up delay-100 drop-shadow-2xl flex flex-col gap-2 items-center">
-            <span className="text-3xl md:text-6xl font-black tracking-tighter leading-none">
-              HUMAN-ROBOT<br />LABOR PLATFORM
-            </span>
-            <span className="text-lg md:text-2xl font-light tracking-widest text-[#a855f7] mt-2 uppercase opacity-90">
-              Human Intelligence, Physical Labor
-            </span>
-            <span className="text-base md:text-xl text-gray-300 font-light leading-relaxed mt-4 max-w-2xl">
-              Ghost Link is an open-source experiment to design the <strong className="text-white font-bold">UI/UX of the inevitable</strong>.
-            </span>
-            <span className="text-sm md:text-base text-gray-400 leading-relaxed max-w-2xl">
-              We know that one day, millions of humans will remotely pilot robots from their living rooms—doing hazardous, skilled, or logistical work via high-fidelity neural links.
-            </span>
-            <span className="mt-4 font-mono text-cyan-400 text-sm tracking-wide opacity-80">
-              &quot;Uber for Androids.&quot; &quot;DoorDash for Drones.&quot;
-            </span>
+          {/* One idea, one heading. Everything else is a paragraph. */}
+          <h1 className="animate-fade-in-up text-white drop-shadow-2xl text-4xl md:text-7xl font-black tracking-tighter leading-none mb-5">
+            RENT OUT<br />YOUR HANDS.
           </h1>
 
+          <p className="animate-fade-in-up text-base md:text-xl text-gray-300 font-light leading-relaxed max-w-xl mx-auto mb-3" style={{ animationDelay: '0.1s' }}>
+            Somewhere on Earth a body is waiting for someone to think for it.
+            You bring the judgement. The machine brings the arms.
+          </p>
 
-          <div className="h-8 md:h-8"></div> <div className="flex flex-col ...">
+          <p className="animate-fade-in-up mono text-[0.72rem] md:text-sm text-cyan-400/80 tracking-wide mb-8" style={{ animationDelay: '0.15s' }}>
+            &quot;Uber for Androids.&quot; &quot;DoorDash for Drones.&quot;
+          </p>
 
+          {/* The concept, felt rather than described */}
+          <div className="animate-fade-in-up mb-8 px-2" style={{ animationDelay: '0.2s' }}>
+            <LatencyDemo />
           </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up delay-300 px-4">
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up px-4" style={{ animationDelay: '0.3s' }}>
             <Link href="/marketplace" style={{ textDecoration: 'none' }}>
               <button className="btn-primary py-4 px-8 text-base shadow-[0_0_20px_rgba(0,229,255,0.3)] hover:shadow-[0_0_30px_rgba(0,229,255,0.5)] w-full sm:w-auto">
-                ⚡ Start Earning Now
+                ⚡ Find a body to pilot
               </button>
             </Link>
             <Link href="/vr" style={{ textDecoration: 'none' }}>
               <button className="btn-secondary py-4 px-8 text-base backdrop-blur-sm bg-white/5 border-white/20 hover:bg-white/10 w-full sm:w-auto">
-                View Demo →
+                See through its eyes →
               </button>
             </Link>
           </div>
@@ -143,6 +136,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Who is on the other end of those numbers */}
+      <OperatorFeed />
 
       {/* Features */}
       <section style={{ padding: '60px 16px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>
@@ -213,6 +209,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* The debate the README asks for, as a control */}
+      <PerspectiveToggle />
 
       {/* Global Node Map */}
       <GlobalNetworkMap />

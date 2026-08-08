@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import GlobalNetworkMap from '../components/GlobalNetworkMap';
+import OperatorFeed from '../components/OperatorFeed';
 import { useState } from 'react';
 
 const allJobs = [
@@ -45,7 +46,7 @@ export default function MarketplacePage() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: '60px' }}>
+            <main style={{ flex: 1, paddingTop: 'var(--nav-h)' }}>
                 {/* Header */}
                 <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '32px 16px' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
@@ -112,6 +113,9 @@ export default function MarketplacePage() {
                         </div>
                     </div>
                 </section>
+
+                {/* Who is on the other end of the listings below */}
+                <OperatorFeed />
 
                 {/* Job Market */}
                 <section style={{ padding: '32px 16px', maxWidth: '1280px', margin: '0 auto', width: '100%' }}>

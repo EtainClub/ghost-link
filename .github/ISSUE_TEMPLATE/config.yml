@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "🌱🕳 Argue about the future itself"
+    url: https://github.com/EtainClub/ghost-link/discussions
+    about: "Not a bug and not a screen — a disagreement about whether this should exist. Take it here."
+  - name: "🔧 Something is actually broken on the site"
+    url: https://github.com/EtainClub/ghost-link/issues/new
+    about: "A real bug in the real code. Plain blank issue is fine — no roleplay needed."

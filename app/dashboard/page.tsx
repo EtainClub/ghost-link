@@ -87,7 +87,7 @@ export default function DashboardPage() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: '60px' }}>
+            <main style={{ flex: 1, paddingTop: 'var(--nav-h)' }}>
                 {/* Header */}
                 <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '20px 16px' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto' }}>

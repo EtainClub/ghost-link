@@ -1,8 +1,9 @@
 'use client';
 import Link from 'next/link';
-import { useState, useEffect, useRef, Suspense } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import VRScene from '../components/VRScene';
+import VRTour from '../components/VRTour';
 
 // Simulated System Logs
 const initialLogs = [
@@ -82,7 +83,7 @@ export default function VRPage() {
             </div>
 
             {/* --- Top Header HUD --- */}
-            <div className="absolute top-0 left-0 w-full p-4 z-20 flex justify-between items-start pointer-events-none">
+            <div className="vr-top absolute top-0 left-0 w-full p-4 z-20 flex justify-between items-start pointer-events-none">
 
                 {/* Left: Latency & Signal */}
                 <div className="flex gap-4 pointer-events-auto">
@@ -110,7 +111,7 @@ export default function VRPage() {
                 </div>
 
                 {/* Center: Objective */}
-                <div className="flex flex-col items-center pointer-events-auto">
+                <div className="vr-objective flex flex-col items-center pointer-events-auto">
                     <div className="backdrop-blur-md bg-[#1337ec]/10 border-x border-b border-[#1337ec]/30 px-8 py-3 rounded-b-lg text-center relative group">
                         {/* Dropdown / Task Selector Trigger */}
                         <div className="text-[10px] text-[#00e5ff] font-bold uppercase tracking-[0.2em] mb-1 cursor-pointer hover:text-white transition-colors"
@@ -160,7 +161,7 @@ export default function VRPage() {
             </div>
 
             {/* --- Center Reticle & HUD --- */}
-            <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-10">
+            <div className="vr-reticle absolute inset-0 pointer-events-none flex items-center justify-center z-10">
                 {/* Dynamic Horizon Line */}
                 <div className="absolute w-[600px] h-[1px] bg-[#00e5ff]/30 flex justify-between items-center opacity-50">
                     <div className="w-8 h-[1px] bg-[#00e5ff]" />
@@ -182,10 +183,10 @@ export default function VRPage() {
             {/* --- Side Panels: Haptics --- */}
 
             {/* Left Haptic */}
-            <div className="absolute left-6 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-4 pointer-events-none">
+            <div className="vr-haptic vr-haptic-l absolute left-6 z-20 flex flex-col gap-4 pointer-events-none">
                 <div className="backdrop-blur-md bg-[#1337ec]/5 border-l-4 border-l-[#00e5ff] p-4 flex flex-col items-center">
                     <span className="text-[10px] font-bold text-[#00e5ff] uppercase mb-4 [writing-mode:vertical-lr] rotate-180">LH HAPTIC</span>
-                    <div className="flex gap-1 h-48 items-end">
+                    <div className="vr-bars flex gap-1 h-48 items-end">
                         {lhHaptic.map((v, i) => (
                             <div key={i} className="w-2 bg-[#00e5ff] transition-all duration-300"
                                 style={{ height: `${v}%`, opacity: 0.3 + (v / 200) }} />
@@ -195,10 +196,10 @@ export default function VRPage() {
             </div>
 
             {/* Right Haptic */}
-            <div className="absolute right-6 top-1/2 -translate-y-1/2 z-20 flex flex-col gap-4 pointer-events-none">
+            <div className="vr-haptic vr-haptic-r absolute right-6 z-20 flex flex-col gap-4 pointer-events-none">
                 <div className="backdrop-blur-md bg-[#1337ec]/5 border-r-4 border-r-[#00e5ff] p-4 flex flex-col items-center">
                     <span className="text-[10px] font-bold text-[#00e5ff] uppercase mb-4 [writing-mode:vertical-lr] rotate-180">RH HAPTIC</span>
-                    <div className="flex gap-1 h-48 items-end">
+                    <div className="vr-bars flex gap-1 h-48 items-end">
                         {rhHaptic.map((v, i) => (
                             <div key={i} className="w-2 bg-[#00e5ff] transition-all duration-300"
                                 style={{ height: `${v}%`, opacity: 0.3 + (v / 200) }} />
@@ -209,7 +210,7 @@ export default function VRPage() {
 
 
             {/* --- Bottom Stats & Controls --- */}
-            <div className="absolute bottom-0 left-0 w-full p-6 z-30 flex justify-between items-end pointer-events-none">
+            <div className="vr-bottom absolute bottom-0 left-0 w-full p-6 z-30 flex justify-between items-end pointer-events-none">
 
                 {/* Left: PIP View (Secondary Camera) - ENLARGED */}
                 <div className="pointer-events-auto relative group flex flex-col gap-2">
@@ -221,7 +222,7 @@ export default function VRPage() {
                     {/* Enlarged PIP Window (approx 400px width) */}
                     <div
                         onClick={() => setSwapViews(!swapViews)}
-                        className="w-[400px] h-[300px] bg-black/80 border-2 border-[#1e2d45] hover:border-[#00e5ff] rounded-lg overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.6)] cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] relative"
+                        className="vr-pip w-[400px] h-[300px] bg-black/80 border-2 border-[#1e2d45] hover:border-[#00e5ff] rounded-lg overflow-hidden shadow-[0_0_40px_rgba(0,0,0,0.6)] cursor-pointer transition-all hover:scale-[1.02] active:scale-[0.98] relative"
                     >
                         {/* 3D Canvas for PIP */}
                         <div className="absolute inset-0">
@@ -243,17 +244,17 @@ export default function VRPage() {
                         <div className="absolute inset-0 bg-[#00e5ff]/5 pointer-events-none group-hover:bg-transparent transition-colors" />
                     </div>
 
-                    <div className="flex items-center gap-2 opacity-50 text-[10px] text-[#00e5ff]">
+                    <div className="vr-swaphint flex items-center gap-2 opacity-50 text-[10px] text-[#00e5ff]">
                         <span className="text-lg">⟲</span>
                         <span>CLICK SCREEN TO SWAP FEEDS</span>
                     </div>
                 </div>
 
                 {/* Right: Controls & Logs */}
-                <div className="flex gap-4 pointer-events-auto items-end">
+                <div className="vr-controls flex gap-4 pointer-events-auto items-end">
 
                     {/* System Logs */}
-                    <div className="backdrop-blur-md bg-black/40 border border-[#00e5ff]/20 p-3 w-96 h-40 flex flex-col gap-1 overflow-hidden rounded-t-xl">
+                    <div className="vr-logs backdrop-blur-md bg-black/40 border border-[#00e5ff]/20 p-3 w-96 h-40 flex flex-col gap-1 overflow-hidden rounded-t-xl">
                         <div className="text-[10px] font-bold text-[#00e5ff] uppercase border-b border-[#00e5ff]/20 pb-1 mb-1">System Logs</div>
                         <div className="text-[10px] font-mono space-y-1 opacity-90 overflow-y-auto">
                             {logs.map((log, i) => (
@@ -268,7 +269,7 @@ export default function VRPage() {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="flex flex-col gap-2">
+                    <div className="vr-actions flex flex-col gap-2">
                         <button
                             onClick={handleEmergencyStop}
                             className={`${isEmergencyStop ? 'bg-[#ef4444]' : 'bg-[#ef4444]/80'} text-white px-8 py-4 font-bold text-sm uppercase tracking-widest hover:brightness-110 flex items-center gap-3 rounded shadow-[0_0_15px_rgba(239,68,68,0.4)] transition-all active:scale-95`}
@@ -297,6 +298,90 @@ export default function VRPage() {
                     </div>
                 </div>
             )}
+
+            {/* First-visit orientation — the HUD is only impressive if it is legible */}
+            <VRTour />
+
+            {/* Tailwind's spacing utilities are dead here (see docs/CONCEPT-IMPROVEMENT.md
+                §1.6a), so the phone layout is plain CSS. */}
+            <style jsx global>{`
+                @media (min-width: 901px) {
+                    /* Vertically centred haptic columns collide with the PIP feed
+                       now that the panels have real padding. Anchor them in the
+                       clear band between the top HUD and the PIP. */
+                    .vr-haptic {
+                        top: 150px;
+                    }
+                    .vr-haptic .vr-bars {
+                        height: 130px;
+                    }
+                }
+                @media (max-width: 900px) {
+                    .vr-top {
+                        flex-wrap: wrap;
+                        gap: 8px;
+                        padding: 8px !important;
+                    }
+                    .vr-top > div {
+                        flex: 1 1 auto;
+                    }
+                    .vr-objective {
+                        order: 3;
+                        width: 100%;
+                    }
+                    .vr-objective > div {
+                        padding: 8px 12px !important;
+                        border-radius: 8px;
+                    }
+                    .vr-reticle {
+                        transform: scale(0.62);
+                    }
+                    .vr-haptic {
+                        top: 150px;
+                        bottom: auto;
+                    }
+                    .vr-haptic-l { left: 8px !important; }
+                    .vr-haptic-r { right: 8px !important; }
+                    .vr-haptic .vr-bars { height: 64px; }
+                    .vr-haptic > div { padding: 8px !important; }
+
+                    .vr-bottom {
+                        flex-direction: column;
+                        align-items: stretch !important;
+                        gap: 10px;
+                        padding: 10px !important;
+                    }
+                    .vr-controls {
+                        flex-direction: column;
+                        align-items: stretch !important;
+                        gap: 10px;
+                    }
+                    .vr-pip {
+                        width: 100% !important;
+                        height: 168px !important;
+                    }
+                    .vr-logs {
+                        width: 100% !important;
+                        height: 92px !important;
+                    }
+                    .vr-actions {
+                        flex-direction: row;
+                    }
+                    .vr-actions button {
+                        flex: 1;
+                        justify-content: center;
+                        padding: 14px 8px !important;
+                        font-size: 0.7rem;
+                    }
+                    .vr-swaphint { display: none; }
+                }
+
+                /* Short phones cannot fit the haptic columns and the controls.
+                   The emergency stop wins. */
+                @media (max-width: 900px) and (max-height: 720px) {
+                    .vr-haptic { display: none; }
+                }
+            `}</style>
 
         </div>
     );

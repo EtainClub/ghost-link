@@ -13,6 +13,8 @@ export default function BottomNav() {
         { href: '/wallet', label: 'Wallet', icon: '💳' },
     ];
 
+    // /vr is a full-screen cockpit — the tab bar would sit on the emergency stop.
+    if (pathname === '/vr') return null;
     return (
         <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden pb-safe" style={{
             background: 'rgba(8, 12, 20, 0.95)',

@@ -3,8 +3,11 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 import GhostLogo from './GhostLogo';
+import SimFrame from './SimFrame';
+import { useOperatorId } from './OperatorIdentity';
 
 const navLinks = [
+    { href: '/story', label: 'Story' },
     { href: '/how-to', label: 'How-To' },
     { href: '/marketplace', label: 'Marketplace' },
     { href: '/dashboard', label: 'Dashboard' },
@@ -16,6 +19,7 @@ const navLinks = [
 export default function Navbar() {
     const pathname = usePathname();
     const [mobileOpen, setMobileOpen] = useState(false);
+    const operatorId = useOperatorId();
 
     return (
         <nav style={{
@@ -24,22 +28,26 @@ export default function Navbar() {
             backdropFilter: 'blur(12px)',
             borderBottom: '1px solid #1e2d45',
         }}>
+            {/* Frames everything below it as fiction — see docs/CONCEPT-IMPROVEMENT.md */}
+            <SimFrame />
+
             {/* Main bar */}
-            <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '60px' }}>
+            <div style={{ maxWidth: '1280px', margin: '0 auto', width: '100%', padding: '0 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 'var(--navbar-h)' }}>
                 {/* Logo */}
-                <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
+                <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none', flexShrink: 0 }}>
                     <GhostLogo width={28} height={28} />
-                    <span style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.02em' }}>
+                    <span style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '-0.02em', whiteSpace: 'nowrap' }}>
                         GHOST <span style={{ color: '#00e5ff' }}>LINK</span>
                     </span>
                 </Link>
 
                 {/* Desktop Nav */}
-                <div className="hidden md:flex" style={{ alignItems: 'center', gap: '4px' }}>
+                <div className="hidden md:flex" style={{ alignItems: 'center', gap: '2px', flexShrink: 1, minWidth: 0 }}>
                     {navLinks.map(link => (
                         <Link key={link.href} href={link.href} style={{
-                            padding: '6px 14px',
-                            fontSize: '0.82rem',
+                            padding: '6px 9px',
+                            fontSize: '0.74rem',
+                            whiteSpace: 'nowrap',
                             fontWeight: 600,
                             letterSpacing: '0.05em',
                             textTransform: 'uppercase',
@@ -54,17 +62,29 @@ export default function Navbar() {
                 </div>
 
                 {/* Right side - desktop */}
-                <div className="hidden md:flex" style={{ alignItems: 'center', gap: '12px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#8899aa' }}>
+                <div className="hidden md:flex" style={{ alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                    {/* redundant with the operator badge once space gets tight */}
+                    <div className="hidden xl:flex" style={{ alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#8899aa', whiteSpace: 'nowrap' }}>
                         <span style={{ color: '#10b981', fontSize: '0.7rem' }}>●</span>
                         <span className="mono" style={{ color: '#00e5ff', fontWeight: 700 }}>OPTIMAL</span>
                         <span className="mono" style={{ color: '#4a5568' }}>12ms</span>
                     </div>
-                    <button className="btn-secondary" style={{ padding: '6px 14px', fontSize: '0.75rem' }}>
-                        Connect Wallet
-                    </button>
-                    <Link href="/vr" style={{ textDecoration: 'none' }}>
-                        <button className="btn-primary" style={{ padding: '6px 14px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    {/* The visitor is not a customer — they are operator #N in this fiction */}
+                    <div
+                        title="Your operator id for this simulation. Stored locally, nowhere else."
+                        style={{
+                            display: 'flex', alignItems: 'center', gap: '6px',
+                            padding: '5px 12px', borderRadius: '4px',
+                            border: '1px solid rgba(0,229,255,0.25)', background: 'rgba(0,229,255,0.06)',
+                        }}
+                    >
+                        <span style={{ fontSize: '0.7rem' }}>👻</span>
+                        <span className="mono" style={{ fontSize: '0.75rem', fontWeight: 700, color: operatorId ? '#00e5ff' : '#4a5568' }}>
+                            {operatorId ?? 'LINKING…'}
+                        </span>
+                    </div>
+                    <Link href="/vr" style={{ textDecoration: 'none', flexShrink: 0 }}>
+                        <button className="btn-primary" style={{ padding: '6px 14px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px', whiteSpace: 'nowrap' }}>
                             <span>⚡</span> Jack In
                         </button>
                     </Link>
@@ -127,10 +147,13 @@ export default function Navbar() {
                             {link.label}
                         </Link>
                     ))}
-                    <div style={{ padding: '12px 20px 4px', borderTop: '1px solid #1e2d45', marginTop: '8px', display: 'flex', gap: '8px' }}>
-                        <button className="btn-secondary" style={{ flex: 1, padding: '8px', fontSize: '0.78rem' }}>
-                            Connect Wallet
-                        </button>
+                    <div style={{ padding: '12px 20px 4px', borderTop: '1px solid #1e2d45', marginTop: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                        <span className="mono" style={{ fontSize: '0.78rem', color: operatorId ? '#00e5ff' : '#4a5568', fontWeight: 700 }}>
+                            👻 {operatorId ?? 'LINKING…'}
+                        </span>
+                        <span className="mono" style={{ fontSize: '0.72rem', color: '#4a5568' }}>
+                            <span style={{ color: '#10b981' }}>●</span> OPTIMAL · 12ms
+                        </span>
                     </div>
                 </div>
             )}

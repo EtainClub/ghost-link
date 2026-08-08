@@ -30,7 +30,7 @@ export default function WalletPage() {
         <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
             <Navbar />
 
-            <main style={{ flex: 1, paddingTop: '80px' }}>
+            <main style={{ flex: 1, paddingTop: 'calc(var(--nav-h) + 20px)' }}>
                 {/* Header */}
                 <section style={{ background: '#0d1420', borderBottom: '1px solid #1e2d45', padding: '24px 16px' }}>
                     <div style={{ maxWidth: '1280px', margin: '0 auto' }}>

@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import BottomNav from "./components/BottomNav";
+import OperatorIdentity from "./components/OperatorIdentity";
+
+const DESCRIPTION =
+  "A speculative prototype of the human-robot labor marketplace: the dashboard for a job that doesn't exist yet. Open source design fiction — every number here is invented.";
 
 export const metadata: Metadata = {
-  title: "Ghost Link — Human Precision, Robotic Scale",
-  description: "The world's first decentralized human-robot labor relay platform. Remotely control high-fidelity robotic avatars and earn real-time crypto yields from anywhere on Earth.",
-  keywords: "robot, teleoperator, remote labor, humanoid, ghost link, CRED, LABR",
+  title: "Ghost Link — The Interface for a Job That Doesn't Exist Yet",
+  description: DESCRIPTION,
+  keywords: "design fiction, speculative design, teleoperation, telepresence, robot, remote labor, humanoid, ghost link, open source, UI concept",
   openGraph: {
-    title: "Ghost Link — Human Precision, Robotic Scale",
-    description: "The world's first decentralized human-robot labor relay platform. Remotely control high-fidelity robotic avatars and earn real-time crypto yields from anywhere on Earth.",
+    title: "Ghost Link — The Interface for a Job That Doesn't Exist Yet",
+    description: DESCRIPTION,
     url: "https://ghostlink.work",
     siteName: "Ghost Link",
     images: [
@@ -24,8 +28,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ghost Link — Human Precision, Robotic Scale",
-    description: "The world's first decentralized human-robot labor relay platform.",
+    title: "Ghost Link — The Interface for a Job That Doesn't Exist Yet",
+    description: "Rent out your hands. A speculative prototype of the telepresence labor economy — built in the open, before the hardware arrives.",
     images: ["https://ghostlink.work/hero-bg.png"],
     creator: "@etainclub",
   },
@@ -45,6 +49,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body style={{ fontFamily: "'Inter', sans-serif" }}>
+        <OperatorIdentity />
         {children}
         <BottomNav />
       </body>

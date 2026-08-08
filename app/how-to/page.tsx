@@ -9,7 +9,7 @@ export default function HowToPage() {
 
             <Navbar />
 
-            <main className="grid-bg" style={{ paddingTop: '60px' }}>
+            <main className="grid-bg" style={{ paddingTop: 'var(--nav-h)' }}>
                 {/* Hero Section: Concept Visualization */}
                 <section id="concept" style={{ padding: '60px 16px', maxWidth: '1280px', margin: '0 auto', position: 'relative' }}>
                     <div className="hero-grid" style={{ gap: '48px', alignItems: 'center' }}>
@@ -99,7 +99,7 @@ export default function HowToPage() {
                                     { id: '04', type: 'LINKAGE', title: 'Neural-Mechanical Link', desc: 'Operator initializes the link via VR/Haptic interface, gaining 1:1 tactile and visual feedback from the machine.', icon: '⚡', color: 'purple', reverse: true },
                                     { id: '05', type: 'ACTION', title: 'Real-time Teleoperation', desc: 'Human operator takes control, solving the complex task using high-level cognitive intuition and manual dexterity.', icon: '🎮', color: 'blue' },
                                     { id: '06', type: 'LEARNING', title: 'Machine Learning Ingestion', desc: 'All human sensory input and mechanical outputs are recorded as high-quality training data for the next AI generation.', icon: '💾', color: 'cyan', reverse: true },
-                                    { id: '07', type: 'REWARD', title: 'Reward & Tokenization', desc: 'Operator earns $GHOST tokens; Robot uncertainty score drops, and the system becomes more autonomous.', icon: '🪙', color: 'purple' },
+                                    { id: '07', type: 'REWARD', title: 'Reward & Tokenization', desc: 'Operator earns CRED; Robot uncertainty score drops, and the system becomes more autonomous.', icon: '🪙', color: 'purple' },
                                 ].map((step, i) => (
                                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '32px', flexDirection: step.reverse ? 'row-reverse' : 'row' }} className={`workflow-step ${step.reverse ? 'reversed' : ''}`}>
                                         <div style={{ flex: 1, textAlign: step.reverse ? 'left' : 'right', order: step.reverse ? 2 : 1 }}>

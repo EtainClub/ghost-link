@@ -1,6 +1,6 @@
 'use client';
 
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment, Grid, Stars } from '@react-three/drei';
 import { useRef } from 'react';
 import * as THREE from 'three';
@@ -12,6 +12,12 @@ interface VRSceneProps {
 
 export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
     const robotRef = useRef<THREE.Group>(null);
+    const { size } = useThree();
+
+    // three's fov is vertical, so a portrait viewport collapses the horizontal
+    // view and buries the camera in whatever is closest. Widen to compensate.
+    const aspect = size.width / Math.max(1, size.height);
+    const widen = (fov: number) => (aspect >= 1 ? fov : Math.min(105, fov / Math.max(0.45, aspect)));
 
     // Animate robot idle movement
     useFrame((state) => {
@@ -45,6 +51,10 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
 
             {/* Robot Representation */}
             <group ref={robotRef} position={[0, 0, 0]}>
+                {/* Torso and head. Hidden in FPV: the camera sits inside this head,
+                    so the chest core and visor would just fill the screen with
+                    unclamped emissive cyan. You should see the bench, not yourself. */}
+                {mode !== 'fpv' && (<>
                 {/* Floating Chassis */}
                 <mesh position={[0, 1.2, 0]}>
                     <boxGeometry args={[0.8, 1, 0.6]} />
@@ -73,8 +83,8 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
                         <cylinderGeometry args={[0.02, 0.02, 0.6]} />
                         <meshStandardMaterial color="#64748b" metalness={1} />
                     </mesh>
-                </group>
-
+                    </group>
+                </>)}
                 {/* Left Robot Arm */}
                 <group position={[-0.6, 1.4, 0]}>
                     {/* Shoulder */}
@@ -194,7 +204,7 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
             {mode === 'fpv' ? (
                 // FPV: Camera looking at the work bench
                 <>
-                    <PerspectiveCamera makeDefault position={[0, 1.8, 0.4]} rotation={[-0.5, 0, 0]} fov={75} />
+                    <PerspectiveCamera makeDefault position={[0, 1.8, 0.4]} rotation={[-0.5, 0, 0]} fov={widen(75)} />
                     <OrbitControls
                         target={[0, 0.8, 0.5]} // Look at the circuit board
                         enableZoom={true}
@@ -209,7 +219,7 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
             ) : (
                 // 3rd Person: External view
                 <>
-                    <PerspectiveCamera makeDefault position={[3, 3, 4]} fov={60} />
+                    <PerspectiveCamera makeDefault position={[3, 3, 4]} fov={widen(60)} />
                     <OrbitControls
                         target={[0, 1, 0]}
                         maxPolarAngle={Math.PI / 2 - 0.1}

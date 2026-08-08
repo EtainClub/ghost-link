@@ -1,0 +1,87 @@
+name: "🛰 Incident report (from 2041)"
+description: "Report a fault in the Ghost Link protocol as if it were live. Treat the fiction as real."
+title: "[INCIDENT] "
+labels: ["roleplay", "design-fiction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You are an operator, a fleet owner, or a regulator in 2041, and something
+        on the relay went wrong. Write it the way you would actually file it.
+
+        The point is not the bug. The point is what the interface should have
+        done — and did not.
+
+  - type: input
+    id: stardate
+    attributes:
+      label: Date of incident
+      description: Somewhere in the Ghost Link era.
+      placeholder: "2041-08-14, 15:14 local"
+    validations:
+      required: true
+
+  - type: input
+    id: operator
+    attributes:
+      label: Operator ID
+      description: The site assigns you one on first visit — check the navbar.
+      placeholder: "OP-4412"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: role
+    attributes:
+      label: Filing as
+      options:
+        - Operator (I was piloting)
+        - Fleet owner (it was my machine)
+        - Facility staff (I was standing next to it)
+        - Regulator / auditor
+        - Someone whose job this replaced
+    validations:
+      required: true
+
+  - type: input
+    id: shell
+    attributes:
+      label: Shell / robot model
+      placeholder: "DEXTERITY-X1, TANK-TREAD V4, SPOT-V4…"
+
+  - type: input
+    id: latency
+    attributes:
+      label: Latency at time of incident
+      placeholder: "58ms, spiking to 300ms"
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: In character. Be specific about what you saw on screen.
+      placeholder: |
+        The haptic feed reported 0.4 N of resistance. The bracket was already
+        cracked by the time the number updated. The HUD showed my proficiency
+        drop before it showed me the incident.
+    validations:
+      required: true
+
+  - type: textarea
+    id: interface-failure
+    attributes:
+      label: What the interface should have done
+      description: This is the part we actually build from.
+      placeholder: |
+        Warn on latency variance, not just absolute latency. Show the incident
+        before the score. Never make a person read their punishment first.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: understood
+    attributes:
+      label: Reality check
+      options:
+        - label: I understand Ghost Link is a speculative prototype — no company, no token, no robots.
+          required: true

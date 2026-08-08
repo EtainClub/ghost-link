@@ -1,0 +1,61 @@
+name: "🖥 Screen proposal"
+description: "Propose a screen, flow or component this future would need and we have not built."
+title: "[SCREEN] "
+labels: ["design", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ghost Link has a marketplace, a dashboard, a VR shift, a wallet and a
+        leaderboard. It is missing almost everything else this world implies.
+
+        Propose one screen. Mockups welcome, words are enough.
+
+  - type: input
+    id: screen
+    attributes:
+      label: The screen
+      placeholder: "Operator dispute panel / Shell maintenance handover / Consent screen for a shell in someone's home"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: whose
+    attributes:
+      label: Who is looking at it
+      options:
+        - An operator
+        - A fleet owner
+        - Someone the robot is working near
+        - A regulator
+        - The AI, reporting to a human
+    validations:
+      required: true
+
+  - type: textarea
+    id: moment
+    attributes:
+      label: The moment it appears
+      description: What just happened that makes someone open this screen?
+      placeholder: |
+        A client disputes four hours of logged work. The operator has haptic
+        telemetry proving she was linked. Neither of them can read a waveform.
+    validations:
+      required: true
+
+  - type: textarea
+    id: hard-part
+    attributes:
+      label: The hard part
+      description: Where the design gets uncomfortable. This is the interesting bit.
+      placeholder: |
+        Showing the evidence favours whoever can read it. A fair screen has to
+        be legible to the person with the least power in the room.
+    validations:
+      required: true
+
+  - type: textarea
+    id: sketch
+    attributes:
+      label: Sketch, ASCII, screenshot or prose
+      description: Optional. Vibe-coded output is entirely welcome.

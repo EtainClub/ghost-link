@@ -16,24 +16,36 @@
   --accent-orange: #f59e0b;
   --accent-red: #ef4444;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Chrome heights. --nav-h is what pages should pad their content by. */
+  --simframe-h: 26px;
+  --navbar-h: 60px;
+  /* +1px for the navbar's bottom border */
+  --nav-h: calc(var(--simframe-h) + var(--navbar-h) + 1px);
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Layered on purpose. Unlayered declarations beat every @layer, and Tailwind v4
+   puts its utilities in @layer utilities — so an unlayered `* { padding: 0 }`
+   silently defeats every padding and margin utility in the project.
+   Keep this reset inside @layer base. */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
+  html {
+    scroll-behavior: smooth;
+  }
 
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  min-height: 100vh;
-  overflow-x: hidden;
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 }
 
 /* Scrollbar */
@@ -506,5 +518,55 @@ body {
     width: 32px !important;
     height: 32px !important;
     font-size: 1rem !important;
+  }
+}
+
+/* Animation utilities referenced by the pages (previously undefined = no-ops) */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cinematic-pan {
+
+  0%,
+  100% {
+    transform: scale(1.08) translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: scale(1.16) translate3d(-2%, -1.5%, 0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-cinematic-pan {
+  animation: cinematic-pan 30s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: radar-spin 20s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .animate-cinematic-pan,
+  .animate-spin-slow {
+    animation: none;
+  }
+
+  .animate-fade-in-up {
+    animation: none;
+    opacity: 1;
   }
 }
