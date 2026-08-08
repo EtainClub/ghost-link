@@ -3,15 +3,17 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useState } from 'react';
 
+// Everyone gets a city. A leaderboard of handles is a game; a leaderboard of
+// people in named places is the point of the whole premise.
 const operators = [
-    { rank: 1, name: 'Cipher_99', location: '', badge: 'Elite Operator', spec: 'Fine Motor Control', specColor: '#a855f7', tasks: 14203, avgTime: '4m 23s', quality: 99.8, qualityTier: 'S-Tier Quality', earnings: 2400, change: '+18% this week', avatar: '👩‍💻' },
+    { rank: 1, name: 'Cipher_99', location: 'Manila, PH', badge: 'Elite Operator', spec: 'Fine Motor Control', specColor: '#a855f7', tasks: 14203, avgTime: '4m 23s', quality: 99.8, qualityTier: 'S-Tier Quality', earnings: 2400, change: '+18% this week', avatar: '👩‍💻' },
     { rank: 2, name: 'Kyl0_Ren', location: 'Tokyo, JP', badge: '', spec: 'Navigation', specColor: '#3b82f6', tasks: 13800, avgTime: '2m 10s', quality: 98.5, qualityTier: 'A-Tier Quality', earnings: 2100, change: '+12% this week', avatar: '🧑‍🚀' },
     { rank: 3, name: 'Neura_Link', location: 'Berlin, DE', badge: '', spec: 'Inspection', specColor: '#10b981', tasks: 12500, avgTime: '6m 05s', quality: 95.0, qualityTier: 'A-Tier Quality', earnings: 1950, change: '+8% this week', avatar: '👩‍🔬' },
-    { rank: 4, name: 'Robo_Cop22', location: '', badge: '', spec: 'Assembly', specColor: '#f59e0b', tasks: 11200, avgTime: '5m 40s', quality: 92.0, qualityTier: 'B-Tier Quality', earnings: 1800, change: '', avatar: '🤖' },
-    { rank: 5, name: 'Sarah_Connor', location: '', badge: '', spec: 'Logistics', specColor: '#ec4899', tasks: 9800, avgTime: '3m 55s', quality: 88.0, qualityTier: 'B-Tier Quality', earnings: 1500, change: '', avatar: '👩‍🦱' },
-    { rank: 6, name: 'Tech_Ninja', location: '', badge: '', spec: 'Navigation', specColor: '#3b82f6', tasks: 8745, avgTime: '4m 12s', quality: 87.5, qualityTier: 'B-Tier Quality', earnings: 1420, change: '', avatar: '🥷' },
-    { rank: 7, name: 'Byte_Walker', location: '', badge: '', spec: 'Fine Motor Control', specColor: '#a855f7', tasks: 8100, avgTime: '7m 30s', quality: 78.0, qualityTier: 'C-Tier Quality', earnings: 1100, change: '', avatar: '🧑‍💻' },
-    { rank: 8, name: 'GhostOp_77', location: '', badge: '', spec: 'Hazmat', specColor: '#ef4444', tasks: 7650, avgTime: '8m 00s', quality: 85.0, qualityTier: 'B-Tier Quality', earnings: 980, change: '', avatar: '👷' },
+    { rank: 4, name: 'Robo_Cop22', location: 'Lagos, NG', badge: '', spec: 'Assembly', specColor: '#f59e0b', tasks: 11200, avgTime: '5m 40s', quality: 92.0, qualityTier: 'B-Tier Quality', earnings: 1800, change: '', avatar: '🤖' },
+    { rank: 5, name: 'Sarah_Connor', location: 'São Paulo, BR', badge: '', spec: 'Logistics', specColor: '#ec4899', tasks: 9800, avgTime: '3m 55s', quality: 88.0, qualityTier: 'B-Tier Quality', earnings: 1500, change: '', avatar: '👩‍🦱' },
+    { rank: 6, name: 'Tech_Ninja', location: 'Chennai, IN', badge: '', spec: 'Navigation', specColor: '#3b82f6', tasks: 8745, avgTime: '4m 12s', quality: 87.5, qualityTier: 'B-Tier Quality', earnings: 1420, change: '', avatar: '🥷' },
+    { rank: 7, name: 'Byte_Walker', location: 'Kyiv, UA', badge: '', spec: 'Fine Motor Control', specColor: '#a855f7', tasks: 8100, avgTime: '7m 30s', quality: 78.0, qualityTier: 'C-Tier Quality', earnings: 1100, change: '', avatar: '🧑‍💻' },
+    { rank: 8, name: 'GhostOp_77', location: 'Cairo, EG', badge: '', spec: 'Hazmat', specColor: '#ef4444', tasks: 7650, avgTime: '8m 00s', quality: 85.0, qualityTier: 'B-Tier Quality', earnings: 980, change: '', avatar: '👷' },
 ];
 
 const categories = ['All Operators', 'Fine Motor', 'Navigation', 'Inspection', 'Logistics'];
@@ -45,8 +47,15 @@ export default function LeaderboardPage() {
                                 <h1 style={{ fontSize: 'clamp(1.6rem, 6vw, 2.5rem)', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px' }}>
                                     GLOBAL OPERATOR <span style={{ color: '#00e5ff' }}>LEADERBOARD</span>
                                 </h1>
-                                <p style={{ fontSize: '0.85rem', color: '#8899aa', maxWidth: '480px', lineHeight: 1.6 }}>
-                                    Real-time ranking of top tele-operators contributing to the Global Neural Network. Higher rank = Higher earnings multiplier.
+                                <p style={{ fontSize: '0.85rem', color: '#8899aa', maxWidth: '520px', lineHeight: 1.6 }}>
+                                    Every operator on the network, sorted by throughput. Rank sets your
+                                    rate multiplier — so this is not a scoreboard, it is the pay scale.
+                                </p>
+                                <p style={{ fontSize: '0.78rem', color: '#4a5568', maxWidth: '520px', lineHeight: 1.7, marginTop: '10px' }}>
+                                    Nobody here chose to be ranked. Eighth place earns
+                                    <span className="mono" style={{ color: '#f59e0b' }}> 980 CRED</span> against
+                                    <span className="mono" style={{ color: '#10b981' }}> 2,400</span> at the top,
+                                    for work that differs by about four minutes a task.
                                 </p>
                             </div>
                             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>

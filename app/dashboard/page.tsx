@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { useState, useEffect } from 'react';
+import { useOperatorId } from '../components/OperatorIdentity';
 
 const workHistory = [
     { date: '2026-02-18', time: '08:45 AM', robot: 'Atlas-X7', icon: '🤖', task: 'Hazmat Cleanup', taskColor: '#ef4444', efficiency: 98.5, earnings: 450 },
@@ -75,6 +76,7 @@ function RadarChart() {
 
 export default function DashboardPage() {
     const [earnings, setEarnings] = useState(45230);
+    const operatorId = useOperatorId();
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -100,7 +102,12 @@ export default function DashboardPage() {
                                     <span className="badge badge-cyan">UNIT-734</span>
                                 </div>
                                 <p style={{ fontSize: '0.82rem', color: '#8899aa' }}>
-                                    Welcome back, Operator. Neural link latency: <span style={{ color: '#10b981' }}>12ms</span>.
+                                    Welcome back, <span className="mono" style={{ color: '#00e5ff', fontWeight: 700 }}>{operatorId ?? 'OPERATOR'}</span>. Neural link latency: <span style={{ color: '#10b981' }}>12ms</span>.
+                                </p>
+                                {/* The human unit behind the numbers below */}
+                                <p style={{ fontSize: '0.78rem', color: '#4a5568', marginTop: '6px', maxWidth: '520px', lineHeight: 1.6 }}>
+                                    You have been linked for <span className="mono" style={{ color: '#8899aa' }}>302h 40m</span> this quarter —
+                                    twelve and a half days spent inside a body that was not yours.
                                 </p>
                             </div>
                             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>

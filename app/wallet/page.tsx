@@ -8,7 +8,8 @@ const recentActivity = [
     { type: 'Mission Reward', date: 'Yesterday, 04:15 PM', amount: +98.50, icon: '↓', color: '#10b981' },
     { type: 'Withdrawal', date: 'Oct 24, 09:00 AM', amount: -2500.00, icon: '↑', color: '#ef4444' },
     { type: 'Stake Deposit', date: 'Oct 22, 11:30 AM', amount: -1000.00, icon: '↑', color: '#a855f7' },
-    { type: 'Referral Bonus', date: 'Oct 20, 02:00 PM', amount: +50.00, icon: '↓', color: '#10b981' },
+    // No referral mechanic: it reads as a real solicitation pattern even inside the fiction.
+    { type: 'Hazard Premium', date: 'Oct 20, 02:00 PM', amount: +50.00, icon: '↓', color: '#10b981' },
 ];
 
 const hardwareUpgrades = [
@@ -68,6 +69,13 @@ export default function WalletPage() {
                                     <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', marginTop: '8px', padding: '4px 10px', background: 'rgba(16,185,129,0.1)', borderRadius: '4px' }}>
                                         <span style={{ fontSize: '0.72rem', color: '#10b981', fontWeight: 600 }}>↑ +12.5% vs last week</span>
                                     </div>
+                                    {/* Same balance, two honest readings — the toggle on the
+                                        landing page, applied to a single number. */}
+                                    <p style={{ fontSize: '0.75rem', color: '#4a5568', marginTop: '14px', maxWidth: '380px', lineHeight: 1.7 }}>
+                                        Fourteen months of median rent in Quezon City.
+                                        <br />
+                                        Three weeks of it in Rotterdam, where the work was done.
+                                    </p>
                                 </div>
                                 <div>
                                     <p style={{ fontSize: '0.65rem', color: '#4a5568', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>Pending Rewards</p>

@@ -54,34 +54,38 @@ export default function MarketplacePage() {
                             {/* Left Content */}
                             <div className="lg:col-span-7">
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                                    <span className="badge badge-green" style={{ fontSize: '0.62rem' }}>● LIVE PROTOCOL · 54,205 UNITS ACTIVE</span>
+                                    <span className="badge badge-green" style={{ fontSize: '0.62rem' }}>● 54,205 BODIES WAITING FOR SOMEONE TO THINK</span>
                                 </div>
                                 <h1 style={{ fontSize: 'clamp(2rem, 8vw, 3.5rem)', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '8px', lineHeight: 1.1 }}>
-                                    MONETIZE YOUR<br /><span style={{ color: '#00e5ff' }}>INTELLIGENCE</span>
+                                    PICK A BODY.<br /><span style={{ color: '#00e5ff' }}>PICK A CITY.</span>
                                 </h1>
                                 <p style={{ fontSize: '0.95rem', color: '#8899aa', maxWidth: '540px', lineHeight: 1.6 }}>
-                                    Remotely control high-fidelity robotic avatars. Connect to the Ghost Link network and earn real-time crypto yields for complex physical tasks.
+                                    Fifty-four thousand machines are standing still somewhere on Earth
+                                    because the thing in front of them needs a judgement no local model
+                                    will make. Every listing below is a pair of hands and a room you
+                                    have never been in.
                                 </p>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '24px' }}>
                                     <Link href="/dashboard">
-                                        <button className="btn-primary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>⚡ Start Earning Now</button>
+                                        <button className="btn-primary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>⚡ Take a shift</button>
                                     </Link>
                                     <Link href="/vr">
-                                        <button className="btn-secondary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>View Demo →</button>
+                                        <button className="btn-secondary" style={{ padding: '12px 24px', fontSize: '0.95rem' }}>See through its eyes →</button>
                                     </Link>
                                 </div>
 
                                 {/* Stats Ticker */}
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4" style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
                                     {[
-                                        { label: 'TOTAL YIELD PAID', value: '$42.8M' },
-                                        { label: 'AVG HOURLY RATE', value: '45.2 CRED', highlight: true },
-                                        { label: 'GLOBAL UPTIME', value: '99.98%' },
-                                        { label: 'NETWORK LOAD', value: 'LOW', green: true },
+                                        { label: 'BODIES IDLE RIGHT NOW', value: '54,205' },
+                                        { label: 'AVG RATE', value: '45.2 CRED', sub: '≈ 6.2× Manila median', highlight: true },
+                                        { label: 'SHORTEST LINK', value: '8ms', sub: 'Seoul → Osaka', green: true },
+                                        { label: 'JOBS NEEDING A HUMAN', value: '1,429' },
                                     ].map((s, i) => (
                                         <div key={i}>
                                             <p style={{ fontSize: '0.62rem', color: '#4a5568', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '4px' }}>{s.label}</p>
                                             <p className="mono" style={{ fontSize: '1.1rem', fontWeight: 800, color: s.highlight ? '#00e5ff' : s.green ? '#10b981' : '#e2e8f0' }}>{s.value}</p>
+                                            {s.sub && <p style={{ fontSize: '0.62rem', color: '#4a5568', marginTop: '2px' }}>{s.sub}</p>}
                                         </div>
                                     ))}
                                 </div>
