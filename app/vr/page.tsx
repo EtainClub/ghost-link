@@ -1,9 +1,11 @@
 'use client';
 import Link from 'next/link';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useMemo, Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import VRScene from '../components/VRScene';
 import VRTour from '../components/VRTour';
+import type { InteractionHandlers } from '../components/VRInteractive';
+import { DESK_Y, GRIP_LIFT, objectsFor, type TaskId, type VRObject } from '../components/vrObjects';
 
 // Simulated System Logs
 const initialLogs = [
@@ -26,7 +28,13 @@ export default function VRPage() {
     const [swapViews, setSwapViews] = useState(false);
 
     // Task State: 'soldering' or 'domestic'
-    const [activeTask, setActiveTask] = useState<'soldering' | 'domestic'>('soldering');
+    const [activeTask, setActiveTask] = useState<TaskId>('soldering');
+
+    // Bench state lives here so the HUD and both camera feeds agree.
+    const [objects, setObjects] = useState<VRObject[]>(() => objectsFor('soldering'));
+    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [grippedId, setGrippedId] = useState<string | null>(null);
+    const [hoveredId, setHoveredId] = useState<string | null>(null);
 
     // Simulated Data Updates
     useEffect(() => {
@@ -35,13 +43,18 @@ export default function VRPage() {
             setSignal(s => Math.min(100, Math.max(80, s + Math.floor(Math.random() * 3) - 1)));
             setBattery(b => Math.max(0, parseFloat((b - 0.005).toFixed(2))));
 
-            // Randomize haptics
-            setLhHaptic(prev => prev.map(v => Math.max(10, Math.min(100, v + (Math.random() * 40 - 20)))));
-            setRhHaptic(prev => prev.map(v => Math.max(10, Math.min(100, v + (Math.random() * 40 - 20)))));
+            // Haptics report what the hands are doing. Holding something reads
+            // as steady pressure; an empty gripper just twitches on noise.
+            const load = grippedId ? 62 : 0;
+            const jitter = grippedId ? 14 : 40;
+            setLhHaptic(prev => prev.map(v => Math.max(6, Math.min(100, v + (Math.random() * jitter - jitter / 2) + (load - v) * 0.35))));
+            setRhHaptic(prev => prev.map(v => Math.max(6, Math.min(100, v + (Math.random() * jitter - jitter / 2) + (load - v) * 0.35))));
 
         }, 800);
         return () => clearInterval(interval);
-    }, []);
+        // Restarting the tick when the grip changes is cheap and keeps the
+        // haptic load honest without stashing state in a ref.
+    }, [grippedId]);
 
     const handleEmergencyStop = () => {
         setIsEmergencyStop(true);
@@ -49,8 +62,11 @@ export default function VRPage() {
         setTimeout(() => setIsEmergencyStop(false), 4000);
     };
 
-    const switchTask = (task: 'soldering' | 'domestic') => {
+    const switchTask = (task: TaskId) => {
         setActiveTask(task);
+        setObjects(objectsFor(task));
+        setSelectedId(null);
+        setGrippedId(null);
         setObjectiveProgress(0); // Reset progress
         addLog('INFO', `TASK SWAPPED: ${task.toUpperCase()}`);
     };
@@ -58,6 +74,57 @@ export default function VRPage() {
     const addLog = (status: string, msg: string) => {
         setLogs(prev => [{ status, msg }, ...prev.slice(0, 4)]);
     };
+
+    /* --- Bench interaction ------------------------------------------------ */
+
+    const handlers: InteractionHandlers = useMemo(() => ({
+        onHover: setHoveredId,
+        onGrab: (id) => {
+            if (isEmergencyStop) return; // halted means halted
+            setSelectedId(id);
+            setGrippedId(id);
+            setObjects(prev => prev.map(o => (o.id === id ? { ...o, pos: [o.pos[0], DESK_Y + GRIP_LIFT, o.pos[2]] } : o)));
+            addLog('OK', `GRIP CLOSED · ${id}`);
+        },
+        onRelease: () => {
+            setGrippedId(prev => {
+                if (!prev) return null;
+                setObjects(objs => objs.map(o => {
+                    if (o.id !== prev) return o;
+                    const restY = o.shape === 'box' ? DESK_Y + o.args[1] / 2 : DESK_Y + o.args[2] / 2;
+                    return { ...o, pos: [o.pos[0], restY, o.pos[2]] };
+                }));
+                addLog('OK', `RELEASED · ${prev}`);
+                return null;
+            });
+        },
+        onMove: (id, pos) => {
+            setObjects(prev => prev.map(o => (o.id === id ? { ...o, pos } : o)));
+        },
+    }), [isEmergencyStop]);
+
+    // An emergency stop drops whatever the machine is holding.
+    useEffect(() => {
+        if (isEmergencyStop && grippedId) handlers.onRelease();
+    }, [isEmergencyStop, grippedId, handlers]);
+
+    // Letting go anywhere ends the grip, including outside the canvas.
+    useEffect(() => {
+        if (!grippedId) return;
+        const up = () => { handlers.onRelease(); document.body.style.cursor = ''; };
+        window.addEventListener('pointerup', up);
+        window.addEventListener('pointercancel', up);
+        return () => {
+            window.removeEventListener('pointerup', up);
+            window.removeEventListener('pointercancel', up);
+        };
+    }, [grippedId, handlers]);
+
+    const selected = objects.find(o => o.id === selectedId) ?? null;
+    const hovered = objects.find(o => o.id === hoveredId) ?? null;
+    // Hovering previews whatever is under the pointer; the selection is what
+    // you fall back to once you look away.
+    const readout = hovered ?? selected;
 
     const mainMode = swapViews ? 'third-person' : 'fpv';
     const pipMode = swapViews ? 'fpv' : 'third-person';
@@ -69,7 +136,16 @@ export default function VRPage() {
             <div className="absolute inset-0">
                 <Canvas shadows dpr={[1, 2]}>
                     <Suspense fallback={null}>
-                        <VRScene mode={mainMode} task={activeTask} />
+                        <VRScene
+                            mode={mainMode}
+                            task={activeTask}
+                            objects={objects}
+                            selectedId={selectedId}
+                            grippedId={grippedId}
+                            interactive={!isEmergencyStop}
+                            latencyMs={latency}
+                            handlers={handlers}
+                        />
                     </Suspense>
                 </Canvas>
 
@@ -80,6 +156,46 @@ export default function VRPage() {
 
                 {/* Vignette */}
                 <div className="absolute inset-0 pointer-events-none shadow-[inset_0_0_150px_rgba(0,0,0,0.9)]" />
+            </div>
+
+            {/* --- Target readout: what the hands are on --- */}
+            {/* Right-hand band is the only column free between the haptics and
+                the log panel; the left one is taken by the PIP feed. */}
+            <div className="vr-target absolute right-6 z-20 pointer-events-none" style={{ top: '400px', width: '280px' }}>
+                <div
+                    className="backdrop-blur-md border rounded"
+                    style={{
+                        padding: '12px 14px',
+                        background: 'rgba(8,12,20,0.72)',
+                        borderColor: grippedId ? 'rgba(245,158,11,0.5)' : readout ? 'rgba(0,229,255,0.35)' : 'rgba(30,45,69,0.8)',
+                        transition: 'border-color 0.2s',
+                    }}
+                >
+                    <div className="flex items-center justify-between" style={{ marginBottom: '8px' }}>
+                        <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: grippedId ? '#f59e0b' : '#00e5ff' }}>
+                            {grippedId ? '● Holding' : readout ? 'Target' : 'No target'}
+                        </span>
+                        {readout && <span className="text-[9px] text-white/30">{readout.id}</span>}
+                    </div>
+
+                    {readout ? (
+                        <>
+                            <p className="text-[13px] font-bold font-sans text-white" style={{ marginBottom: '6px', lineHeight: 1.3 }}>
+                                {readout.label}
+                            </p>
+                            <div className="flex gap-4 text-[10px]" style={{ marginBottom: '6px' }}>
+                                <span className="text-white/40">MASS <span className="text-white/80">{readout.mass}</span></span>
+                            </div>
+                            <p className="text-[10px] text-white/40" style={{ marginBottom: '8px' }}>{readout.material}</p>
+                            <p className="vr-target-note text-[10px] leading-relaxed" style={{ color: '#8899aa' }}>{readout.note}</p>
+                        </>
+                    ) : (
+                        <p className="text-[10px] leading-relaxed text-white/40">
+                            Point at something on the bench. Press and hold to close the gripper,
+                            drag to move it, let go to set it down.
+                        </p>
+                    )}
+                </div>
             </div>
 
             {/* --- Top Header HUD --- */}
@@ -228,7 +344,16 @@ export default function VRPage() {
                         <div className="absolute inset-0">
                             <Canvas shadows dpr={[1, 2]}>
                                 <Suspense fallback={null}>
-                                    <VRScene mode={pipMode} task={activeTask} />
+                                    <VRScene
+                                        mode={pipMode}
+                                        task={activeTask}
+                                        objects={objects}
+                                        selectedId={selectedId}
+                                        grippedId={grippedId}
+                                        interactive={false}
+                                        latencyMs={latency}
+                                        handlers={handlers}
+                                    />
                                 </Suspense>
                             </Canvas>
                         </div>
@@ -374,6 +499,15 @@ export default function VRPage() {
                         font-size: 0.7rem;
                     }
                     .vr-swaphint { display: none; }
+
+                    /* Sits between the two haptic columns, under the objective. */
+                    .vr-target {
+                        top: 150px !important;
+                        left: 96px;
+                        right: 96px !important;
+                        width: auto !important;
+                    }
+                    .vr-target .vr-target-note { display: none; }
                 }
 
                 /* Short phones cannot fit the haptic columns and the controls.

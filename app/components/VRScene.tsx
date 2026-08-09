@@ -4,13 +4,32 @@ import { useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera, Environment, Grid, Stars } from '@react-three/drei';
 import { useRef } from 'react';
 import * as THREE from 'three';
+import VRInteractive, { type InteractionHandlers } from './VRInteractive';
+import { type TaskId, type VRObject } from './vrObjects';
 
 interface VRSceneProps {
     mode: 'fpv' | 'third-person';
-    task: 'soldering' | 'domestic'; // New task type support
+    task: TaskId;
+    /** Bench objects, owned by the page so both feeds agree. */
+    objects: VRObject[];
+    selectedId: string | null;
+    grippedId: string | null;
+    /** Only the large viewport takes pointer events; the PIP just mirrors. */
+    interactive: boolean;
+    latencyMs: number;
+    handlers: InteractionHandlers;
 }
 
-export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
+export default function VRScene({
+    mode,
+    task = 'soldering',
+    objects,
+    selectedId,
+    grippedId,
+    interactive,
+    latencyMs,
+    handlers,
+}: VRSceneProps) {
     const robotRef = useRef<THREE.Group>(null);
     const { size } = useThree();
 
@@ -206,6 +225,8 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
                 <>
                     <PerspectiveCamera makeDefault position={[0, 1.8, 0.4]} rotation={[-0.5, 0, 0]} fov={widen(75)} />
                     <OrbitControls
+                        // Orbiting while dragging an object fights the drag.
+                        enabled={grippedId === null}
                         target={[0, 0.8, 0.5]} // Look at the circuit board
                         enableZoom={true}
                         enablePan={true}
@@ -221,6 +242,7 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
                 <>
                     <PerspectiveCamera makeDefault position={[3, 3, 4]} fov={widen(60)} />
                     <OrbitControls
+                        enabled={grippedId === null}
                         target={[0, 1, 0]}
                         maxPolarAngle={Math.PI / 2 - 0.1}
                         minDistance={2}
@@ -237,39 +259,20 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
                     <meshStandardMaterial color={task === 'soldering' ? "#0f172a" : "#e2e8f0"} roughness={task === 'soldering' ? 0.8 : 0.2} metalness={0.2} />
                 </mesh>
 
+                {/* Static scenery. Anything the operator can pick up lives in
+                    VRInteractive so its position survives in page state. */}
                 {task === 'soldering' ? (
-                    // Soldering: Circuit Board
                     <group position={[0, 0.86, 0]} rotation={[-0.1, 0, 0]}>
                         {/* PCB Board */}
                         <mesh receiveShadow>
                             <boxGeometry args={[0.6, 0.02, 0.4]} />
                             <meshStandardMaterial color="#059669" roughness={0.3} metalness={0.5} />
                         </mesh>
-                        {/* Chips/Components */}
-                        <mesh position={[0, 0.02, 0]} castShadow>
-                            <boxGeometry args={[0.1, 0.02, 0.1]} />
-                            <meshStandardMaterial color="#1e293b" />
-                        </mesh>
-                        <mesh position={[0.15, 0.02, -0.1]} castShadow>
-                            <boxGeometry args={[0.05, 0.03, 0.15]} />
-                            <meshStandardMaterial color="#000000" />
-                        </mesh>
                         {/* Traces/Details (Simulated) */}
                         <gridHelper args={[0.6, 20, 0x10b981, 0x10b981]} position={[0, 0.011, 0]} rotation={[0, 0, 0]} />
                     </group>
                 ) : (
-                    // Domestic: Table Cleaning / Sorting
                     <group position={[0, 0.86, 0]}>
-                        {/* Plate / Table Items */}
-                        <mesh position={[-0.2, 0.02, 0.1]} castShadow>
-                            <cylinderGeometry args={[0.15, 0.1, 0.05, 32]} />
-                            <meshStandardMaterial color="#ffedd5" />
-                        </mesh>
-                        {/* Cup */}
-                        <mesh position={[0.3, 0.1, -0.2]} castShadow>
-                            <cylinderGeometry args={[0.06, 0.05, 0.15, 16]} />
-                            <meshStandardMaterial color="#3b82f6" transparent opacity={0.6} />
-                        </mesh>
                         {/* Spilled Juice (Stain) */}
                         <mesh position={[0.1, 0.005, 0.1]} rotation={[-Math.PI / 2, 0, 0]}>
                             <circleGeometry args={[0.12, 32]} />
@@ -277,6 +280,16 @@ export default function VRScene({ mode, task = 'soldering' }: VRSceneProps) {
                         </mesh>
                     </group>
                 )}
+
+                {/* The things you can actually touch */}
+                <VRInteractive
+                    objects={objects}
+                    selectedId={selectedId}
+                    grippedId={grippedId}
+                    interactive={interactive}
+                    latencyMs={latencyMs}
+                    handlers={handlers}
+                />
 
                 {/* Desk Lamp Glow */}
                 <pointLight position={[0, 1.5, 0]} distance={2} intensity={2} color={task === 'soldering' ? "#fbbf24" : "#ffffff"} />
